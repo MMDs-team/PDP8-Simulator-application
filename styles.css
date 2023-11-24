@@ -1,0 +1,133 @@
+body{
+    background-color: #f4f2f2;
+
+}
+
+.wrapper{
+    width: calc(100% - 2rem);
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.inputs--part{
+    width: calc(50% - 2rem);
+    height: 300px;
+    padding: 1rem;
+}
+
+#text-inputs{
+    width: calc(100% - 2rem);
+    background-color: white;
+    border: none;
+    box-shadow: 0px 2px 10px #e1e1e1;
+    border-radius: .2rem;
+    padding: 1rem;
+    resize: none;
+}
+
+
+.outputs--part{
+    width: calc(50% - 2rem);
+    padding: 1rem;
+    margin-top: 1rem;
+    background-color: white;
+}
+
+
+.top-registers{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    margin-bottom: 1rem;
+}
+.ac-register{
+    background-color: #f4a8a8;
+    width: calc(80% - .7rem);
+    padding: .2rem;
+    height: 3rem;
+}
+.e-register{
+    background-color: #bdc5f1;
+    width: calc(20% - .7rem);
+    padding: .2rem;
+    height: 3rem;
+}
+
+
+.program-counter-register{
+    width: 100%;
+}
+.program-counter{
+    background-color: #e5f4a8;
+    width: calc(100% -1rem);
+    padding: .2rem;
+    margin-bottom: 1rem;
+    height: 3rem;
+}
+
+
+.iot-registers{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    margin-bottom: 1rem;
+}
+.inout-register{
+    background-color: #abf5d7;
+    width: calc(50% - .7rem);
+    padding: .2rem;
+    height: 3rem;
+}
+.output-register{
+    background-color: #a8f4f2;
+    width: calc(50% - .7rem);
+    padding: .2rem;
+    height: 3rem;
+}
+.flags-registers{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+.flags-registers div{
+    
+    background-color: #e2e2e2;
+    width: calc(33% - .7rem);
+    padding: .2rem;
+    height: 3rem;
+}
+
+.otpt-btn{
+    border-radius: .2rem;
+}
+
+.otpt-btn:hover{
+    box-shadow: 0px 1px 5px #555;
+}
+
+.hex{}
+.bin{}
+.dec{}
+
+@media screen and (min-width: 700px) {
+    .inputs--part{
+        width: calc(60% - 2rem);
+    }
+
+    .outputs--part{
+        width: calc(40% - 2rem);
+    }
+    
+}
+
+#file-inp-btn{
+    margin: 1rem 0;
+    border: 1px solid #d1d1d1;
+    padding: 1rem;
+    padding-left: 0;
+    float: right;
+}

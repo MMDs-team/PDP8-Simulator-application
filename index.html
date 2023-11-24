@@ -3,13 +3,44 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <link rel="stylesheet" href="styles.css">
     <title>PDP-8</title>
   </head>
   <body>
-    PDP_8
+
+    <div class="wrapper">
+      <div class="inputs--part">
+        <textarea rows="42" cols="9" id="text-inputs"></textarea>
+      </div>
+
+      <div class="outputs--part">
+        <div class="top-registers">
+          <div class="ac-register otpt-btn hex"></div>
+          <div class="e-register otpt-btn hex"></div>
+        </div>
+        <div class="program-counter-register">
+          <div class="program-counter otpt-btn hex"></div>
+        </div>
+        <div class="iot-registers">
+          <div class="inout-register otpt-btn hex"></div>
+          <div class="output-register otpt-btn hex"></div>
+        </div>
+        <div class="flags-registers">
+          <div class="interrupt otpt-btn"></div>
+          <div class="inpf otpt-btn"></div>
+          <div class="outf otpt-btn"></div>
+        </div>
+        <input type="file" accept=".txt" name="file-inp" id="file-inp-btn" dir="rtl">
+      </div>
+      
+    </div>
+
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
   </body>
