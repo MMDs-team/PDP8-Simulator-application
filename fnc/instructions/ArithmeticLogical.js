@@ -1,7 +1,14 @@
-const { AC, E } = require('../registers/AC');
-const ProgramConter = require('../ProgramConter')
+const { AC, E } = require('../Register.js');
+const ProgramConter = require('../ProgramConter.js');
+const Instruction = require('./Instruction.js');
 
 class ArithmeticLogical extends Instruction {
+
+
+
+    constructor() {
+        super()
+    }
 
     CLA() {}
 
@@ -27,3 +34,6 @@ class ArithmeticLogical extends Instruction {
 
     HLT() {}
 }
+
+
+module.exports = ArithmeticLogical;

@@ -1,4 +1,10 @@
+const Instruction = require('./Instruction.js')
+
 class IOT extends Instruction {
+
+    constructor() {
+        super()
+    }
 
     INP() {}
     OUT() {}
@@ -7,3 +13,5 @@ class IOT extends Instruction {
     ION() {}
     IOF() {}
 }
+
+module.exports = IOT;
