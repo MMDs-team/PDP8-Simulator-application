@@ -3,7 +3,9 @@ const ProgramConter = require('../ProgramConter')
 
 class ArithmeticLogical extends Instruction {
 
-    CLA() {}
+    CLA() {
+        AC.setMem(0);
+    }
 
     CLE() {}
 
