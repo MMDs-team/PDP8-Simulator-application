@@ -1,3 +1,5 @@
+class Register{}
+
 
 class AC extends Register{
     
@@ -23,7 +25,6 @@ class E extends Register{
 
 
 
-class Register{}
 class IEN extends Register{}
 class IF extends Register{}
 class OF extends Register{}
