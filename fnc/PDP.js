@@ -3,7 +3,6 @@ const Instruction = require('./instructions/Instruction.js');
 const MemoryRefrence = require('./instructions/MemoryRefrence.js');
 const ArithmeticLogical = require('./instructions/ArithmeticLogical.js');
 const IOT = require('./instructions/IOT.js');
-const { log } = require('console');
 
 
 class PDP{
@@ -20,7 +19,7 @@ class Control {
     isOn = false
 
     static start() {
-        let IR = PDP.memory[ProgramCounter.get()]
+        let IR = PDP.getMem(ProgramCounter.get())
         this.decode(IR)
         if (isOn) this.start()
     }
@@ -31,39 +30,39 @@ class Control {
         let address = IR & ~( (1<<12)-1 )
         let instruction = new Object();
 
-        if (d!==7 && I===1) address = PDP.memory[address] & ~( (1<<12)-1 )
+        if (d!==7 && I===1) address = PDP.getMem(address) & ~( (1<<12)-1 )
         
         switch (d) {
             case 0:
-                instruction = new MemoryRefrence(address, PDP.memory[address])
+                instruction = new MemoryRefrence(address, PDP.getMem(address))
                 instruction.AND()
                 break;
             case 1:
-                instruction = new MemoryRefrence(address, PDP.memory[address])
+                instruction = new MemoryRefrence(address, PDP.getMem(address))
                 instruction.ADD()
                 break;
             case 2:
-                instruction = new MemoryRefrence(address, PDP.memory[address])
+                instruction = new MemoryRefrence(address, PDP.getMem(address))
                 instruction.LDA() 
                 break;
             case 3:
-                instruction = new MemoryRefrence(address, PDP.memory[address])
+                instruction = new MemoryRefrence(address, PDP.getMem(address))
                 instruction.STA()           
                 break;
             case 4:
-                instruction = new MemoryRefrence(address, PDP.memory[address])
+                instruction = new MemoryRefrence(address, PDP.getMem(address))
                 instruction.BUN()         
                 break;
             case 5:
-                instruction = new MemoryRefrence(address, PDP.memory[address])
+                instruction = new MemoryRefrence(address, PDP.getMem(address))
                 instruction.BSA()            
                 break;
             case 6:
-                instruction = new MemoryRefrence(address, PDP.memory[address])
+                instruction = new MemoryRefrence(address, PDP.getMem(address))
                 instruction.ISZ()         
                 break;
             case 7:
-                const upCode = PDP.memory[address] & ~( (1<<12)-1 )
+                const upCode = PDP.getMem(address) & ~( (1<<12)-1 )
                 if (I) {
                     switch (upCode) {
                         case 1<11:
