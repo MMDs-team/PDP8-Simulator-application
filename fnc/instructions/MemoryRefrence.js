@@ -17,7 +17,12 @@ class MemoryRefrecne extends Instruction{
     }
 
 
-    AND(ref) {}
+    AND(ref) {
+        const getMemVal = PDP.getMem(ref) 
+        const ACValue = AC.getMem() 
+        const answer = ACValue & getMemVal 
+        AC.setMem(answer)
+    }
 
     ADD(ref) {}
 
