@@ -7,10 +7,38 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <title>PDP-8</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
   </head>
   <body>
-    PDP_8
+    
+    <div class="container">
+      <div class="row"></div>
+
+      <div class="row">
+        <div class="col-7">
+          <form>
+            <fieldset>
+              <div class="form-group">
+                <label for="exampleTextarea" class="form-label mt-4">Example textarea</label>
+                <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 107px;"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="formFile" class="form-label mt-4">Default file input example</label>
+                <input class="form-control" type="file" id="formFile">
+              </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+        <div class="col-5"></div>
+      </div>
+    </div>
+
+
     <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
+    <script src="./renderer.js">
+      require('./index.js')
+    </script>
   </body>
 </html>
