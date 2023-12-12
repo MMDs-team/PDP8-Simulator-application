@@ -49,7 +49,7 @@ class MemoryRefrecne extends Instruction{
         const ACValue = AC.getMem()
         PDP.setMem(ref , ACValue)
         ref += 1 
-        AC.setMem(ref)
+        ProgramCounter.load(ref)
     }
 
     ISZ(ref) {
