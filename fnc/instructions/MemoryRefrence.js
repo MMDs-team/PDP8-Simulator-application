@@ -16,45 +16,39 @@ class MemoryRefrecne extends Instruction{
         this.DR = DR
     }
 
-    AND(ref) {
-        const memVal = PDP.getMem(ref) 
+    AND() {
         const ACValue = AC.getMem() 
-        const answer = ACValue & memVal 
+        const answer = ACValue & this.DR 
         AC.setMem(answer)
     }
 
-    ADD(ref) {
-        const memVal = PDP.getMem(ref) 
+    ADD() {
         const ACValue = AC.getMem() 
-        const answer = ACValue + memVal 
+        const answer = ACValue + this.DR 
         AC.setMem(answer)
     }
 
-    LDA(ref) {
-        const memVal = PDP.getMem(ref) 
-        AC.setMem(memVal)
+    LDA() {
+        AC.setMem(this.DR)
     }
 
-    STA(ref) {
+    STA() {
         const ACValue = AC.getMem() 
-        PDP.setMem(ref , getMemVal)
+        PDP.setMem(this.AR , ACValue)
     }
 
-    BUN(ref) {
-        const memVal = PDP.getMem(ref) 
-        ProgramCounter.load(memVal) 
+    BUN() { 
+        ProgramCounter.load(this.DR) 
     }
 
-    BSA(ref) {
-        const ACValue = AC.getMem()
-        PDP.setMem(ref , ACValue)
-        ref += 1 
-        ProgramCounter.load(ref)
+    BSA() {
+        const PCValue = ProgramCounter.get()
+        PDP.setMem(this.AR , PCValue)
+        ProgramCounter.load(this.AR + 1)
     }
 
-    ISZ(ref) {
-        DR = PDP.getMem(ref) + 1 
-        PDP.setMem(ref , DR) 
+    ISZ() {
+        PDP.setMem(this.AR , this.DR++) 
         if(DR == 0) ProgramCounter.increment() 
     }
 }
