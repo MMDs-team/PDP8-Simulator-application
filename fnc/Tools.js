@@ -1,4 +1,6 @@
 
+
+
 class Tools{
 
     static toHex12bit(){ }
@@ -6,6 +8,8 @@ class Tools{
     static toHex16bit() {}
 
     static toBin() { }
+
+    static addressStringToDecimal(address) {}
 
 }
 
