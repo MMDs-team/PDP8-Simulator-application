@@ -9,6 +9,8 @@ class AC extends Register{
 
     static getMem() { return this.#mem }
 
+    static increment() { this.#mem = this.#mem + 1 }
+
     //other methods
 }
 
