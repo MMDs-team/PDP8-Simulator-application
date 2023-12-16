@@ -3,7 +3,7 @@ const Instruction = require('./instructions/Instruction.js')
 const PDP = require('./PDP.js')
 
 
-class Memory extends Word{
+class Memory {
     
     static instOpcode = {
         'AND': [ '0', '8' ],
@@ -57,9 +57,18 @@ class Memory extends Word{
             let amount = Tools.HexStringToDecimal(value)
             
         })
+        PDP.setMem(address, amount)
     }
 
+    static sayHi() {
+        return "Hiii!!"
+    }
     
 }
 
+module.exports = {
+    Memory, 
+    addToMemory: Memory.addToMemory, 
+    sayHi: Memory.sayHi
+}
 

@@ -1,6 +1,3 @@
-const Instruction = require('./fnc/instructions/Instruction.js')
-const Memory = require('./fnc/Memory.js')
-
 ///////////////////////////////////////////
 
 const labelItems = document.querySelectorAll(".label--item")
@@ -22,32 +19,39 @@ labelItems[1].addEventListener("click", () => {
     items[0].classList.remove("active")
 })
 
-////////////////////////////////////
-
-const textArea = document.getElementById("exampleTextarea")
-const sendBtn = document.getElementById("sendAssem")
-let assembelyText = []
-
-const validateAssembly = () => {
-    assembelyText.forEach((inst, i) => {
-        let instruction = inst.split(' ')
-        try {
-            Instruction.validateInstruction(inst)
-        } catch (error) {
-            // alert and return
-            return false
-        }
-    })
-    return true
-}
+// ////////////example/////////////////////
+// const x = document.getElementById("right--pdp")
+// x.textContent = window.api.sayHello()
+// document.getElementById("right--pdp").textContent = window.api.sayHello()
+// document.getElementById("right--pdp").textContent = window.api.sayHi()
+// console.log(window.api)
+////////////////////////////////
 
 
-sendBtn.addEventListener("click", (e) => {
-    e.preventDefault()
+// const textArea = document.getElementById("exampleTextarea")
+// const sendBtn = document.getElementById("sendAssem")
+// let assembelyText = []
 
-    assembelyText = textArea.value.splite('\n')
-    if (validateAssembly()) {
-        Memory.addToMemory(assembelyText)
-    }
+// const validateAssembly = () => {
+//     assembelyText.forEach((inst, i) => {
+//         let instruction = inst.split(' ')
+//         try {
+//             Instruction.validateInstruction(inst)
+//         } catch (error) {
+//             // alert and return
+//             return false
+//         }
+//     })
+//     return true
+// }
 
-})
+
+// sendBtn.addEventListener("click", (e) => {
+//     e.preventDefault()
+
+//     assembelyText = textArea.value.splite('\n')
+//     if (validateAssembly()) {
+//         Memory.addToMemory(assembelyText)
+//     }
+//     // document.getElementById("right--pdp").textContent = 
+// })
