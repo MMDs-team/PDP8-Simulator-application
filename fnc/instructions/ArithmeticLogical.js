@@ -7,15 +7,28 @@ class ArithmeticLogical extends Instruction {
         AC.setMem(0);
     }
 
-    CLE() {}
+    CLE() {
+        E.setMem(false);
+    }
 
-    CMA() {}
+    CMA() {
+        const currVal = AC.getMem()
+        AC.setMem(((1 << AC.size()) - 1) - currVal)
+    }
 
-    CME() {}
+    CME() { E.setMem(!E.getMem()) }
 
-    CIR() {}
+    CIR() {
+        const eVal = E.getMem();
+        E.setMem(AC.getMem() && 1);
 
-    CIL() {}
+        const toAssign = (AC.getMem() >> 1) & (eVal << 16);
+        AC.setMem(toAssign);
+    }
+
+    CIL() {
+
+    }
 
     INC() {}
 
