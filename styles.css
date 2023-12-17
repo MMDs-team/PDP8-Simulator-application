@@ -54,3 +54,53 @@
 .inp--file{
     /* height: 2.45rem; */
 }
+
+/* ////////////////////righy pdp/////////////////////////////// */
+
+
+
+#right--pdp{
+    height: 100%;
+    padding: 2.7rem 1rem;
+    display: flex;
+    flex-direction: column;
+}
+.pdp--wrapper{
+    background-color: antiquewhite;
+    height: 20rem;
+}
+.registers--wrapper{
+    height: 20rem;
+    background-color: aliceblue;
+}
+
+
+.top--pdp-part{}
+.bottom-pdp-part{
+    padding: 1rem;
+    background-color: gray;
+}
+
+.bottom-pdp-part >div{
+    background-color: white;
+}
+.switch--wrapper{
+    display: flex;
+    border: 2px solid brown;
+}
+
+.switch{
+    width: 2.2rem;
+    height: 5rem;
+    background-color: darkorchid;
+    margin: 0 .15rem;
+}
+.red-c-switch{}
+.wight-c-swith{}
+
+
+
+
+
+
+
