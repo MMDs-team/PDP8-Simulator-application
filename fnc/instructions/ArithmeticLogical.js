@@ -1,38 +1,65 @@
-const { AC, E } = require('../Register.js');
-const ProgramConter = require('../ProgramConter.js');
-const Instruction = require('./Instruction.js');
+const { AC, E } = require('../Register.js')
+const { ProgramConter } = require('../ProgramConter.js')
+const Instruction = require('./Instruction.js')
+const { Control } = require('../PDP.js')
 
 class ArithmeticLogical extends Instruction {
-
-
 
     constructor() {
         super()
     }
+  
+    CLA() { AC.setMem(0); }
 
-    CLA() {}
+    CLE() { E.setMem(false); }
 
-    CLE() {}
+    CMA() {
+        const currVal = AC.getMem()
+        AC.setMem(((1 << AC.size()) - 1) - currVal)
+    }
 
-    CMA() {}
+    CME() { E.setMem(!E.getMem()) }
 
-    CME() {}
+    CIR() {
+        const eVal = Number(E.getMem())
+        E.setMem(Boolean(AC.getMem() & 1))
 
-    CIR() {}
+        const toAssign = (AC.getMem() >> 1) | (eVal << (AC.size() - 1 /* Index base: 0 */))
+        AC.setMem(toAssign)
+    }
 
-    CIL() {}
+    CIL() {
+        const eVal = Number(E.getMem())
+        E.setMem(Boolean(AC.getMem() & (1 << (AC.size() - 1 /* Index base: 0 */))))
 
-    INC() {}
+        const toAssign = ((AC.getMem() << 1) | eVal)
+        AC.setMem(toAssign)
+    }
 
-    SPA() {}
+    INC() {
+        const toAssign = AC.getMem() + 1;
+        AC.setMem(toAssign)
+        E.setMem(Boolean(toAssign & (1 << AC.size() /* Index base: 0 */)))
+    }
 
-    SNA() {}
+    SPA() {
+        // In this instruction we include zero to positive values too!
+        if (!(Boolean(AC.getMem() & (1 << (AC.size() - 1))))) ProgramCounter.increment()
+    }
 
-    SZA() {}
+    SNA() {
+        if (Boolean(AC.getMem() & (1 << (AC.size() - 1)))) ProgramConter.increment()
+    }
 
-    SZE() {}
+    SZA() {
+        if (AC.getMem() == 0) ProgramCounter.increment()
+    }
 
-    HLT() {}
+    SZE() {
+        if (!E.getMem()) ProgramCounter.increment()
+    }
+
+    HLT() { Control.isOn = false; }
 }
 
 
