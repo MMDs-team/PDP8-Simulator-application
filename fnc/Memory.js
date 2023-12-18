@@ -1,9 +1,9 @@
-const Tools = require('./Tools.js')
+
 const Instruction = require('./instructions/Instruction.js')
 const PDP = require('./PDP.js')
 
 
-class Memory extends Word{
+class Memory {
     
     static instOpcode = {
         'AND': [ '0', '8' ],
@@ -36,6 +36,7 @@ class Memory extends Word{
     }
     
     static addToMemory(instructions) {
+        let amount = 0;
         instructions.forEach((inst, i) => {
             let instruction = inst.split(' ')
             // convert a 4 carachter address to a decimal
@@ -54,12 +55,21 @@ class Memory extends Word{
             } else {// if it is data
                 value = instruction[1]
             } 
-            let amount = Tools.HexStringToDecimal(value)
+            amount = parseInt(value, 16)
             
         })
+        PDP.setMem(address, amount)
     }
 
+    static sayHi() {
+        return "Hiii!!"
+    }
     
 }
 
+module.exports = {
+    Memory, 
+    addToMemory: Memory.addToMemory, 
+    sayHi: Memory.sayHi
+}
 

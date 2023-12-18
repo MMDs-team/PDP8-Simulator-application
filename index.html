@@ -5,7 +5,9 @@
   <head>
     <meta charset="UTF-8">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
+    <meta http-equiv="X-UA0Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDP-8</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="bootstrap.min.css">
@@ -13,7 +15,6 @@
   <body>
     
     <div class="px-4">
-      <div class="row"></div>
       <div class="row py-2">
         <!-- left part for edit text and memory -->
         <div class="col-4">
@@ -27,7 +28,7 @@
               <form>
                 <fieldset>
                   <div class="form-group">
-                    <textarea class="form-control" id="exampleTextarea" rows="26" style="height: 107px;" ></textarea>
+                    <textarea class="form-control" id="exampleTextarea" rows="26"></textarea>
                   </div>
                 </fieldset>
                 <div class="wrap--btn-left">
@@ -42,7 +43,325 @@
 
         </div>
         <!-- right part for PDP simulator and details for registers -->
-        <div class="col-8"></div>
+        <div class="col-8" id="right--pdp">
+          <dib class="row pdp--wrapper">
+            <div class="top--pdp-part">
+              
+              <div class="top--logo"></div><!-- top logo of pdp-->
+              <div class="middle--lights pe-3">
+                <div class="row">
+                  <div class="col-1"> <!--left part of middle-->
+
+                  </div>
+                  <div class="col-8"> <!-- middle lights-->
+                    <!-- program Conter and data field and inst field -->
+                    <div class="row">
+                      <span class="col-5 row">
+                        <span class="col-6">Data Field</span>
+                        <span class="col-6">Data Field</span>
+                      </span>
+
+                      <span class="col-7 row">
+                        <span class="col-4"></span>
+                        <span class="col-6">
+                          Program Counter
+                        </span>
+                      </span>
+                    </div>
+                    <div class="line-of-light">
+                      <!-- 1 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 2 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 3 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 4 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 5 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 6 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      
+                      
+
+                    </div>
+                    <!-- memory address -->
+                    <div class="row">
+                      <span class="col-5 row"></span>
+                      <span class="col-7 row">
+                        <span class="col-4"></span>
+                        <span class="col-6">
+                          Memory Address
+                        </span>
+                      </span>
+                    </div>
+                    <div class="line-of-light">
+                      <!-- 1 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 2 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 3 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 4 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 5 -->
+                      <div class="col-2 light--part-wrap"></div>
+                      <!-- 6 -->
+                      <div class="col-2 light--part-wrap"></div>
+
+                    </div>
+                    <!-- memory buffer -->
+                    <div class="row">
+                      <span class="col-5 row"></span>
+                      <span class="col-7 row">
+                        <span class="col-4"></span>
+                        <span class="col-6">
+                          Memory Buffer
+                        </span>
+                      </span>
+                    </div>
+                    <div class="line-of-light">
+                      <!-- 1 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 2 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 3 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 4 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 5 -->
+                      <div class="col-2 light--part-wrap"></div>
+                      <!-- 6 -->
+                      <div class="col-2 light--part-wrap"></div>
+                      
+                      
+
+                    </div>
+                    <!-- Accumulator  and link-->
+                    <div class="row">
+                      <span class="col-5 row"></span>
+                      <span class="col-7 row">
+                        <span class="col-4"></span>
+                        <span class="col-6">
+                          Accumulator
+                        </span>
+                      </span>
+                    </div>
+                    <div class="line-of-light">
+                      <!-- 1 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 2 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 3 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 4 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 5 -->
+                      <div class="col-2 light--part-wrap link-e">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span>
+                        </div>
+                      </div>
+                      <!-- 6 -->
+                      <div class="col-2 light--part-wrap"></div>
+                      
+                      
+
+                    </div>
+                    <!-- Multiplier Qutionet and step counter -->
+                    <div class="row">
+                      <span class="col-5 row"></span>
+                      <span class="col-7 row">
+                        <span class="col-4"></span>
+                        <span class="col-6">
+                          Multiplier Qutionet
+                        </span>
+                      </span>
+                    </div>
+                    <div class="line-of-light">
+                      <!-- 1 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 2 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 3 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 4 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 5 -->
+                      <div class="col-2 light--part-wrap step-count">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span>
+                        </div>
+                      </div>
+                      <!-- 6 -->
+                      <div class="col-2 light--part-wrap">
+                        <div class="top-light-line"></div>
+                        <div class="light-part">
+                          <span></span><span></span><span></span>
+                        </div>
+                      </div>
+                      
+                      
+
+                    </div>
+
+                  </div>
+                  <div class="col-3"> <!--right part of middle-->
+
+                  </div>
+                </div>
+              </div>
+              <div class="bottom--panel"></div>
+
+            </div>
+            <div class="bottom-pdp-part">
+              <div>
+                <div class="col-1 power--btn-wrap"></div>
+                <div class="col-11 switch--wrapper"> <!-- wrapper of bottom switches -->
+                  <div class="switch red-c-switch"></div>
+                  <div class="switch red-c-switch"></div>
+                  <div class="switch red-c-switch"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch red-c-switch"></div>
+                  <div class="switch red-c-switch"></div>
+                  <div class="switch red-c-switch"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch red-c-switch"></div>
+                  <div class="switch red-c-switch"></div>
+                  <div class="switch red-c-switch"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch red-c-switch"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch wight-c-swith"></div>
+                  <div class="switch red-c-switch"></div>
+                  <div class="switch red-c-switch"></div>
+                </div>
+              </div>
+            </div>
+          </dib>
+          <div class="row registers--wrapper"></div>
+        </div>
         </div>
 
       </div>
@@ -50,8 +369,6 @@
 
 
     <!-- You can also require other files to run in this process -->
-    <script src="./index.js">
-      require('./index.js')
-    </script>
+    <script src="./index.js"></script>
   </body>
 </html>

@@ -21,6 +21,7 @@ class Control {
     static start() {
         let IR = PDP.getMem(ProgramCounter.get())
         this.decode(IR)
+        ProgramCounter.increment()
         if (isOn) this.start()
     }
 
