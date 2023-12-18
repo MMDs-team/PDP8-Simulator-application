@@ -1,4 +1,4 @@
-const Tools = require('./Tools.js')
+
 const Instruction = require('./instructions/Instruction.js')
 const PDP = require('./PDP.js')
 
@@ -36,6 +36,7 @@ class Memory {
     }
     
     static addToMemory(instructions) {
+        let amount = 0;
         instructions.forEach((inst, i) => {
             let instruction = inst.split(' ')
             // convert a 4 carachter address to a decimal
@@ -54,7 +55,7 @@ class Memory {
             } else {// if it is data
                 value = instruction[1]
             } 
-            let amount = Tools.HexStringToDecimal(value)
+            amount = parseInt(value, 16)
             
         })
         PDP.setMem(address, amount)
