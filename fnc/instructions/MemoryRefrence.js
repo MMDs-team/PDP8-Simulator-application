@@ -2,22 +2,55 @@ const PDP = require('../PDP.js')
 const Instruction = require('./Instruction');
 const { AC, E} = require('../Register.js');
 const ProgramCounter = require('../ProgramConter.js');
+const { Module } = require('module');
 
 
 class MemoryRefrecne extends Instruction{
-    
 
-    AND(ref) {}
+    AR = 0
+    DR = 0
 
-    ADD(ref) {}
+    constructor(AR, DR) {
+        super()
+        this.AR = AR
+        this.DR = DR
+    }
 
-    LDA(ref) {}
+    AND() {
+        const ACValue = AC.getMem() 
+        const answer = ACValue & this.DR 
+        AC.setMem(answer)
+    }
 
-    STA(ref) {}
+    ADD() {
+        const ACValue = AC.getMem() 
+        const answer = ACValue + this.DR 
+        AC.setMem(answer)
+    }
 
-    BUN(ref) {}
+    LDA() {
+        AC.setMem(this.DR)
+    }
 
-    BSA(ref) {}
+    STA() {
+        const ACValue = AC.getMem() 
+        PDP.setMem(this.AR , ACValue)
+    }
 
-    ISZ(ref) {}
+    BUN() { 
+        ProgramCounter.load(this.DR) 
+    }
+
+    BSA() {
+        const PCValue = ProgramCounter.get()
+        PDP.setMem(this.AR , PCValue)
+        ProgramCounter.load(this.AR + 1)
+    }
+
+    ISZ() {
+        PDP.setMem(this.AR , this.DR++) 
+        if(DR == 0) ProgramCounter.increment() 
+    }
 }
+
+module.exports = MemoryRefrecne;

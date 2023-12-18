@@ -7,10 +7,51 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <title>PDP-8</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
   </head>
   <body>
-    PDP_8
+    
+    <div class="px-4">
+      <div class="row"></div>
+      <div class="row py-2">
+        <!-- left part for edit text and memory -->
+        <div class="col-4">
+          <div class="label--wrap">  <!-- tuggle part for mem and edit -->
+            <span class="label--item py-2 px-3 active" >asemmbly</span>
+            <span class="label--item py-2 px-3" >memory</span>
+          </div>
+          <!-- edit text or memory -->
+          <div class="wrap--left p-1 ps-2">
+            <div class="edit--text left--part active">
+              <form>
+                <fieldset>
+                  <div class="form-group">
+                    <textarea class="form-control" id="exampleTextarea" rows="26" style="height: 107px;" ></textarea>
+                  </div>
+                </fieldset>
+                <div class="wrap--btn-left">
+                  <button type="submit" class="btn btn-secondary m-2 ms-0" id="sendAssem">Submit</button>
+                  <input class="form-control inp--file me-2" type="file" id="formFile">
+                </div>
+              </form>
+            </div>
+
+            <div class="left--part" id="memory--wrap"></div>
+          </div>
+
+        </div>
+        <!-- right part for PDP simulator and details for registers -->
+        <div class="col-8"></div>
+        </div>
+
+      </div>
+    </div>
+
+
     <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
+    <script src="./index.js">
+      require('./index.js')
+    </script>
   </body>
 </html>

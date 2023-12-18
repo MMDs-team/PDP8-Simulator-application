@@ -1,9 +1,14 @@
-const { AC, E } = require('../registers/AC')
-const { ProgramConter } = require('../ProgramConter')
+const { AC, E } = require('../Register.js')
+const { ProgramConter } = require('../ProgramConter.js')
+const Instruction = require('./Instruction.js')
 const { Control } = require('../PDP.js')
 
 class ArithmeticLogical extends Instruction {
 
+    constructor() {
+        super()
+    }
+  
     CLA() { AC.setMem(0); }
 
     CLE() { E.setMem(false); }
@@ -56,3 +61,6 @@ class ArithmeticLogical extends Instruction {
 
     HLT() { Control.isOn = false; }
 }
+
+
+module.exports = ArithmeticLogical;

@@ -3,20 +3,22 @@
 
 class ProgramCounter {
 
-    static mem;
-    static isOn = false
+    static #mem = 0;
 
-    static load(ref) {}
+    static load(ref) {
+        this.#mem = ref
+    }
 
-    static increment() {}
+    static increment() {
+        this.#mem = this.#mem + 1
+    }
 
-    static doOperation(inp) {
-        //do the operation
-        
-        if (this.isOn)
-            return        
-        this.increment() 
+    static clear() {
+        this.#mem = 0
+    }
 
+    static get() {
+        return this.#mem
     }
 
 
