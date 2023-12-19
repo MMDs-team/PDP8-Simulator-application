@@ -1,74 +1,65 @@
-const { AC, E } = require('../Register.js');
-const ProgramConter = require('../ProgramConter.js');
-const Instruction = require('./Instruction.js');
+const { AC, E } = require('../Register.js')
+const { ProgramConter } = require('../ProgramConter.js')
+const Instruction = require('./Instruction.js')
+const { Control } = require('../PDP.js')
 
 class ArithmeticLogical extends Instruction {
 
     constructor() {
         super()
     }
+  
+    CLA() { AC.setMem(0); }
 
-    CLA() {
-        AC.setMem(0) 
-    }
-
-    CLE() {
-        E.setMem(0)
-    }
+    CLE() { E.setMem(false); }
 
     CMA() {
-        const ACValue = AC.getMem() 
-        AC.setMem(~ ACValue) 
+        const currVal = AC.getMem()
+        AC.setMem(((1 << AC.size()) - 1) - currVal)
     }
 
-    CME() {
-        const EValue = E.getMem() 
-        E.setMem(~ EValue) 
-    }
+    CME() { E.setMem(!E.getMem()) }
 
     CIR() {
-        const ACValue = AC.getMem() 
-        if(ACValue & 1) E.setMem(1)
-        else E.setMem(0)
+        const eVal = Number(E.getMem())
+        E.setMem(Boolean(AC.getMem() & 1))
 
-        AC.setMem(ACValue >> 1)
+        const toAssign = (AC.getMem() >> 1) | (eVal << (AC.size() - 1 /* Index base: 0 */))
+        AC.setMem(toAssign)
     }
 
     CIL() {
-        const ACValue = AC.getMem() 
-        if(ACValue >= 0) E.setMem(0)
-        else E.setMem(1)
+        const eVal = Number(E.getMem())
+        E.setMem(Boolean(AC.getMem() & (1 << (AC.size() - 1 /* Index base: 0 */))))
 
-        AC.setMem(ACValue << 1)
+        const toAssign = ((AC.getMem() << 1) | eVal)
+        AC.setMem(toAssign)
     }
 
     INC() {
-        AC.increment()
+        const toAssign = AC.getMem() + 1;
+        AC.setMem(toAssign)
+        E.setMem(Boolean(toAssign & (1 << AC.size() /* Index base: 0 */)))
     }
 
     SPA() {
-        const ACValue = AC.getMem() 
-        if(ACValue > 0) ProgramConter.increment()
+        // In this instruction we include zero to positive values too!
+        if (!(Boolean(AC.getMem() & (1 << (AC.size() - 1))))) ProgramCounter.increment()
     }
 
     SNA() {
-        const ACValue = AC.getMem() 
-        if(ACValue < 0) ProgramConter.increment()
+        if (Boolean(AC.getMem() & (1 << (AC.size() - 1)))) ProgramConter.increment()
     }
 
     SZA() {
-        const ACValue = AC.getMem() 
-        if(ACValue == 0) ProgramConter.increment()
+        if (AC.getMem() == 0) ProgramCounter.increment()
     }
 
     SZE() {
-        const EValue = E.getMem() 
-        if(EValue == 0) ProgramConter.increment()
+        if (!E.getMem()) ProgramCounter.increment()
     }
 
-    HLT() {
-        // break 
-    }
+    HLT() { Control.isOn = false; }
 }
 
 

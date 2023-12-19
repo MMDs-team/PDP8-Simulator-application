@@ -1,5 +1,5 @@
 const PDP = require('../PDP.js')
-const Instruction = require('./Instruction');
+const { Instruction } = require('./Instruction');
 const { AC, E} = require('../Register.js');
 const ProgramCounter = require('../ProgramConter.js');
 const { Module } = require('module');

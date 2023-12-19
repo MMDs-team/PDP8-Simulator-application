@@ -4,12 +4,14 @@ class Register{}
 class AC extends Register{
     
     static #mem = 0
+
+    static size = () => { return 16 }
     
     static setMem(newMem) { this.mem = newMem }
 
     static getMem() { return this.#mem }
 
-    static increment() { this.#mem = this.#mem + 1 }
+    static increment() { this.#mem = this.#mem + 1}
 
     //other methods
 }
@@ -19,6 +21,8 @@ class AC extends Register{
 class E extends Register{
     
     static #mem = 0
+
+    static size = () => { return 1 }
 
     static setMem(newMem) { this.mem = newMem }
 
