@@ -28,30 +28,29 @@ labelItems[1].addEventListener("click", () => {
 ////////////////////////////////
 
 
-// const textArea = document.getElementById("exampleTextarea")
-// const sendBtn = document.getElementById("sendAssem")
-// let assembelyText = []
+const textArea = document.getElementById("exampleTextarea")
+const sendBtn = document.getElementById("sendAssem")
+let assembelyText = []
 
-// const validateAssembly = () => {
-//     assembelyText.forEach((inst, i) => {
-//         let instruction = inst.split(' ')
-//         try {
-//             Instruction.validateInstruction(inst)
-//         } catch (error) {
-//             // alert and return
-//             return false
-//         }
-//     })
-//     return true
-// }
+const validateAssembly = () => {
+    assembelyText.forEach((inst, i) => {
+        let instruction = inst.split(' ')
+        try {
+            window.api.validateInstruction(inst)
+        } catch (error) {
+            // alert and return
+            return false
+        }
+    })
+    return true
+}
 
 
-// sendBtn.addEventListener("click", (e) => {
-//     e.preventDefault()
+sendBtn.addEventListener("click", (e) => {
+    e.preventDefault()
 
-//     assembelyText = textArea.value.splite('\n')
-//     if (validateAssembly()) {
-//         Memory.addToMemory(assembelyText)
-//     }
-//     // document.getElementById("right--pdp").textContent = 
-// })
+    assembelyText = textArea.value.splite('\n')
+    if (validateAssembly()) {
+        window.api.addToMemory(assembelyText)
+    }
+})
