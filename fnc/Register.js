@@ -38,5 +38,39 @@ class INPR extends Register{}
 class OUTR extends Register{}
 
 
-module.exports = {AC, E, IEN, IF, OF, INPR, OUTR}
+
+const getRegistersValues = () => {
+
+    answer = {
+        ac: {
+            hex: '',
+            dec: '',
+            bin: '',
+        },
+        pc: {
+            hex: '',
+            dec: '',
+            bin: '',
+        },
+        inp: {
+            hex: '',
+            dec: '',
+            bin: '',
+        },
+        out: {
+            hex: '',
+            dec: '',
+            bin: '',
+        },
+        e: {
+            hex: '',
+            dec: '',
+            bin: '',
+        },
+    }
+    return answer
+}
+
+
+module.exports = {AC, E, IEN, IF, OF, INPR, OUTR, getRegistersValues}
 

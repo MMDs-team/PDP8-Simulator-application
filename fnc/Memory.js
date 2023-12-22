@@ -36,11 +36,11 @@ class Memory {
     }
     
     static addToMemory(instructions) {
-        let amount = 0;
+    
         instructions.forEach((inst, i) => {
             let instruction = inst.split(' ')
             // convert a 4 carachter address to a decimal
-            let address = Tools.HexStringToDecimal(instruction[0])
+            const address = parseInt(instruction[0].slice(0,-1), 16)
             let value = ''
             // if it is memeory refrefrece
             if (Instruction.instructName['mem'].includes(instruction[1])) {
@@ -55,10 +55,10 @@ class Memory {
             } else {// if it is data
                 value = instruction[1]
             } 
-            amount = parseInt(value, 16)
+            const amount = parseInt(value, 16)
             
+            PDP.setMem(address, amount)
         })
-        PDP.setMem(address, amount)
     }
 
     static sayHi() {
