@@ -129,10 +129,35 @@ const outNibbles = document.querySelectorAll(".out--box .nibble-box")
 const e = document.querySelector('.e--box .e-inner-box')
 
 
+const updateLights = () => {
+    
+}
 
 
 const updateRegistersBox = () => {
     const registersValues = window.api.getRegistersValues()
 
-    //
+    for (let i = 0; i < 4; i++) { // updating the accumulator register box in hex
+        acNibbles[i].textContent = registersValues.ac.hex[i]
+    }
+
+    for (let i = 0; i < 3; i++) { // updating the program counter register box in hex
+        pcNibbles[i].textContent = registersValues.pc.hex[i]
+    }
+
+    for (let i = 0; i < 2; i++) { // updating the input register box in hex
+        inpNibbles[i].textContent = registersValues.inp.hex[i]
+    }
+
+    for (let i = 0; i < 2; i++) { // updating the output register box in hex
+        outNibbles[i].textContent = registersValues.out.hex[i]
+    }
+
+    e.textContent = registersValues.e.hex  // updating the E register box in hex
+
+
+    updateLights()
 }
+
+updateRegistersBox()
+
