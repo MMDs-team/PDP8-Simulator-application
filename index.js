@@ -54,3 +54,85 @@ sendBtn.addEventListener("click", (e) => {
         window.api.addToMemory(assembelyText)
     }
 })
+
+
+
+///////////////////////// PDP-8 //////////////////////////
+
+const switchesVal = document.querySelectorAll(".switch-vl")
+const switchesCon = document.querySelectorAll(".switch-control")
+
+
+let valueSwitches = [0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0]
+let controlSwitches = [0,0,0,0, 0,0,0,0]
+
+
+const checkFunc = (switchNumber) => {
+    switch (switchNumber) {
+        case 0: //start
+            window.api.start()
+            break;
+        case 1: // load address
+            window.api.loadAdd(valueSwitches)
+            break;
+        case 2: // deposit
+            window.api.deposit(valueSwitches)
+            break;
+        case 3: // examinate
+            window.api.examinate()
+            break;
+        case 4: // continue
+            window.api.continueSw()
+            break;
+        case 5: // stop
+            window.api.stop()
+            break;
+        case 6: // sing step
+            window.api.singStep()
+            break;
+        case 7: // sing inst
+            window.api.singInst()
+            break;
+        default: 
+            break;
+    }
+}
+
+switchesVal.forEach((swch, i) => {
+    swch.addEventListener("click", (e) => {
+        valueSwitches[i] = valueSwitches[i] === 0 ? 1 : 0
+
+        // change the swich shape
+    })
+})
+
+
+
+switchesCon.forEach((swch, i) => {
+    swch.addEventListener("click", (e) => {
+        controlSwitches[i] = controlSwitches[i] === 0 ? 1 : 0
+
+        // change the switch shape
+    })
+})
+
+
+
+// ////////////////////////////////////////
+
+
+const acNibbles = document.querySelectorAll(".ac--box .nibble-box")
+const pcNibbles = document.querySelectorAll(".pc--box .nibble-box")
+const inpNibbles = document.querySelectorAll(".inp--box .nibble-box")
+const outNibbles = document.querySelectorAll(".out--box .nibble-box")
+
+const e = document.querySelector('.e--box .e-inner-box')
+
+
+
+
+const updateRegistersBox = () => {
+    const registersValues = window.api.getRegistersValues()
+
+    //
+}

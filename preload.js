@@ -12,6 +12,21 @@ const sayHello = () => { return "Hello World"}
 
 const {Memory, addToMemory, sayHi} = require('./fnc/Memory.js')
 
+const {
+  start,
+  loadAdd,
+  deposit,
+  examinate,
+  continueSw,
+  stop,
+  singStep,
+  singInst,
+
+} = require('./pdpFunc.js')
+
+
+
+
 // const Instruction = require('./fnc/instructions/Instruction.js')
 
 contextBridge.exposeInMainWorld('api', {
@@ -22,7 +37,18 @@ contextBridge.exposeInMainWorld('api', {
   sayHi: () => sayHi(),
   addToMemory: () => addToMemory(),
   Memory: Memory,
-//   Instruction: Instruction,
+
+  start: () => start(),
+  loadAdd: () => loadAdd(value),
+  deposit: () => deposit(value),
+  examinate: () => examinate(),
+  continueSw: () => continueSw(),
+  stop: () => stop(),
+  singStep: () => singStep(),
+  singInst: () => singInst(),
+
+  getRegistersValues: () => getRegistersValues(),
+  // Instruction: Instruction,
   // we can also expose variables, not just functions
 
 })
