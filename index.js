@@ -100,9 +100,13 @@ const checkFunc = (switchNumber) => {
 
 switchesVal.forEach((swch, i) => {
     swch.addEventListener("click", (e) => {
-        valueSwitches[i] = valueSwitches[i] === 0 ? 1 : 0
-
-        // change the swich shape
+        if (valueSwitches[i] === 0) {
+            valueSwitches[i] = 1;
+            swch.classList.add("active")
+        } else {
+            valueSwitches[i] = 0
+            swch.classList.remove("active")
+        }
     })
 })
 
@@ -110,9 +114,13 @@ switchesVal.forEach((swch, i) => {
 
 switchesCon.forEach((swch, i) => {
     swch.addEventListener("click", (e) => {
-        controlSwitches[i] = controlSwitches[i] === 0 ? 1 : 0
-
-        // change the switch shape
+        if (controlSwitches[i] === 0) {
+            controlSwitches[i] = 1;
+            swch.classList.add("active")
+        } else {
+            controlSwitches[i] = 0
+            swch.classList.remove("active")
+        }
     })
 })
 
@@ -128,9 +136,44 @@ const outNibbles = document.querySelectorAll(".out--box .nibble-box")
 
 const e = document.querySelector('.e--box .e-inner-box')
 
+const PCLights = document.querySelectorAll(".pc-lights span")
+const ARLights = document.querySelectorAll(".ar-lights span")
+const DRLights = document.querySelectorAll(".dr-lights span")
+const ACLights = document.querySelectorAll(".ac-lights span")
 
-const updateLights = () => {
-    
+
+const updateLights = (registersValues) => {
+    const PCVlue = registersValues.pc.bin
+    for (let i = 0; i < 12; i++) {
+        if (PCVlue[i] === '1' && !PCLights[i].classList.contains("active"))
+            PCLights[i].classList.add("active")
+        else if (PCVlue[i] === '0' && PCLights[i].classList.contains("active"))
+            PCLights[i].classList.remove("active")
+    }
+
+    const ARVlue = registersValues.ar.bin
+    for (let i = 0; i < 12; i++) {
+        if (ARVlue[i] === '1' && !ARLights[i].classList.contains("active"))
+            ARLights[i].classList.add("active")
+        else if (ARVlue[i] === '0' && ARLights[i].classList.contains("active"))
+            ARLights[i].classList.remove("active")
+    }
+
+    const DRVlue = registersValues.dr.bin
+    for (let i = 0; i < 16; i++) {
+        if (DRVlue[i] === '1' && !DRLights[i].classList.contains("active"))
+            DRLights[i].classList.add("active")
+        else if (DRVlue[i] === '0' && DRLights[i].classList.contains("active"))
+            DRLights[i].classList.remove("active")
+    }
+
+    const ACVlue = registersValues.ac.bin
+    for (let i = 0; i < 16; i++) {
+        if (ACLights[i] === '1' && !ACLights[i].classList.contains("active"))
+            ACLights[i].classList.add("active")
+        else if (ACLights[i] === '0' && ACLights[i].classList.contains("active"))
+            ACLights[i].classList.remove("active")
+    }
 }
 
 
@@ -156,8 +199,7 @@ const updateRegistersBox = () => {
     e.textContent = registersValues.e.hex  // updating the E register box in hex
 
 
-    updateLights()
+    updateLights(registersValues)
 }
 
 updateRegistersBox()
-
