@@ -40,8 +40,7 @@ class INPR extends Register{}
 class OUTR extends Register{}
 
 
-
-const getRegistersValues = () => {
+const getRegistersValues = (AR, DR) => {
 
     answer = {
         ac: {
@@ -70,14 +69,14 @@ const getRegistersValues = () => {
             bin: String(E.getMem() ? String(1) : String(0)),
         },
         ar: {
-            hex: AR.getMem().toString(16).toUpperCase().slice(-4),
-            dec: String(AR.getMem()),
-            bin: AR.getMem().toString(2).slice(-16),
+            hex: AR.toString(16).toUpperCase().slice(-4),
+            dec: String(AR),
+            bin: AR.toString(2).slice(-16),
         },
         dr: {
-            hex: DR.getMem().toString(16).toUpperCase().slice(-4),
-            dec: String(DR.getMem()),
-            bin: DR.getMem().toString(2).slice(-16),
+            hex: DR.toString(16).toUpperCase().slice(-4),
+            dec: String(DR),
+            bin: DR.toString(2).slice(-16),
         }
     }
 
@@ -94,8 +93,7 @@ const getRegistersValues = () => {
     answer.dr.bin = '0'.repeat(16 - answer.dr.bin.length) + answer.dr.bin
 
     return answer
-} 
+}
 
 
 module.exports = {AC, E, IEN, IF, OF, INPR, OUTR, getRegistersValues}
-
