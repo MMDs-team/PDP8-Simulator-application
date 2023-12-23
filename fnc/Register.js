@@ -1,3 +1,5 @@
+const { INP } = require("./instructions/IOT")
+
 class Register{}
 
 
@@ -43,33 +45,43 @@ const getRegistersValues = () => {
 
     answer = {
         ac: {
-            hex: '',
-            dec: '',
-            bin: '',
+            hex: AC.getMem().toString(16),
+            dec: String(AC.getMem()),
+            bin: AC.getMem().toString(2),
         },
         pc: {
-            hex: '',
-            dec: '',
-            bin: '',
+            hex: PC.getMem().toString(16),
+            dec: String(PC.getMem()),
+            bin: PC.getMem().toString(2),
         },
         inp: {
-            hex: '',
-            dec: '',
-            bin: '',
+            hex: '00',
+            dec: '0',
+            bin: '00000000',
         },
         out: {
-            hex: '',
-            dec: '',
-            bin: '',
+            hex: '00',
+            dec: '0',
+            bin: '00000000',
         },
         e: {
-            hex: '',
-            dec: '',
-            bin: '',
+            hex: String(E.getMem() ? String(1) : String(0)),
+            dec: String(E.getMem() ? String(1) : String(0)),
+            bin: String(E.getMem() ? String(1) : String(0)),
         },
+        ar: {
+            hex: AR.getMem().toString(16),
+            dec: String(AR.getMem()),
+            bin: AR.getMem().toString(2),
+        },
+        dr: {
+            hex: DR.getMem().toString(16),
+            dec: String(DR.getMem()),
+            bin: DR.getMem().toString(2),
+        }
     }
     return answer
-}
+} 
 
 
 module.exports = {AC, E, IEN, IF, OF, INPR, OUTR, getRegistersValues}
