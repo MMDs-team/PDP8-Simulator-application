@@ -42,15 +42,15 @@ class Memory {
             // convert a 4 carachter address to a decimal
             const address = parseInt(instruction[0].slice(0,-1), 16)
             let value = ''
-            // if it is memeory refrefrece
+            // if it is memeory reference
             if (Instruction.instructName['mem'].includes(instruction[1])) {
                 if (instruction[3]==='I')
                     value = this.instOpcode[instruction[1]][1] + instruction[2]
                 else
                     value = this.instOpcode[instruction[1]][0] + instruction[2]
-            } else if (Instruction.instructName['reg'].includes(instruction[1])) { // if it is register refrence
+            } else if (Instruction.instructName['reg'].includes(instruction[1])) { // if it is register reference
                 value = this.instOpcode[instruction[1]]
-            } else if (Instruction.instructName['iot'].includes[instruction[1]]) { // if it is input output refrence
+            } else if (Instruction.instructName['iot'].includes[instruction[1]]) { // if it is input output reference
                 value = this.instOpcode[instruction[1]]
             } else {// if it is data
                 value = instruction[1]
@@ -61,10 +61,6 @@ class Memory {
         })
     }
 
-    static sayHi() {
-        return "Hiii!!"
-    }
-    
 }
 
 module.exports = {
