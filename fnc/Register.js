@@ -1,4 +1,6 @@
 const { INP } = require("./instructions/IOT")
+const { ProgramCounter } = require("./ProgramCounter.js")
+const { PDP } = require("./PDP.js")
 
 class Register{}
 
@@ -39,8 +41,10 @@ class OF extends Register{}
 class INPR extends Register{}
 class OUTR extends Register{}
 
-
-const getRegistersValues = (AR, DR) => {
+const getRegistersValues = () => {
+    const pcVal = ProgramCounter.get()
+    const arVal = PDP.getAR()
+    const drVal = PDP.getDR()
 
     answer = {
         ac: {
@@ -49,9 +53,9 @@ const getRegistersValues = (AR, DR) => {
             bin: AC.getMem().toString(2).slice(-16),
         },
         pc: {
-            hex: PC.getMem().toString(16).toUpperCase().slice(-3),
-            dec: String(PC.getMem()),
-            bin: PC.getMem().toString(2).slice(-12),
+            hex: pcVal.toString(16).toUpperCase().slice(-3),
+            dec: String(pcVal),
+            bin: pcVal.toString(2).slice(-12),
         },
         inp: {
             hex: '00',
@@ -69,14 +73,14 @@ const getRegistersValues = (AR, DR) => {
             bin: String(E.getMem() ? String(1) : String(0)),
         },
         ar: {
-            hex: AR.toString(16).toUpperCase().slice(-4),
-            dec: String(AR),
-            bin: AR.toString(2).slice(-16),
+            hex: arVal.toString(16).toUpperCase().slice(-4),
+            dec: String(arVal),
+            bin: arVal.toString(2).slice(-16),
         },
         dr: {
-            hex: DR.toString(16).toUpperCase().slice(-4),
-            dec: String(DR),
-            bin: DR.toString(2).slice(-16),
+            hex: drVal.toString(16).toUpperCase().slice(-4),
+            dec: String(drVal),
+            bin: drVal.toString(2).slice(-16),
         }
     }
 
