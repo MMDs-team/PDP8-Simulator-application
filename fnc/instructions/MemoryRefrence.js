@@ -7,8 +7,8 @@ const { Module } = require('module');
 
 class MemoryRefrecne extends Instruction{
 
-    AR = 0
-    DR = 0
+    static AR = 0
+    static DR = 0
 
     constructor(AR, DR) {
         super()
@@ -44,7 +44,8 @@ class MemoryRefrecne extends Instruction{
     BSA() {
         const PCValue = ProgramCounter.get()
         PDP.setMem(this.AR , PCValue)
-        ProgramCounter.load(this.AR + 1)
+        this.AR = this.AR + 1
+        ProgramCounter.load(this.AR)
     }
 
     ISZ() {
