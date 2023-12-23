@@ -24,7 +24,7 @@ const {
 
 } = require('./pdpFunc.js')
 
-
+const { getRegistersValues } = require('./fnc/Register.js')
 
 
 // const Instruction = require('./fnc/instructions/Instruction.js')

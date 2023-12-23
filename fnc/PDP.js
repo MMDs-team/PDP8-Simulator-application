@@ -1,9 +1,8 @@
 const ProgramCounter  = require('./ProgramConter.js');
-const Instruction = require('./instructions/Instruction.js');
+const {Instruction} = require('./instructions/Instruction.js');
 const MemoryRefrence = require('./instructions/MemoryRefrence.js');
 const ArithmeticLogical = require('./instructions/ArithmeticLogical.js');
 const IOT = require('./instructions/IOT.js');
-
 
 class PDP{
 

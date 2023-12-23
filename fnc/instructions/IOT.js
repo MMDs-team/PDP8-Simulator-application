@@ -1,10 +1,6 @@
 const Instruction = require('./Instruction.js')
 
-class IOT extends Instruction {
-
-    constructor() {
-        super()
-    }
+class IOT {
 
     INP() {}
     OUT() {}

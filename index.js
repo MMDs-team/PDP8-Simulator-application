@@ -3,6 +3,92 @@
 const labelItems = document.querySelectorAll(".label--item")
 const items = document.querySelectorAll(".left--part")
 
+const textArea = document.getElementById("exampleTextarea")
+const sendBtn = document.getElementById("sendAssem")
+let assembelyText = []
+
+const acNibbles = document.querySelectorAll(".ac--box .nibble-box")
+const pcNibbles = document.querySelectorAll(".pc--box .nibble-box")
+const inpNibbles = document.querySelectorAll(".inp--box .nibble-box")
+const outNibbles = document.querySelectorAll(".out--box .nibble-box")
+
+const e = document.querySelector('.e--box .e-inner-box')
+
+const PCLights = document.querySelectorAll(".pc-lights span")
+const ARLights = document.querySelectorAll(".ar-lights span")
+const DRLights = document.querySelectorAll(".dr-lights span")
+const ACLights = document.querySelectorAll(".ac-lights span")
+
+const switchesVal = document.querySelectorAll(".switch-vl")
+const switchesCon = document.querySelectorAll(".switch-control")
+
+let valueSwitches = [0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0]
+let controlSwitches = [0,0,0,0, 0,0,0,0]
+
+
+
+const updateLights = (registersValues) => {
+    const PCVlue = registersValues.pc.bin
+    for (let i = 0; i < 12; i++) {
+        if (PCVlue[i] === '1' && !PCLights[i].classList.contains("active"))
+            PCLights[i].classList.add("active")
+        else if (PCVlue[i] === '0' && PCLights[i].classList.contains("active"))
+            PCLights[i].classList.remove("active")
+    }
+
+    const ARVlue = registersValues.ar.bin
+    for (let i = 0; i < 12; i++) {
+        if (ARVlue[i] === '1' && !ARLights[i].classList.contains("active"))
+            ARLights[i].classList.add("active")
+        else if (ARVlue[i] === '0' && ARLights[i].classList.contains("active"))
+            ARLights[i].classList.remove("active")
+    }
+
+    const DRVlue = registersValues.dr.bin
+    for (let i = 0; i < 16; i++) {
+        if (DRVlue[i] === '1' && !DRLights[i].classList.contains("active"))
+            DRLights[i].classList.add("active")
+        else if (DRVlue[i] === '0' && DRLights[i].classList.contains("active"))
+            DRLights[i].classList.remove("active")
+    }
+
+    const ACVlue = registersValues.ac.bin
+    for (let i = 0; i < 16; i++) {
+        if (ACLights[i] === '1' && !ACLights[i].classList.contains("active"))
+            ACLights[i].classList.add("active")
+        else if (ACLights[i] === '0' && ACLights[i].classList.contains("active"))
+            ACLights[i].classList.remove("active")
+    }
+}
+
+
+const updateRegistersBox = () => {
+    const registersValues = window.api.getRegistersValues()
+
+    for (let i = 0; i < 4; i++) { // updating the accumulator register box in hex
+        acNibbles[i].textContent = registersValues.ac.hex[i]
+    }
+
+    for (let i = 0; i < 3; i++) { // updating the program counter register box in hex
+        pcNibbles[i].textContent = registersValues.pc.hex[i]
+    }
+
+    for (let i = 0; i < 2; i++) { // updating the input register box in hex
+        inpNibbles[i].textContent = registersValues.inp.hex[i]
+    }
+
+    for (let i = 0; i < 2; i++) { // updating the output register box in hex
+        outNibbles[i].textContent = registersValues.out.hex[i]
+    }
+
+    e.textContent = registersValues.e.hex  // updating the E register box in hex
+
+
+    updateLights(registersValues)
+}
+
+
+
 labelItems[0].addEventListener("click", () => {
     if (labelItems[0].classList.contains("active")) return
     labelItems[0].classList.add("active")
@@ -19,18 +105,7 @@ labelItems[1].addEventListener("click", () => {
     items[0].classList.remove("active")
 })
 
-// ////////////example/////////////////////
-// const x = document.getElementById("right--pdp")
-// x.textContent = window.api.sayHello()
-// document.getElementById("right--pdp").textContent = window.api.sayHello()
-// document.getElementById("right--pdp").textContent = window.api.sayHi()
-// console.log(window.api)
-////////////////////////////////
 
-
-const textArea = document.getElementById("exampleTextarea")
-const sendBtn = document.getElementById("sendAssem")
-let assembelyText = []
 
 const validateAssembly = () => {
     assembelyText.forEach((inst, i) => {
@@ -54,18 +129,6 @@ sendBtn.addEventListener("click", (e) => {
         window.api.addToMemory(assembelyText)
     }
 })
-
-
-
-///////////////////////// PDP-8 //////////////////////////
-
-const switchesVal = document.querySelectorAll(".switch-vl")
-const switchesCon = document.querySelectorAll(".switch-control")
-
-
-let valueSwitches = [0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0]
-let controlSwitches = [0,0,0,0, 0,0,0,0]
-
 
 const checkFunc = (switchNumber) => {
     switch (switchNumber) {
@@ -96,13 +159,18 @@ const checkFunc = (switchNumber) => {
         default: 
             break;
     }
+    updateRegistersBox()
 }
 
 switchesVal.forEach((swch, i) => {
     swch.addEventListener("click", (e) => {
-        valueSwitches[i] = valueSwitches[i] === 0 ? 1 : 0
-
-        // change the swich shape
+        if (valueSwitches[i] === 0) {
+            valueSwitches[i] = 1;
+            swch.classList.add("active")
+        } else {
+            valueSwitches[i] = 0
+            swch.classList.remove("active")
+        }
     })
 })
 
@@ -110,29 +178,15 @@ switchesVal.forEach((swch, i) => {
 
 switchesCon.forEach((swch, i) => {
     swch.addEventListener("click", (e) => {
-        controlSwitches[i] = controlSwitches[i] === 0 ? 1 : 0
-
-        // change the switch shape
+        if (controlSwitches[i] === 0) {
+            controlSwitches[i] = 1;
+            swch.classList.add("active")
+        } else {
+            controlSwitches[i] = 0
+            swch.classList.remove("active")
+        }
     })
 })
 
 
-
-// ////////////////////////////////////////
-
-
-const acNibbles = document.querySelectorAll(".ac--box .nibble-box")
-const pcNibbles = document.querySelectorAll(".pc--box .nibble-box")
-const inpNibbles = document.querySelectorAll(".inp--box .nibble-box")
-const outNibbles = document.querySelectorAll(".out--box .nibble-box")
-
-const e = document.querySelector('.e--box .e-inner-box')
-
-
-
-
-const updateRegistersBox = () => {
-    const registersValues = window.api.getRegistersValues()
-
-    //
-}
+updateRegistersBox()
