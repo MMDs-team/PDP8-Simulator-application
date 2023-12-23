@@ -45,12 +45,12 @@ const getRegistersValues = () => {
 
     answer = {
         ac: {
-            hex: AC.getMem().toString(16),
+            hex: AC.getMem().toString(16).toUpperCase(),
             dec: String(AC.getMem()),
             bin: AC.getMem().toString(2),
         },
         pc: {
-            hex: PC.getMem().toString(16),
+            hex: PC.getMem().toString(16).toUpperCase(),
             dec: String(PC.getMem()),
             bin: PC.getMem().toString(2),
         },
@@ -70,12 +70,12 @@ const getRegistersValues = () => {
             bin: String(E.getMem() ? String(1) : String(0)),
         },
         ar: {
-            hex: AR.getMem().toString(16),
+            hex: AR.getMem().toString(16).toUpperCase(),
             dec: String(AR.getMem()),
             bin: AR.getMem().toString(2),
         },
         dr: {
-            hex: DR.getMem().toString(16),
+            hex: DR.getMem().toString(16).toUpperCase(),
             dec: String(DR.getMem()),
             bin: DR.getMem().toString(2),
         }
