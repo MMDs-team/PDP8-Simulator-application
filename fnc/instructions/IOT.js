@@ -1,13 +1,12 @@
-const Instruction = require('./Instruction.js')
 
 class IOT {
 
-    INP() {}
-    OUT() {}
-    SKI() {}
-    SKO() {}
-    ION() {}
-    IOF() {}
+    static INP() {}
+    static OUT() {}
+    static SKI() {}
+    static SKO() {}
+    static ION() {}
+    static IOF() {}
 }
 
 module.exports = IOT;
