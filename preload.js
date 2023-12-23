@@ -10,7 +10,7 @@ const { contextBridge } = require('electron')
 
 const sayHello = () => { return "Hello World"}
 
-const {Memory, addToMemory, sayHi} = require('./fnc/Memory.js')
+const {Memory, addToMemory} = require('./fnc/Memory.js')
 
 const {
   start,
@@ -34,7 +34,6 @@ contextBridge.exposeInMainWorld('api', {
   chrome: () => process.versions.chrome,
   electron: () => process.versions.electron,
   sayHello: () => sayHello(),
-  sayHi: () => sayHi(),
   addToMemory: () => addToMemory(),
   Memory: Memory,
 
