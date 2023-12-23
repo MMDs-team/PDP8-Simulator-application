@@ -1,5 +1,5 @@
 const { AC, E } = require('../Register.js')
-const { ProgramConter } = require('../ProgramConter.js')
+const ProgramConter = require('../ProgramConter.js')
 const { Control } = require('../PDP.js')
 
 class ArithmeticLogical {
