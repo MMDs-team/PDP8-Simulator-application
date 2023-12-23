@@ -1,6 +1,5 @@
 const ProgramCounter  = require('./ProgramConter.js');
-const {Instruction} = require('./instructions/Instruction.js');
-const MemoryRefrence = require('./instructions/MemoryRefrence.js');
+const MemoryReference = require('./instructions/MemoryRefrence.js');
 const ArithmeticLogical = require('./instructions/ArithmeticLogical.js');
 const IOT = require('./instructions/IOT.js');
 
@@ -8,14 +7,26 @@ class PDP{
 
    static #memory = new Array(4096).fill(0);
 
+   static #AR = 0
+
+   static #DR = 0
+
    static getMem(i) { return this.#memory[i]}
    
    static setMem(i,value)  { this.#memory[i] = value }
+
+   static getAR() { return this.#AR}
+
+   static getDR() { return this.#DR}
+
+   static setAR(value) { this.#AR = value}
+
+   static setDR(value) { this.#DR = value}
     
 }
 
 class Control {
-    isOn = false
+    static isOn = false
 
     static start() {
         let IR = PDP.getMem(ProgramCounter.get())
@@ -28,66 +39,52 @@ class Control {
         let I = IR & (1 << 15)
         let d = (IR & ~(1<<15)) >> 12
         let address = IR & ~( (1<<12)-1 )
-        let instruction = new Object();
 
         if (d!==7 && I===1) address = PDP.getMem(address) & ~( (1<<12)-1 )
         
         switch (d) {
             case 0:
-                instruction = new MemoryRefrence(address, PDP.getMem(address))
-                instruction.AND()
+                MemoryReference.AND()
                 break;
             case 1:
-                instruction = new MemoryRefrence(address, PDP.getMem(address))
-                instruction.ADD()
+                MemoryReference.ADD()
                 break;
             case 2:
-                instruction = new MemoryRefrence(address, PDP.getMem(address))
-                instruction.LDA() 
+                MemoryReference.LDA()
                 break;
             case 3:
-                instruction = new MemoryRefrence(address, PDP.getMem(address))
-                instruction.STA()           
+                MemoryReference.STA()  
                 break;
             case 4:
-                instruction = new MemoryRefrence(address, PDP.getMem(address))
-                instruction.BUN()         
+                MemoryReference.BUN()
                 break;
             case 5:
-                instruction = new MemoryRefrence(address, PDP.getMem(address))
-                instruction.BSA()            
+                MemoryReference.BSA()   
                 break;
             case 6:
-                instruction = new MemoryRefrence(address, PDP.getMem(address))
-                instruction.ISZ()         
+                MemoryReference.ISZ()
                 break;
             case 7:
                 const upCode = PDP.getMem(address) & ~( (1<<12)-1 )
                 if (I) {
                     switch (upCode) {
                         case 1<11:
-                            instruction = new IOT()
-                            instruction.INP()
+                            IOT.INP()
                             break;
                         case 1<10:
-                            instruction = new IOT()
-                            instruction.OUT()
+                            IOT.OUT()
                             break;
                         case 1<<9:
-                            instruction = new IOT()
-                            instruction.SKI()
+                            IOT.SKI()
                             break;
                         case 1<<8:
-                            instruction = new IOT()
-                            instruction.SKO()
+                            IOT.SKO()
                             break;
                         case 1<<7:
-                            instruction = new IOT()
-                            instruction.ION()
+                            IOT.ION()
                             break;
                         case 1<<6:
-                            instruction = new IOT()
-                            instruction.IOF()
+                            IOT.IOF()
                             break;
                         default:
                             console.log('error while decodeing !!!!')
@@ -96,52 +93,40 @@ class Control {
                 } else {
                     switch (upCode) {
                         case 1<11:
-                            instruction = new ArithmeticLogical()
-                            instruction.CLA()
+                            ArithmeticLogical.CLA()
                             break;
                         case 1<10:
-                            instruction = new ArithmeticLogical()
-                            instruction.CLE()
+                            ArithmeticLogical.CLE()
                             break;
                         case 1<<9:
-                            instruction = new ArithmeticLogical()
-                            instruction.CMA()
+                            ArithmeticLogical.CMA()
                             break;
                         case 1<<8:
-                            instruction = new ArithmeticLogical()
-                            instruction.CME()
+                            ArithmeticLogical.CME()
                             break;
                         case 1<<7:
-                            instruction = new ArithmeticLogical()
-                            instruction.CIR()
+                            ArithmeticLogical.CIR()
                             break;
                         case 1<<6:
-                            instruction = new ArithmeticLogical()
-                            instruction.CIL()
+                            ArithmeticLogical.CIL()
                             break;
                         case 1<<5:
-                            instruction = new ArithmeticLogical()
-                            instruction.INC()
+                            ArithmeticLogical.INC()
                             break;
                         case 1<<4:
-                            instruction = new ArithmeticLogical()
-                            instruction.SPA()
+                            ArithmeticLogical.SPA()
                             break;
                         case 1<<3:
-                            instruction = new ArithmeticLogical()
-                            instruction.SNA()
+                            ArithmeticLogical.SNA()
                             break;
                         case 1<<2:
-                            instruction = new ArithmeticLogical()
-                            instruction.SZA()
+                            ArithmeticLogical.SZA()
                             break;
                         case 1<<1:
-                            instruction = new ArithmeticLogical()
-                            instruction.SZE()
+                            ArithmeticLogical.SZE()
                             break;
                         case 1:
-                            instruction = new ArithmeticLogical()
-                            instruction.HLT()
+                            ArithmeticLogical.HLT()
                             break;
                         default:
                             console.log('error while decodding!!')
@@ -158,3 +143,11 @@ class Control {
     }
 }
 
+
+const starting = () => { Control.start() }
+
+module.exports = { 
+    PDP,
+    Control,
+    start: starting
+}
