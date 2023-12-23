@@ -45,14 +45,14 @@ const getRegistersValues = () => {
 
     answer = {
         ac: {
-            hex: AC.getMem().toString(16).toUpperCase(),
+            hex: AC.getMem().toString(16).toUpperCase().slice(-4),
             dec: String(AC.getMem()),
-            bin: AC.getMem().toString(2),
+            bin: AC.getMem().toString(2).slice(-16),
         },
         pc: {
-            hex: PC.getMem().toString(16).toUpperCase(),
+            hex: PC.getMem().toString(16).toUpperCase().slice(-3),
             dec: String(PC.getMem()),
-            bin: PC.getMem().toString(2),
+            bin: PC.getMem().toString(2).slice(-12),
         },
         inp: {
             hex: '00',
@@ -70,16 +70,29 @@ const getRegistersValues = () => {
             bin: String(E.getMem() ? String(1) : String(0)),
         },
         ar: {
-            hex: AR.getMem().toString(16).toUpperCase(),
+            hex: AR.getMem().toString(16).toUpperCase().slice(-4),
             dec: String(AR.getMem()),
-            bin: AR.getMem().toString(2),
+            bin: AR.getMem().toString(2).slice(-16),
         },
         dr: {
-            hex: DR.getMem().toString(16).toUpperCase(),
+            hex: DR.getMem().toString(16).toUpperCase().slice(-4),
             dec: String(DR.getMem()),
-            bin: DR.getMem().toString(2),
+            bin: DR.getMem().toString(2).slice(-16),
         }
     }
+
+    answer.ac.hex = '0'.repeat(4 - answer.ac.hex.length) + answer.ac.hex
+    answer.ac.bin = '0'.repeat(16 - answer.ac.bin.length) + answer.ac.bin
+
+    answer.pc.hex = '0'.repeat(3 - answer.pc.hex.length) + answer.pc.hex
+    answer.pc.bin = '0'.repeat(12 - answer.pc.bin.length) + answer.pc.bin
+
+    answer.ar.hex = '0'.repeat(4 - answer.ar.hex.length) + answer.ar.hex
+    answer.ar.bin = '0'.repeat(16 - answer.ar.bin.length) + answer.ar.bin
+
+    answer.dr.hex = '0'.repeat(4 - answer.dr.hex.length) + answer.dr.hex
+    answer.dr.bin = '0'.repeat(16 - answer.dr.bin.length) + answer.dr.bin
+
     return answer
 } 
 
