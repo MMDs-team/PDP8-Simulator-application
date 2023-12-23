@@ -36,7 +36,6 @@ const singInst = () => {}
 
 
 
-
 module.exports = {
     start,
     loadAdd,
