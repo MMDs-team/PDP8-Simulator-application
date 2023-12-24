@@ -38,8 +38,8 @@ contextBridge.exposeInMainWorld('api', {
   Memory: Memory,
 
   start: () => start(),
-  loadAdd: () => loadAdd(value),
-  deposit: () => deposit(value),
+  loadAdd: (value) => loadAdd(value),
+  deposit: (value) => deposit(value),
   examinate: () => examinate(),
   continueSw: () => continueSw(),
   stop: () => stop(),

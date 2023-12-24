@@ -199,6 +199,7 @@ switchesCon.forEach((swch, i) => {
         if (controlSwitches[i] === 0) {
             controlSwitches[i] = 1;
             swch.classList.add("active")
+            checkFunc(i)
         } else {
             controlSwitches[i] = 0
             swch.classList.remove("active")

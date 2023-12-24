@@ -3,7 +3,7 @@ const MemoryReference = require('./instructions/MemoryReference.js');
 const ArithmeticLogical = require('./instructions/ArithmeticLogical.js');
 const IOT = require('./instructions/IOT.js');
 
-class PDP{
+module.exports.PDP = class PDP{
 
    static #memory = new Array(4096).fill(0);
 
@@ -25,7 +25,7 @@ class PDP{
     
 }
 
-class Control {
+module.exports.Control = class Control {
     static isOn = false
 
     static start() {
@@ -143,11 +143,3 @@ class Control {
     }
 }
 
-
-const starting = () => { Control.start() }
-
-module.exports = { 
-    PDP,
-    Control,
-    start: starting
-}
