@@ -1,6 +1,6 @@
 const { PDP } = require('../PDP.js')
 const { AC, E } = require('../Register.js');
-const ProgramCounter = require('../ProgramConter.js');
+const ProgramCounter = require('../ProgramCounter.js');
 
 class MemoryReference {
 
@@ -52,4 +52,4 @@ class MemoryReference {
     }
 }
 
-module.exports = MemoryRefrecne;
+module.exports = MemoryReference ;
