@@ -1,5 +1,5 @@
 const ProgramCounter = require('./fnc/ProgramCounter.js')
-const { PDP } = require('./fnc/PDP.js')
+const PDP= require('./fnc/PDP.js')
 
 const start = () => {}
 
@@ -14,14 +14,14 @@ const loadAdd = (swch) => {
 }
 
 const deposit = (swch) => {
-    let address = PDP.getAR() 
+    let address = PDP.PDP.getAR() 
     let value = 0 
     let mul = 1 
     for(let index = 17 ; index >= 2 ; index--){
         value += swch[index] * mul 
         mul *= 2 
     }
-    PDP.setMem(address , value) 
+    PDP.PDP.setMem(address , value) 
 }
 
 const examinate = () => {}

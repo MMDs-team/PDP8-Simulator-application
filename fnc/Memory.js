@@ -1,6 +1,6 @@
 
 const Instruction = require('./instructions/Instruction.js')
-const .PDP = require('./.PDP.js')
+const PDP = require('./PDP.js')
 
 
 class Memory {
