@@ -1,5 +1,5 @@
 const { AC, E } = require('../Register.js')
-const ProgramConter = require('../ProgramConter.js')
+const ProgramCounter = require('../ProgramCounter.js')
 const { Control } = require('../PDP.js')
 
 class ArithmeticLogical {
@@ -42,7 +42,7 @@ class ArithmeticLogical {
     }
 
     static SNA() {
-        if (Boolean(AC.getMem() & (1 << (AC.size() - 1)))) ProgramConter.increment()
+        if (Boolean(AC.getMem() & (1 << (AC.size() - 1)))) ProgramConuter.increment()
     }
 
     static SZA() {

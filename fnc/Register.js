@@ -1,5 +1,5 @@
 const { INP } = require("./instructions/IOT")
-const ProgramCounter = require("./ProgramConter.js")
+const ProgramCounter = require("./ProgramCounter.js")
 const { PDP } = require("./PDP.js")
 
 class Register{}
