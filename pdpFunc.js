@@ -1,23 +1,23 @@
-const { ProgramConter } = require('fnc/ProgramConter.js')
-const PDP = require('fnc/PDP.js')
+const ProgramCounter = require('./fnc/ProgramCounter.js')
+const { PDP } = require('./fnc/PDP.js')
 
 const start = () => {}
 
 const loadAdd = (swch) => {
-    var value = 0 
-    var mul = 1 
-    for(var index = 17 ; index >= 6 ; index--){
+    let value = 0 
+    let mul = 1 
+    for(let index = 17 ; index >= 6 ; index--){
         value += swch[index] * mul 
         mul *= 2 
     }
-    ProgramConter.load(value)
+    ProgramCounter.load(value)
 }
 
 const deposit = (swch) => {
-    var address = PDP.getAR() 
-    var value = 0 
-    var mul = 1 
-    for(var index = 17 ; index >= 2 ; index--){
+    let address = PDP.getAR() 
+    let value = 0 
+    let mul = 1 
+    for(let index = 17 ; index >= 2 ; index--){
         value += swch[index] * mul 
         mul *= 2 
     }
