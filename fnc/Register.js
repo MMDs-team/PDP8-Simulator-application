@@ -1,5 +1,5 @@
 const { INP } = require("./instructions/IOT")
-const ProgramCounter = require("./ProgramCounter.js")
+const ProgramCounter = require("./ProgramConter.js")
 const { PDP } = require("./PDP.js")
 
 class Register{}
@@ -100,4 +100,4 @@ const getRegistersValues = () => {
 }
 
 
-module.exports = {AC, E, IEN, IF, OF, INPR, OUTR, getRegistersValues}
+module.exports = { AC, E, IEN, IF, OF, INPR, OUTR, getRegistersValues }
