@@ -110,12 +110,30 @@ labelItems[1].addEventListener("click", () => {
 const validateAssembly = () => {
     assembelyText.forEach((inst, i) => {
         let instruction = inst.split(' ')
-        try {
-            window.api.validateInstruction(inst)
-        } catch (error) {
-            // alert and return
-            return false
+        
+        const statuse =  window.api.validateInstruction(inst)
+        switch (statuse) {
+            case 100:
+                return true
+            case 101:
+                // show allert
+                return false
+            case 102:
+                // show allert
+                return false
+            case 103:
+                // show allert
+                return false
+            case 104:
+                // show allert
+                return false
+            case 105:
+                // show allert
+                return false
+            default:
+                return false
         }
+        
     })
     return true
 }
