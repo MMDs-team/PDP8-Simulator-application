@@ -1,4 +1,4 @@
-const ProgramCounter  = require('./ProgramConter.js');
+const ProgramCounter  = require('./ProgramCounter.js');
 const MemoryReference = require('./instructions/MemoryReference.js');
 const ArithmeticLogical = require('./instructions/ArithmeticLogical.js');
 const IOT = require('./instructions/IOT.js');
