@@ -292,7 +292,7 @@
 
 
 .active-light{
-    background-color: yellow;
+    background-color: yellow !important;
 }
 
 #power{

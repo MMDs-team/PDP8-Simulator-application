@@ -1,6 +1,6 @@
 
 const Instruction = require('./instructions/Instruction.js')
-const { PDP } = require('./PDP.js')
+const PDP = require('./PDP.js')
 
 
 class Memory {
@@ -57,7 +57,7 @@ class Memory {
             } 
             const amount = parseInt(value, 16)
             
-            PDP.setMem(address, amount)
+            PDP.PDP.setMem(address, amount)
         })
     }
 
