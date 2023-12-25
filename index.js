@@ -30,40 +30,41 @@ let controlSwitches = [0,0,0,0, 0,0,0,0]
 const updateLights = (registersValues) => {
     const PCVlue = registersValues.pc.bin
     for (let i = 0; i < 12; i++) {
-        if (PCVlue[i] === '1' && !PCLights[i].classList.contains("active"))
-            PCLights[i].classList.add("active")
-        else if (PCVlue[i] === '0' && PCLights[i].classList.contains("active"))
-            PCLights[i].classList.remove("active")
+        if (PCVlue[i] === '1' && !PCLights[i].classList.contains("active-light"))
+            PCLights[i].classList.add("active-light")
+        else if (PCVlue[i] === '0' && PCLights[i].classList.contains("active-light"))
+            PCLights[i].classList.remove("active-light")
     }
 
     const ARVlue = registersValues.ar.bin
     for (let i = 0; i < 12; i++) {
-        if (ARVlue[i] === '1' && !ARLights[i].classList.contains("active"))
-            ARLights[i].classList.add("active")
-        else if (ARVlue[i] === '0' && ARLights[i].classList.contains("active"))
-            ARLights[i].classList.remove("active")
+        if (ARVlue[i] === '1' && !ARLights[i].classList.contains("active-light"))
+            ARLights[i].classList.add("active-light")
+        else if (ARVlue[i] === '0' && ARLights[i].classList.contains("active-light"))
+            ARLights[i].classList.remove("active-light")
     }
 
     const DRVlue = registersValues.dr.bin
     for (let i = 0; i < 16; i++) {
-        if (DRVlue[i] === '1' && !DRLights[i].classList.contains("active"))
-            DRLights[i].classList.add("active")
-        else if (DRVlue[i] === '0' && DRLights[i].classList.contains("active"))
-            DRLights[i].classList.remove("active")
+        if (DRVlue[i] === '1' && !DRLights[i].classList.contains("active-light"))
+            DRLights[i].classList.add("active-light")
+        else if (DRVlue[i] === '0' && DRLights[i].classList.contains("active-light"))
+            DRLights[i].classList.remove("active-light")
     }
 
     const ACVlue = registersValues.ac.bin
     for (let i = 0; i < 16; i++) {
-        if (ACLights[i] === '1' && !ACLights[i].classList.contains("active"))
-            ACLights[i].classList.add("active")
-        else if (ACLights[i] === '0' && ACLights[i].classList.contains("active"))
-            ACLights[i].classList.remove("active")
+        if (ACVlue[i] === '1' && !ACLights[i].classList.contains("active-light"))
+            ACLights[i].classList.add("active-light")
+        else if (ACVlue[i] === '0' && ACLights[i].classList.contains("active-light"))
+            ACLights[i].classList.remove("active-light")
     }
 }
 
 
 const updateRegistersBox = () => {
     const registersValues = window.api.getRegistersValues()
+    console.log(registersValues)
 
     for (let i = 0; i < 4; i++) { // updating the accumulator register box in hex
         acNibbles[i].textContent = registersValues.ac.hex[i]
