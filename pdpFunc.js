@@ -1,7 +1,9 @@
 const ProgramCounter = require('./fnc/ProgramCounter.js')
-const PDP= require('./fnc/PDP.js')
+const PDP = require('./fnc/PDP.js')
 
-const start = () => {}
+const start = () => {
+    PDP.PDP.start()
+}
 
 const loadAdd = (swch) => {
     let value = 0 
@@ -24,11 +26,21 @@ const deposit = (swch) => {
     PDP.PDP.setMem(address , value) 
 }
 
-const examinate = () => {}
+const examinate = () => {
+    const address = ProgramCounter.get() 
+    PDP.PDP.setAR(address)
+    const memValue = PDP.PDP.getMem(address)
+    PDP.PDP.setDR(memValue)
+    ProgramCounter.increment()
+}
 
-const continueSw = () => {}
+const continueSw = () => {
+    PDP.PDP.isOn = true 
+}
 
-const stop = () => {}
+const stop = () => {
+    PDP.PDP.isOn = false
+}
 
 const singStep = () => {}
 
