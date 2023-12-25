@@ -1,6 +1,6 @@
 const { INP } = require("./instructions/IOT")
 const ProgramCounter = require("./ProgramCounter.js")
-const { PDP } = require("./PDP.js")
+const PDP = require("./PDP.js")
 
 class Register{}
 
@@ -43,8 +43,8 @@ class OUTR extends Register{}
 
 const getRegistersValues = () => {
     const pcVal = ProgramCounter.get()
-    const arVal = PDP.getAR()
-    const drVal = PDP.getDR()
+    const arVal = PDP.PDP.getAR()
+    const drVal = PDP.PDP.getDR()
 
     answer = {
         ac: {
