@@ -1,6 +1,6 @@
 const { AC, E } = require('../Register.js')
 const ProgramCounter = require('../ProgramCounter.js')
-const { Control } = require('../PDP.js')
+const PDP = require('../PDP.js')
 
 class ArithmeticLogical {
     static CLA() { AC.setMem(0); }
@@ -53,7 +53,7 @@ class ArithmeticLogical {
         if (!E.getMem()) ProgramCounter.increment()
     }
 
-    static HLT() { Control.isOn = false; }
+    static HLT() { PDP.PDP.isOn = false; }
 }
 
 
