@@ -42,7 +42,7 @@ class ArithmeticLogical {
     }
 
     static SNA() {
-        if (Boolean(AC.getMem() & (1 << (AC.size() - 1)))) ProgramConuter.increment()
+        if (Boolean(AC.getMem() & (1 << (AC.size() - 1)))) ProgramCounter.increment()
     }
 
     static SZA() {
