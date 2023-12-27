@@ -25,7 +25,7 @@ const {
 } = require('./pdpFunc.js')
 
 const { getRegistersValues } = require('./fnc/Register.js')
-
+const { validateInstruction} = require('./fnc/instructions/Instruction.js')
 
 // const Instruction = require('./fnc/instructions/Instruction.js')
 
@@ -47,6 +47,7 @@ contextBridge.exposeInMainWorld('api', {
   singInst: () => singInst(),
 
   getRegistersValues: () => getRegistersValues(),
+  validateInstruction: (inst) => validateInstruction(inst),
   // Instruction: Instruction,
   // we can also expose variables, not just functions
 
