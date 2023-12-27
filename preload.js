@@ -27,14 +27,13 @@ const {
 const { getRegistersValues } = require('./fnc/Register.js')
 const { validateInstruction} = require('./fnc/instructions/Instruction.js')
 
-// const Instruction = require('./fnc/instructions/Instruction.js')
 
 contextBridge.exposeInMainWorld('api', {
   node: () => process.versions.node,
   chrome: () => process.versions.chrome,
   electron: () => process.versions.electron,
   sayHello: () => sayHello(),
-  addToMemory: () => addToMemory(),
+  addToMemory: (assem) => addToMemory(assem),
   Memory: Memory,
 
   start: () => start(),
