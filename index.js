@@ -112,7 +112,7 @@ const validateAssembly = () => {
     assembelyText.forEach((inst, i) => {
         let instruction = inst.split(' ')
         
-        const statuse =  window.api.validateInstruction(inst)
+        const statuse =  window.api.validateInstruction(instruction)
         switch (statuse) {
             case 100:
                 return true
@@ -143,7 +143,7 @@ const validateAssembly = () => {
 sendBtn.addEventListener("click", (e) => {
     e.preventDefault()
 
-    assembelyText = textArea.value.splite('\n')
+    assembelyText = textArea.value.split('\n')
     if (validateAssembly()) {
         window.api.addToMemory(assembelyText)
     }
