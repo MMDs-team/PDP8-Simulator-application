@@ -7,7 +7,7 @@ module.exports.PDP = class PDP {
 
     static #memory = new Array(4096).fill(0);
 
-    static isOn = false
+    static isOn = true
 
     static #AR = 0
 
@@ -29,7 +29,7 @@ module.exports.PDP = class PDP {
         let IR = this.getMem(ProgramCounter.get())
         this.decode(IR)
         ProgramCounter.increment()
-        if (isOn) this.start()
+        if (this.isOn) this.start()
     }
 
     static decode(IR) {
@@ -38,7 +38,6 @@ module.exports.PDP = class PDP {
         let address = IR & ~((1 << 12) - 1)
 
         if (d !== 7 && I === 1) address = this.getMem(address) & ~((1 << 12) - 1)
-
         switch (d) {
             case 0:
                 MemoryReference.AND()
@@ -62,7 +61,7 @@ module.exports.PDP = class PDP {
                 MemoryReference.ISZ()
                 break;
             case 7:
-                const upCode = this.getMem(address) & ~((1 << 12) - 1)
+                const upCode = IR & ((1 << 12) - 1)
                 if (I) {
                     switch (upCode) {
                         case 1 < 11:

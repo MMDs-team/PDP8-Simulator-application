@@ -28,7 +28,7 @@ let controlSwitches = [0,0,0,0, 0,0,0,0]
 
 
 const updateLights = (registersValues) => {
-    const PCVlue = registersValues.pc.bin
+    const PCVlue = registersValues.pc.bin.split("").reverse().join("");
     for (let i = 0; i < 12; i++) {
         if (PCVlue[i] === '1' && !PCLights[i].classList.contains("active-light"))
             PCLights[i].classList.add("active-light")
@@ -36,7 +36,7 @@ const updateLights = (registersValues) => {
             PCLights[i].classList.remove("active-light")
     }
 
-    const ARVlue = registersValues.ar.bin
+    const ARVlue = registersValues.ar.bin.split("").reverse().join("");
     for (let i = 0; i < 12; i++) {
         if (ARVlue[i] === '1' && !ARLights[i].classList.contains("active-light"))
             ARLights[i].classList.add("active-light")
@@ -44,7 +44,7 @@ const updateLights = (registersValues) => {
             ARLights[i].classList.remove("active-light")
     }
 
-    const DRVlue = registersValues.dr.bin
+    const DRVlue = registersValues.dr.bin.split("").reverse().join("");
     for (let i = 0; i < 16; i++) {
         if (DRVlue[i] === '1' && !DRLights[i].classList.contains("active-light"))
             DRLights[i].classList.add("active-light")
@@ -52,7 +52,7 @@ const updateLights = (registersValues) => {
             DRLights[i].classList.remove("active-light")
     }
 
-    const ACVlue = registersValues.ac.bin
+    const ACVlue = registersValues.ac.bin.split("").reverse().join("");
     for (let i = 0; i < 16; i++) {
         if (ACVlue[i] === '1' && !ACLights[i].classList.contains("active-light"))
             ACLights[i].classList.add("active-light")
