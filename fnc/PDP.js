@@ -35,9 +35,11 @@ module.exports.PDP = class PDP {
     static decode(IR) {
         let I = IR & (1 << 15)
         let d = (IR & ~(1 << 15)) >> 12
-        let address = IR & ~((1 << 12) - 1)
+        let address = IR & ((1 << 12) - 1)
 
-        if (d !== 7 && I === 1) address = this.getMem(address) & ~((1 << 12) - 1)
+        if (d !== 7 && I === 1) address = this.getMem(address) & ((1 << 12) - 1)
+        this.setAR(address)
+        this.setDR(PDP.getMem(address))
         switch (d) {
             case 0:
                 MemoryReference.AND()
