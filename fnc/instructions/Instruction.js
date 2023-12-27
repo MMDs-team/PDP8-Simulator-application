@@ -22,7 +22,7 @@ class Instruction extends Word{
         // 105 : inst length not enough 
 
         // check first address
-        for(index = 0 ; index < 3 ; index++) if(!hex.includes(inst[0][index])) return 101
+        for(let index = 0 ; index < 3 ; index++) if(!hex.includes(inst[0][index])) return 101
         if(inst[0][3] != ":") return 101 
 
         switch (inst.length) {
@@ -34,7 +34,7 @@ class Instruction extends Word{
 
                 // check second address
                 if(inst[2].length !== 3) return 102 
-                for(index = 0 ; index < 3 ; index++) if(!hex.includes(inst[2][index])) return 102
+                for(let index = 0 ; index < 3 ; index++) if(!hex.includes(inst[2][index])) return 102
 
                 // check indirect sign 
                 if(inst[3] != "I") return 104 
@@ -48,7 +48,7 @@ class Instruction extends Word{
 
                 // check second address
                 if(inst[2].length !== 3) return 102
-                for(index = 0 ; index < 3 ; index++) if(!hex.includes(inst[2][index])) return 102
+                for(let index = 0 ; index < 3 ; index++) if(!hex.includes(inst[2][index])) return 102
 
                 return 100 
             case 2:
@@ -59,7 +59,7 @@ class Instruction extends Word{
 
                 // check data validation of data  
                 if(inst[1].length !== 3) return 102 
-                for(index = 0 ; index < 3 ; index++) if(!hex.includes(inst[1][index])) return 102
+                for(let index = 0 ; index < 3 ; index++) if(!hex.includes(inst[1][index])) return 102
 
                 return 100 
             default :
