@@ -16,18 +16,21 @@ const loadAdd = (swch) => {
 }
 
 const deposit = (swch) => {
-    let address = PDP.PDP.getAR() 
+    const address = ProgramCounter.get() 
+    PDP.PDP.setAR(address)
     let value = 0 
     let mul = 1 
     for(let index = 17 ; index >= 2 ; index--){
         value += swch[index] * mul 
         mul *= 2 
     }
+    PDP.PDP.setDR(value)
     PDP.PDP.setMem(address , value) 
+    ProgramCounter.increment()
 }
 
 const examinate = () => {
-    const address = ProgramCounter.get() 
+    const address = ProgramCounter.get()
     PDP.PDP.setAR(address)
     const memValue = PDP.PDP.getMem(address)
     PDP.PDP.setDR(memValue)

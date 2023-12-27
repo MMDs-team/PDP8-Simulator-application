@@ -73,9 +73,9 @@ const getRegistersValues = () => {
             bin: String(E.getMem() ? String(1) : String(0)),
         },
         ar: {
-            hex: arVal.toString(16).toUpperCase().slice(-4),
+            hex: arVal.toString(16).toUpperCase().slice(-3),
             dec: String(arVal),
-            bin: arVal.toString(2).slice(-16),
+            bin: arVal.toString(2).slice(-12),
         },
         dr: {
             hex: drVal.toString(16).toUpperCase().slice(-4),
@@ -90,8 +90,8 @@ const getRegistersValues = () => {
     answer.pc.hex = '0'.repeat(3 - answer.pc.hex.length) + answer.pc.hex
     answer.pc.bin = '0'.repeat(12 - answer.pc.bin.length) + answer.pc.bin
 
-    answer.ar.hex = '0'.repeat(4 - answer.ar.hex.length) + answer.ar.hex
-    answer.ar.bin = '0'.repeat(16 - answer.ar.bin.length) + answer.ar.bin
+    answer.ar.hex = '0'.repeat(3 - answer.ar.hex.length) + answer.ar.hex
+    answer.ar.bin = '0'.repeat(12 - answer.ar.bin.length) + answer.ar.bin
 
     answer.dr.hex = '0'.repeat(4 - answer.dr.hex.length) + answer.dr.hex
     answer.dr.bin = '0'.repeat(16 - answer.dr.bin.length) + answer.dr.bin
