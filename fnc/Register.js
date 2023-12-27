@@ -11,7 +11,7 @@ class AC extends Register{
 
     static size = () => { return 16 }
     
-    static setMem(newMem) { this.mem = newMem }
+    static setMem(newMem) { this.#mem = newMem }
 
     static getMem() { return this.#mem }
 
@@ -24,11 +24,11 @@ class AC extends Register{
 
 class E extends Register{
     
-    static #mem = 0
+    static #mem = false
 
     static size = () => { return 1 }
 
-    static setMem(newMem) { this.mem = newMem }
+    static setMem(newMem) { this.#mem = newMem }
 
     static getMem() { return this.#mem }
 }
