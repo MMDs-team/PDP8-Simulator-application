@@ -22,8 +22,6 @@ const _instIdentify = (toCon) => {
     const registerInsts = ["CLA", "CLE", "CMA", "CME", "CIR", "CIL", "INC", "SPA", "SNA", "SZA", "SZE", "HLT"]
     const iO = ["INP", "OUT", "SKI", "SKO", "ION", "IOF"]
 
-    if (I && d !== 7) address = PDP.getMem(address) // delete this one!
-
     switch (d) {
         case 7:
             // Identify the data elems from counting pop bits of the adress and then control the flow!
