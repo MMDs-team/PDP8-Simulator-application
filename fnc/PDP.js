@@ -2,7 +2,7 @@ const ProgramCounter = require('./ProgramCounter.js');
 const MemoryReference = require('./instructions/MemoryReference.js');
 const ArithmeticLogical = require('./instructions/ArithmeticLogical.js');
 const IOT = require('./instructions/IOT.js');
-const {IEN, IF, OF, INPR, OUTR} = require('./Register.js')
+const {IEN, IF, OF} = require('./Register.js')
 
 module.exports.PDP = class PDP {
 
@@ -31,6 +31,14 @@ module.exports.PDP = class PDP {
     static setAR(value) { this.#AR = value }
 
     static setDR(value) { this.#DR = value }
+
+    static power = () => {
+        this.#memory = new Array(4096).fill(0);
+        this.R = false
+        this.isOn = true
+        this.#AR = 0
+        this.#DR = 0
+    }
 
     static start() {
         let IR = this.getMem(ProgramCounter.get())
