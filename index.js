@@ -210,3 +210,91 @@ switchesCon.forEach((swch, i) => {
 
 
 updateRegistersBox()
+
+
+// /////////  memory panel ////////////////
+
+const instructionWrapper = document.querySelector(".instructions-wrappper")
+const currentBtn = document.querySelector(".current-btn")
+const upBtn = document.querySelector(".up-btn")
+const downBtn = document.querySelector(".down-btn")
+const jumpBtn = document.querySelector(".jump-btn")
+const addressInput = document.querySelector(".address-inp")
+
+let currentMemoryIndex = 0
+
+const createPanel = (startAddress) => {
+    const end = startAddress+20<4096 ? startAddress+20 : 4096;
+    currentMemoryIndex = startAddress
+    instructionWrapper.innerHTML = ""
+    for (let i = startAddress; i < end; i++) {
+        const {data, instruction, isCurrent, address} = window.api.findWord(i)
+
+        let word = document.createElement("div")
+        word.className = isCurrent? "instruction active" : "instruction"
+        let addressName = document.createElement("div")
+        addressName.className = "address-part"
+        addressName.innerHTML = address
+
+        instPart = document.createElement("div")
+        instPart.className = "inst-part"
+
+        switch (instruction.length) {
+            case 3:
+                let dirName = document.createElement("div")
+                dirName.className = "dir-name text-info"
+                dirName.innerHTML = instruction[2]
+                instPart.appendChild(dirName)
+            case 2:
+                let address2Name = document.createElement("div")
+                address2Name.className = "address2-name text-warning"
+                address2Name.innerHTML = instruction[1]
+                instPart.appendChild(address2Name)
+            case 1:
+                let instName = document.createElement("div")
+                instName.className = "inst-name text-primary"
+                instName.innerHTML = instruction[0]
+                instPart.appendChild(instName)
+            case 0:
+                let dataPart = document.createElement("div")
+                dataPart.className = "data-part text-success"
+                dataPart.innerHTML = data
+                word.appendChild(addressName)
+                word.appendChild(dataPart)
+                break;
+            default:
+                console.log('instructioin does not exist!!!!!')
+                break;
+        }
+            
+        if (instPart.innerHTML!="") {
+            word.appendChild(instPart)
+        }
+        
+        instructionWrapper.appendChild(word)
+    }
+}
+
+
+currentBtn.addEventListener("click", (e) => {
+    let start = window.api.ProgramCounter.get()
+    createPanel(start)
+})
+
+upBtn.addEventListener("click", (e) => {
+    let start = currentMemoryIndex > 0 ? currentMemoryIndex - 1 : 0;
+    createPanel(start)
+})
+
+downBtn.addEventListener("click", (e) => {
+    let start = currentMemoryIndex < 4095 ? currentMemoryIndex + 1 : 4095;
+    createPanel(start)
+})
+
+jumpBtn.addEventListener("click", (e) => {
+    if (addressInput.value=="") return
+    let start = parseInt(addressInput.value, 16)
+    if (start<0) start = 0
+    if (start>4095) start = 4095
+    createPanel(start)
+})
