@@ -27,6 +27,7 @@ const {
 const { getRegistersValues } = require('./fnc/Register.js')
 const { validateInstruction} = require('./fnc/instructions/Instruction.js')
 const ProgramConter = require('./fnc/ProgramCounter.js')
+const { findWord } = require('./fnc/Word.js')
 
 
 contextBridge.exposeInMainWorld('api', {
@@ -38,6 +39,7 @@ contextBridge.exposeInMainWorld('api', {
   getBinHex: (instructions) => getBinHex(instructions),
   Memory: Memory,
   ProgramConter,
+  findWord: (start) => findWord(start),
 
   start: () => start(),
   loadAdd: (value) => loadAdd(value),
