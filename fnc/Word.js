@@ -11,8 +11,8 @@ class Word{
     getMem() { return this.#mem; }
 }
 
-const _instIdentify = (addr, toCon) => {
-    result = [addr.toString(16).toUpperCase().slice(-3)/*, inst, blank/targetAddr, blank/I*/]
+const _instIdentify = (toCon) => {
+    result = [/*, inst, blank/targetAddr, blank/I*/]
     result[0] = '0'.repeat(3 - result[0].length) + result[0]
 
     let I = Boolean(toCon & (1 << 15))
@@ -37,7 +37,7 @@ const _instIdentify = (addr, toCon) => {
                 }
             }
 
-            if (popCnt != 1) return []
+            if (popCnt != 1) break;
 
             if (!I) result.push(registerInsts[cmdFlag])
             else result.push(iO[cmdFlag])
@@ -60,7 +60,7 @@ const findWord = (address) => {
 
     let answer = {
         'data': parseInt(arbWord, 16).toUpperCase().slice(-4),
-        'instruction': _instIdentify(address, arbWord),
+        'instruction': _instIdentify(arbWord),
         'isCurrent': ProgramCounter.getMem() === address,
         'address': address.toString(16).toUpperCase().slice(-3)
     }
