@@ -47,7 +47,10 @@ const stop = () => {
 
 const singStep = () => {}
 
-const singInst = () => {}
+const singInst = () => {
+    if(PDP.PDP.singInst) PDP.PDP.singInst = false 
+    else PDP.PDP.singInst = true  
+}
 
 
 
