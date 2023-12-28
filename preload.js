@@ -29,6 +29,7 @@ const { validateInstruction} = require('./fnc/instructions/Instruction.js')
 const ProgramConter = require('./fnc/ProgramCounter.js')
 const { findWord } = require('./fnc/Word.js')
 
+const getProgramCounterMem = () => ProgramConter.get()
 
 contextBridge.exposeInMainWorld('api', {
   node: () => process.versions.node,
@@ -39,6 +40,7 @@ contextBridge.exposeInMainWorld('api', {
   getBinHex: (instructions) => getBinHex(instructions),
   Memory: Memory,
   ProgramConter,
+  getProgramCounterMem: () => getProgramCounterMem(),
   findWord: (start) => findWord(start),
 
   start: () => start(),
