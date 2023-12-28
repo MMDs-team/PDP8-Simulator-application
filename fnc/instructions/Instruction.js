@@ -8,7 +8,9 @@ class Instruction {
         // 102 : wrong second address 
         // 103 : wrong instruction
         // 104 : wrong indirect char 
-        // 105 : inst length not enough 
+        // 105 : wrong data char 
+        // 106 : data length not enough
+        // 107 : inst length not enough 
 
         const instructName = {
             'mem': [ 'AND', 'ADD', 'LDA', 'STA', 'BUN', 'BSA', 'ISZ'],
@@ -55,14 +57,13 @@ class Instruction {
                 if(instructName["reg"].includes(inst[1]) || instructName["iot"].includes(inst[1])) return 100
 
                 // check data validation of data  
-                if(inst[1].length !== 3) return 102 
-                for(let index = 0 ; index < 3 ; index++) if(!hex.includes(inst[1][index])) return 102
+                if(inst[1].length !== 4) return 106 
+                for(let index = 0 ; index < 4 ; index++) if(!hex.includes(inst[1][index])) return 105
 
                 return 100 
             default :
                 // it is wrong!!!!
-                
-                return 105
+                return 107
         }
     }
 }
