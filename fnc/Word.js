@@ -22,8 +22,6 @@ const _instIdentify = (toCon) => {
     const registerInsts = ["CLA", "CLE", "CMA", "CME", "CIR", "CIL", "INC", "SPA", "SNA", "SZA", "SZE", "HLT"]
     const iO = ["INP", "OUT", "SKI", "SKO", "ION", "IOF"]
 
-    if (I && d !== 7) address = PDP.getMem(address)
-
     switch (d) {
         case 7:
             // Identify the data elems from counting pop bits of the adress and then control the flow!
@@ -70,4 +68,61 @@ const findWord = (address) => {
     return answer
 }
 
-module.exports = { Word, findWord };
+const assemble = (toCon) => {
+    // ["CMD", "ADDR", "I"] or ["DATA"]
+    const instOpcode = {
+        // Memory reference:
+        'AND': 0,
+        'ADD': 1,
+        'LDA': 2,
+        'STA': 3,
+        'BUN': 4,
+        'BSA': 5,
+        'ISZ': 6,
+
+        // Arithmetic & Logic: 
+        'CLA': '7800',
+        'CLE': '7400',
+        'CMA': '7200',
+        'CME': '7100',
+        'CIR': '7080',
+        'CIL': '7040',
+        'INC': '7020',
+        'SPA': '7010',
+        'SNA': '7008',
+        'SZA': '7004',
+        'SZE': '7002',
+        'HLT': '7001',
+
+        // I/O:
+        'INP': 'F800',
+        'OUT': 'F400',
+        'SKI': 'F200',
+        'SKO': 'F100',
+        'ION': 'F080',
+        'IOF': 'F040',
+    }
+
+    if (typeof (instOpcode[toCon[0]]) === 'number') {
+        let result = instOpcode[toCon[0]] << 12;
+        if (toCon.length === 3) result |= 1 << 15
+
+        let address = parseInt(toCon[1], 16)
+        result |= address
+
+        result = result.toString(2).slice(-16)
+        result = '0'.repeat(16 - result.length) + result
+
+        return result
+    }
+    else if (!(toCon[0] in instOpcode)) {
+        let result = parseInt(toCon[0], 16).toString(2).slice(-16)
+        return '0'.repeat(16 - result.length) + result
+    }
+    else {
+        let result = parseInt(instOfcode[toCon[0]], 16).toString(2).slice(-16)
+        return '0'.repeat(16 - result.length) + result
+    }
+}
+
+module.exports = { Word, findWord, assemble };
