@@ -465,18 +465,10 @@
               </div>
             </div>
             <div class="row">
-              <label class="col-1" for="e-box">E</label>
-              <label class="col-6"></label>
+              <label class="col-7"></label>
               <label class="col-5" for="pc-box">Program Counter</label>
             </div>
-            <div class="col-1 reg--box e--box" id="e-box">
-              <div class="row">
-                <div class="col-12 py-2">
-                  <div class="row e-inner-box display-5 gx-1">1</div>
-                </div>
-              </div>
-            </div>
-            <div class="col-2 reg--box empty--box"></div>
+            <div class="col-3 reg--box empty--box"></div>
             <div class="col-9 reg--box pc--box" id="pc-box">
               <div class="row">
                 <div class="col-4 py-2">
@@ -492,12 +484,35 @@
             </div>
 
             <div class="row">
-              <label class="col-6" for="e-box"></label>
-              <label class="col-3"></label>
-              <label class="col-3" for="pc-box">INP</label>
+              <div class="col-6 label-wrap-flag">
+                <label for="e-box">E</label>
+                <label for="e-box">IEN</label>
+                <label for="e-box">OF</label>
+                <label for="e-box">IF</label>
+              </div>
+              <label class="col-3" ></label>
+              <label class="col-3" for="pc-box">OUT</label>
             </div>
-            <div class="col-6 reg--box"></div>
-            <div class="col-6 reg--box inp--box">
+            <div class="col-6 reg--box">
+              <div class="row">
+                <div class="col-2 py-2 e--box">
+                  <div class="row e-inner-box display-5 gx-1">1</div>
+                </div>
+                <div class="col-1 reg--box empty--box"></div>
+                <div class="col-2 py-2 e--box">
+                  <div class="row e-inner-box display-5 gx-1">1</div>
+                </div>
+                <div class="col-1 reg--box empty--box"></div>
+                <div class="col-2 py-2 e--box">
+                  <div class="row e-inner-box display-5 gx-1">1</div>
+                </div>
+                <div class="col-1 reg--box empty--box"></div>
+                <div class="col-2 py-2 e--box">
+                  <div class="row e-inner-box display-5 gx-1">1</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 reg--box out--box">
               <div class="row">
                 <div class="col-6 py-2">
                   <div class="row nibble-box display-5 gx-1">1</div>
@@ -510,10 +525,13 @@
             <div class="row">
               <label class="col-6" for="e-box"></label>
               <label class="col-3"></label>
-              <label class="col-3" for="pc-box">OUT</label>
+              <label class="col-3" for="inp-box">INP</label>
             </div>
-            <div class="col-6 reg--box"></div>
-            <div class="col-6 reg--box out--box">
+            <div class="col-6 inp-wrap-int">
+              <div class="input--label btn btn-success px-4 fs-2">INPUT</div>
+              <input type="text" class="inp-inp" placeholder="0x">
+            </div>
+            <div class="col-6 reg--box inp--box">
               <div class="row">
                 <div class="col-6 py-2">
                   <div class="row nibble-box display-5 gx-1">1</div>
