@@ -59,7 +59,7 @@ const findWord = (address) => {
     const arbWord = PDP.PDP.getMem(address)
 
     let answer = {
-        'data': parseInt(arbWord, 16).toUpperCase().slice(-4),
+        'data': arbWord.toString(16).toUpperCase().slice(-4),
         'instruction': _instIdentify(arbWord),
         'isCurrent': ProgramCounter.getMem() === address,
         'address': address.toString(16).toUpperCase().slice(-3)
