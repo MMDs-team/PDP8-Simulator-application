@@ -24,7 +24,7 @@ const _instIdentify = (toCon) => {
 
     switch (d) {
         case 7:
-            // Identify the data elems from counting pop bits of the adress and then control the flow!
+            // Identify the data elems from counting pop bits of the address and then control the flow!
             let popCnt = 0
             let cmdFlag = -1
             for (let i = 0; i < 12; i++) {
@@ -52,6 +52,12 @@ const _instIdentify = (toCon) => {
     return result
 }
 
+// const _toRTL = (instruction) => {
+//     // Shape of instruction array: [inst, targetAddr(opt), I(opt)]
+    
+
+// }
+
 const findWord = (address) => {
     const arbWord = PDP.PDP.getMem(address)
 
@@ -59,17 +65,20 @@ const findWord = (address) => {
         'data': arbWord.toString(16).toUpperCase().slice(-4),
         'instruction': _instIdentify(arbWord),
         'isCurrent': ProgramCounter.get() === address,
+        'RTL': "",
         'address': address.toString(16).toUpperCase().slice(-3)
     }
 
     answer.data = '0'.repeat(4 - answer.data.length) + answer.data
     answer.address = '0'.repeat(3 - answer.address.length) + answer.address
     
+    if (answer.instruction.length) answer.RTL = _toRTL(answer.instruction)
+
     return answer
 }
 
 const assemble = (toCon) => {
-    // ["CMD", "ADDR", "I"] or ["DATA"]
+    // [CMD, ADDR(optional), I(optional)] or [DATA]
     const instOpcode = {
         // Memory reference:
         'AND': 0,
@@ -103,7 +112,8 @@ const assemble = (toCon) => {
         'IOF': 'F040',
     }
 
-    if (typeof (instOpcode[toCon[0]]) === 'number') {
+    const isInst = toCon[0] in instOpCode
+    if (isInst && typeof (instOpcode[toCon[0]]) === 'number') {
         let result = instOpcode[toCon[0]] << 12;
         if (toCon.length === 3) result |= 1 << 15
 
@@ -115,7 +125,7 @@ const assemble = (toCon) => {
 
         return result
     }
-    else if (!(toCon[0] in instOpcode)) {
+    else if (isInst) {
         let result = parseInt(toCon[0], 16).toString(2).slice(-16)
         return '0'.repeat(16 - result.length) + result
     }
