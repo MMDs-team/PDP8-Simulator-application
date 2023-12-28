@@ -392,6 +392,7 @@
     /* background-color: white; */
     box-shadow: 1px 1px 5px #e1e1e1;
     padding: 0 .5rem;
+    flex-direction: row-reverse;
 }
 
 .inst-name{

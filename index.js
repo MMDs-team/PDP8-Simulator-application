@@ -25,6 +25,20 @@ const switchesCon = document.querySelectorAll(".switch-control")
 let valueSwitches = [0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0]
 let controlSwitches = [0,0,0,0, 0,0,0,0]
 
+const instructionWrapper = document.querySelector(".instructions-wrappper")
+const currentBtn = document.querySelector(".current-btn")
+const upBtn = document.querySelector(".up-btn")
+const downBtn = document.querySelector(".down-btn")
+const jumpBtn = document.querySelector(".jump-btn")
+const addressInput = document.querySelector(".address-inp")
+
+let currentMemoryIndex = 0
+
+const getPcToStart = () => {
+    let start = window.api.getProgramCounterMem()
+    start = start > 3 ? start - 4 : 0
+    return start
+}
 
 
 const updateLights = (registersValues) => {
@@ -64,7 +78,6 @@ const updateLights = (registersValues) => {
 
 const updateRegistersBox = () => {
     const registersValues = window.api.getRegistersValues()
-    console.log(registersValues)
 
     for (let i = 0; i < 4; i++) { // updating the accumulator register box in hex
         acNibbles[i].textContent = registersValues.ac.hex[i]
@@ -88,140 +101,6 @@ const updateRegistersBox = () => {
     updateLights(registersValues)
 }
 
-
-
-labelItems[0].addEventListener("click", () => {
-    if (labelItems[0].classList.contains("active")) return
-    labelItems[0].classList.add("active")
-    labelItems[1].classList.remove("active")
-    items[0].classList.add("active")
-    items[1].classList.remove("active")
-})
-
-labelItems[1].addEventListener("click", () => {
-    if (labelItems[1].classList.contains("active")) return
-    labelItems[1].classList.add("active")
-    labelItems[0].classList.remove("active")
-    items[1].classList.add("active")
-    items[0].classList.remove("active")
-})
-
-
-
-const validateAssembly = () => {
-    assembelyText.forEach((inst, i) => {
-        let instruction = inst.split(' ')
-        
-        const statuse =  window.api.validateInstruction(instruction)
-        switch (statuse) {
-            case 100:
-                return true
-            case 101:
-                // show allert
-                return false
-            case 102:
-                // show allert
-                return false
-            case 103:
-                // show allert
-                return false
-            case 104:
-                // show allert
-                return false
-            case 105:
-                // show allert
-                return false
-            default:
-                return false
-        }
-        
-    })
-    return true
-}
-
-
-sendBtn.addEventListener("click", (e) => {
-    e.preventDefault()
-
-    assembelyText = textArea.value.split('\n')
-    if (validateAssembly()) {
-        window.api.addToMemory(assembelyText)
-    }
-})
-
-const checkFunc = (switchNumber) => {
-    switch (switchNumber) {
-        case 0: //start
-            window.api.start()
-            break;
-        case 1: // load address
-            window.api.loadAdd(valueSwitches)
-            break;
-        case 2: // deposit
-            window.api.deposit(valueSwitches)
-            break;
-        case 3: // examinate
-            window.api.examinate()
-            break;
-        case 4: // continue
-            window.api.continueSw()
-            break;
-        case 5: // stop
-            window.api.stop()
-            break;
-        case 6: // sing step
-            window.api.singStep()
-            break;
-        case 7: // sing inst
-            window.api.singInst()
-            break;
-        default: 
-            break;
-    }
-    updateRegistersBox()
-}
-
-switchesVal.forEach((swch, i) => {
-    swch.addEventListener("click", (e) => {
-        if (valueSwitches[i] === 0) {
-            valueSwitches[i] = 1;
-            swch.classList.add("active")
-        } else {
-            valueSwitches[i] = 0
-            swch.classList.remove("active")
-        }
-    })
-})
-
-
-
-switchesCon.forEach((swch, i) => {
-    swch.addEventListener("click", (e) => {
-        if (controlSwitches[i] === 0) {
-            controlSwitches[i] = 1;
-            swch.classList.add("active")
-            checkFunc(i)
-        } else {
-            controlSwitches[i] = 0
-            swch.classList.remove("active")
-        }
-    })
-})
-
-
-updateRegistersBox()
-
-
-// /////////  memory panel ////////////////
-
-const instructionWrapper = document.querySelector(".instructions-wrappper")
-const currentBtn = document.querySelector(".current-btn")
-const upBtn = document.querySelector(".up-btn")
-const downBtn = document.querySelector(".down-btn")
-const jumpBtn = document.querySelector(".jump-btn")
-const addressInput = document.querySelector(".address-inp")
-
-let currentMemoryIndex = 0
 
 const createPanel = (startAddress) => {
     const end = startAddress+20<4096 ? startAddress+20 : 4096;
@@ -270,14 +149,140 @@ const createPanel = (startAddress) => {
         if (instPart.innerHTML!="") {
             word.appendChild(instPart)
         }
-        
         instructionWrapper.appendChild(word)
     }
 }
 
 
+
+
+
+const validateAssembly = () => {
+    assembelyText.forEach((inst, i) => {
+        let instruction = inst.split(' ')
+        
+        const statuse =  window.api.validateInstruction(instruction)
+        switch (statuse) {
+            case 100:
+                return true
+            case 101:
+                // show allert
+                return false
+            case 102:
+                // show allert
+                return false
+            case 103:
+                // show allert
+                return false
+            case 104:
+                // show allert
+                return false
+            case 105:
+                // show allert
+                return false
+            default:
+                return false
+        }
+        
+    })
+    return true
+}
+
+
+const checkFunc = (switchNumber) => {
+    switch (switchNumber) {
+        case 0: //start
+            window.api.start()
+            break;
+        case 1: // load address
+            window.api.loadAdd(valueSwitches)
+            break;
+        case 2: // deposit
+            window.api.deposit(valueSwitches)
+            break;
+        case 3: // examinate
+            window.api.examinate()
+            break;
+        case 4: // continue
+            window.api.continueSw()
+            break;
+        case 5: // stop
+            window.api.stop()
+            break;
+        case 6: // sing step
+            window.api.singStep()
+            break;
+        case 7: // sing inst
+            window.api.singInst()
+            break;
+        default: 
+            break;
+    }
+    updateRegistersBox()
+}
+
+
+sendBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+
+    assembelyText = textArea.value.split('\n')
+    if (validateAssembly()) {
+        window.api.addToMemory(assembelyText)
+    }
+    createPanel(getPcToStart())
+})
+
+labelItems[0].addEventListener("click", () => {
+    if (labelItems[0].classList.contains("active")) return
+    labelItems[0].classList.add("active")
+    labelItems[1].classList.remove("active")
+    items[0].classList.add("active")
+    items[1].classList.remove("active")
+})
+
+labelItems[1].addEventListener("click", () => {
+    if (labelItems[1].classList.contains("active")) return
+    labelItems[1].classList.add("active")
+    labelItems[0].classList.remove("active")
+    items[1].classList.add("active")
+    items[0].classList.remove("active")
+})
+
+switchesVal.forEach((swch, i) => {
+    swch.addEventListener("click", (e) => {
+        if (valueSwitches[i] === 0) {
+            valueSwitches[i] = 1;
+            swch.classList.add("active")
+        } else {
+            valueSwitches[i] = 0
+            swch.classList.remove("active")
+        }
+    })
+})
+
+
+
+switchesCon.forEach((swch, i) => {
+    swch.addEventListener("click", (e) => {
+        if (controlSwitches[i] === 0) {
+            controlSwitches[i] = 1;
+            swch.classList.add("active")
+            checkFunc(i)
+            createPanel(getPcToStart())
+        } else {
+            controlSwitches[i] = 0
+            swch.classList.remove("active")
+        }
+    })
+})
+
+
+
+
+// /////////  memory panel ////////////////
+
 currentBtn.addEventListener("click", (e) => {
-    let start = window.api.ProgramCounter.get()
+    let start = window.api.getProgramCounterMem()
     createPanel(start)
 })
 
@@ -298,3 +303,6 @@ jumpBtn.addEventListener("click", (e) => {
     if (start>4095) start = 4095
     createPanel(start)
 })
+
+updateRegistersBox()
+createPanel(getPcToStart())
