@@ -111,6 +111,10 @@ const assemble = (toCon) => {
 
         let address = parseInt(toCon[1], 16)
         result |= address
+
+        result = result.toString(2).slice(-16)
+        result = '0'.repeat(16 - result.length) + result
+
         return result
     }
     else if (!(toCon[0] in instOpcode)) {
