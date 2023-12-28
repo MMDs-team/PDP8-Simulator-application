@@ -2,6 +2,7 @@ const ProgramCounter = require('./ProgramCounter.js');
 const MemoryReference = require('./instructions/MemoryReference.js');
 const ArithmeticLogical = require('./instructions/ArithmeticLogical.js');
 const IOT = require('./instructions/IOT.js');
+const {IEN, IF, OF, INPR, OUTR} = require('./Register.js')
 
 module.exports.PDP = class PDP {
 
@@ -12,6 +13,12 @@ module.exports.PDP = class PDP {
     static #AR = 0
 
     static #DR = 0
+
+    static singInst = false
+
+    static singStep = false
+
+    static R = false
 
     static getMem(i) { return this.#memory[i] }
 
@@ -28,14 +35,28 @@ module.exports.PDP = class PDP {
     static start() {
         let IR = this.getMem(ProgramCounter.get())
         this.decode(IR)
+        if (R) {
+            this.interrupt()
+            return
+        }
         ProgramCounter.increment()
-        if (this.isOn) this.start()
+        if (this.isOn && !this.singInst) this.start()
+    }
+
+    static interrupt() {
+        IEN.setMem(false)
+        this.R = false
+        this.setMem(0, ProgramCounter.get())
+        ProgramCounter.setMem(0)
+        this.start()
     }
 
     static decode(IR) {
         let I = IR & (1 << 15)
         let d = (IR & ~(1 << 15)) >> 12
         let address = IR & ~((1 << 12) - 1)
+
+        if (IEN.getMem() && (OF.getMem() || IF.getMem())) this.R = true
 
         if (d !== 7 && I === 1) address = this.getMem(address) & ~((1 << 12) - 1)
         switch (d) {
