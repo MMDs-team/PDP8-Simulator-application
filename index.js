@@ -25,6 +25,20 @@ const switchesCon = document.querySelectorAll(".switch-control")
 let valueSwitches = [0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0]
 let controlSwitches = [0,0,0,0, 0,0,0,0]
 
+const instructionWrapper = document.querySelector(".instructions-wrappper")
+const currentBtn = document.querySelector(".current-btn")
+const upBtn = document.querySelector(".up-btn")
+const downBtn = document.querySelector(".down-btn")
+const jumpBtn = document.querySelector(".jump-btn")
+const addressInput = document.querySelector(".address-inp")
+
+let currentMemoryIndex = 0
+
+const getPcToStart = () => {
+    let start = window.api.getProgramCounterMem()
+    start = start > 3 ? start - 4 : 0
+    return start
+}
 
 
 const updateLights = (registersValues) => {
@@ -64,7 +78,6 @@ const updateLights = (registersValues) => {
 
 const updateRegistersBox = () => {
     const registersValues = window.api.getRegistersValues()
-    console.log(registersValues)
 
     for (let i = 0; i < 4; i++) { // updating the accumulator register box in hex
         acNibbles[i].textContent = registersValues.ac.hex[i]
@@ -89,22 +102,58 @@ const updateRegistersBox = () => {
 }
 
 
+const createPanel = (startAddress) => {
+    const end = startAddress+20<4096 ? startAddress+20 : 4096;
+    currentMemoryIndex = startAddress
+    instructionWrapper.innerHTML = ""
+    for (let i = startAddress; i < end; i++) {
+        const {data, instruction, isCurrent, address} = window.api.findWord(i)
 
-labelItems[0].addEventListener("click", () => {
-    if (labelItems[0].classList.contains("active")) return
-    labelItems[0].classList.add("active")
-    labelItems[1].classList.remove("active")
-    items[0].classList.add("active")
-    items[1].classList.remove("active")
-})
+        let word = document.createElement("div")
+        word.className = isCurrent? "instruction active" : "instruction"
+        let addressName = document.createElement("div")
+        addressName.className = "address-part"
+        addressName.innerHTML = address
 
-labelItems[1].addEventListener("click", () => {
-    if (labelItems[1].classList.contains("active")) return
-    labelItems[1].classList.add("active")
-    labelItems[0].classList.remove("active")
-    items[1].classList.add("active")
-    items[0].classList.remove("active")
-})
+        instPart = document.createElement("div")
+        instPart.className = "inst-part"
+
+        switch (instruction.length) {
+            case 3:
+                let dirName = document.createElement("div")
+                dirName.className = "dir-name text-info"
+                dirName.innerHTML = instruction[2]
+                instPart.appendChild(dirName)
+            case 2:
+                let address2Name = document.createElement("div")
+                address2Name.className = "address2-name text-warning"
+                address2Name.innerHTML = instruction[1]
+                instPart.appendChild(address2Name)
+            case 1:
+                let instName = document.createElement("div")
+                instName.className = "inst-name text-primary"
+                instName.innerHTML = instruction[0]
+                instPart.appendChild(instName)
+            case 0:
+                let dataPart = document.createElement("div")
+                dataPart.className = "data-part text-success"
+                dataPart.innerHTML = data
+                word.appendChild(addressName)
+                word.appendChild(dataPart)
+                break;
+            default:
+                console.log('instructioin does not exist!!!!!')
+                break;
+        }
+            
+        if (instPart.innerHTML!="") {
+            word.appendChild(instPart)
+        }
+        instructionWrapper.appendChild(word)
+    }
+}
+
+
 
 
 
@@ -140,15 +189,6 @@ const validateAssembly = () => {
 }
 
 
-sendBtn.addEventListener("click", (e) => {
-    e.preventDefault()
-
-    assembelyText = textArea.value.split('\n')
-    if (validateAssembly()) {
-        window.api.addToMemory(assembelyText)
-    }
-})
-
 const checkFunc = (switchNumber) => {
     switch (switchNumber) {
         case 0: //start
@@ -181,6 +221,33 @@ const checkFunc = (switchNumber) => {
     updateRegistersBox()
 }
 
+
+sendBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+
+    assembelyText = textArea.value.split('\n')
+    if (validateAssembly()) {
+        window.api.addToMemory(assembelyText)
+    }
+    createPanel(getPcToStart())
+})
+
+labelItems[0].addEventListener("click", () => {
+    if (labelItems[0].classList.contains("active")) return
+    labelItems[0].classList.add("active")
+    labelItems[1].classList.remove("active")
+    items[0].classList.add("active")
+    items[1].classList.remove("active")
+})
+
+labelItems[1].addEventListener("click", () => {
+    if (labelItems[1].classList.contains("active")) return
+    labelItems[1].classList.add("active")
+    labelItems[0].classList.remove("active")
+    items[1].classList.add("active")
+    items[0].classList.remove("active")
+})
+
 switchesVal.forEach((swch, i) => {
     swch.addEventListener("click", (e) => {
         if (valueSwitches[i] === 0) {
@@ -201,6 +268,7 @@ switchesCon.forEach((swch, i) => {
             controlSwitches[i] = 1;
             swch.classList.add("active")
             checkFunc(i)
+            createPanel(getPcToStart())
         } else {
             controlSwitches[i] = 0
             swch.classList.remove("active")
@@ -209,4 +277,32 @@ switchesCon.forEach((swch, i) => {
 })
 
 
+
+
+// /////////  memory panel ////////////////
+
+currentBtn.addEventListener("click", (e) => {
+    let start = window.api.getProgramCounterMem()
+    createPanel(start)
+})
+
+upBtn.addEventListener("click", (e) => {
+    let start = currentMemoryIndex > 0 ? currentMemoryIndex - 1 : 0;
+    createPanel(start)
+})
+
+downBtn.addEventListener("click", (e) => {
+    let start = currentMemoryIndex < 4095 ? currentMemoryIndex + 1 : 4095;
+    createPanel(start)
+})
+
+jumpBtn.addEventListener("click", (e) => {
+    if (addressInput.value=="") return
+    let start = parseInt(addressInput.value, 16)
+    if (start<0) start = 0
+    if (start>4095) start = 4095
+    createPanel(start)
+})
+
 updateRegistersBox()
+createPanel(getPcToStart())

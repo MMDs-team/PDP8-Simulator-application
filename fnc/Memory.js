@@ -4,16 +4,15 @@ const PDP = require('./PDP.js')
 
 class Memory {
     
-    static addToMemory(instructions) {
-
+    static addToMemory(instructions) {   
         const instOpcode = {
             'AND': [ '0', '8' ],
             'ADD': [ '1', '9' ],
             'LDA': [ '2', 'A' ], 
-            'STA': [ '3', '8' ],
-            'BUN': [ '4', 'B' ],
-            'BSA': [ '5', 'C' ],
-            'ISZ': [ '6', 'D' ],
+            'STA': [ '3', 'B' ],
+            'BUN': [ '4', 'C' ],
+            'BSA': [ '5', 'D' ],
+            'ISZ': [ '6', 'E' ],
             
             'CLA': '7800',
             'CLE': '7400',
@@ -41,7 +40,7 @@ class Memory {
             'reg': [ 'CLA', 'CLE', 'CMA', 'CME', 'CIR', 'CIL', 'INC', 'SPA', 'SNA', 'SZA', 'SZE', 'HLT'],
             'iot': [ 'INP', 'OUT', 'SKI', 'SKO', 'ION', 'IOF']
         }
-    
+        
         instructions.forEach((inst, i) => {
             let instruction = inst.split(' ')
             // convert a 4 carachter address to a decimal
@@ -61,7 +60,7 @@ class Memory {
                 value = instruction[1]
             } 
             const amount = parseInt(value, 16)
-            
+            console.log(`memeory(${address}) set to ${amount}`)
             PDP.PDP.setMem(address, amount)
         })
     }
@@ -70,7 +69,7 @@ class Memory {
 
 module.exports = {
     Memory, 
-    addToMemory: Memory.addToMemory, 
-    sayHi: Memory.sayHi
+    addToMemory: Memory.addToMemory,
+    getBinHex: Memory.getBinHex,
 }
 

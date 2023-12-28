@@ -10,7 +10,7 @@ const { contextBridge } = require('electron')
 
 const sayHello = () => { return "Hello World"}
 
-const {Memory, addToMemory} = require('./fnc/Memory.js')
+const {Memory, addToMemory, getBinHex} = require('./fnc/Memory.js')
 
 const {
   start,
@@ -26,7 +26,11 @@ const {
 
 const { getRegistersValues } = require('./fnc/Register.js')
 const { validateInstruction} = require('./fnc/instructions/Instruction.js')
+const ProgramConter = require('./fnc/ProgramCounter.js')
+const { findWord } = require('./fnc/Word.js')
 
+
+const getProgramCounterMem = () => ProgramConter.get()
 
 contextBridge.exposeInMainWorld('api', {
   node: () => process.versions.node,
@@ -35,6 +39,9 @@ contextBridge.exposeInMainWorld('api', {
   sayHello: () => sayHello(),
   addToMemory: (assem) => addToMemory(assem),
   Memory: Memory,
+  ProgramConter,
+  getProgramCounterMem: () => getProgramCounterMem(),
+  findWord: (start) => findWord(start),
 
   start: () => start(),
   loadAdd: (value) => loadAdd(value),

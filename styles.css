@@ -368,3 +368,121 @@
     display: flex;
     margin: .5rem;
 }
+
+
+/*/////////////////// memory part /////////////// */
+
+#memory--wrap{
+    display: none;
+}
+#memory--wrap.active{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.instructions-wrap{
+
+}
+
+.instructions-wrappper{}
+
+
+.mem-btn-wrap{
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #999;
+    padding-top: .5rem;
+}
+
+
+.instruction{
+    display: flex;
+    background-color: #f5f5f5;
+    padding: .3rem .5rem;
+    margin: .2rem 0;
+    font-size: large;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.address-part{
+    padding: 0rem .5rem;
+    background-color: white;
+    box-shadow: 1px 1px 5px #999;
+    border-radius: .4rem;
+    margin-right: 1rem;
+}
+.data-part{
+    background-color: wheat;
+    padding: 0 .5rem;
+    margin-right: .7rem;
+    box-shadow: 1px 1px 5px #e1e1e1;
+}
+.inst-part{
+    display: flex;
+    /* background-color: white; */
+    box-shadow: 1px 1px 5px #e1e1e1;
+    padding: 0 .5rem;
+    flex-direction: row-reverse;
+}
+
+.inst-name{
+    padding: 0 .5rem;
+}
+.address2-name{
+    padding: 0 .5rem;
+}
+.dir-name{
+    padding: 0 .5rem;
+}
+
+.label-mem-wrap{
+    display: flex;
+    padding: 0 .5rem 0 0;
+    font-size: small;
+}
+
+.label-mem-wrap .data-part{
+    margin: 0 2.5rem 0 .5rem;
+}
+
+.instruction.active{
+    box-shadow: 2px 1px 10px #0af641;
+    border: 2px solid #0af641;
+}
+
+.instruction:hover{
+    box-shadow: 2px 2px 15px #999;
+    transform: scale(1.05);
+}
+
+.instruction.active:hover{
+    box-shadow: 2px 1px 10px #0f9d30;
+}
+
+
+
+.current-btn{
+    flex-grow: 1;
+    margin-right: .5rem;
+}
+.up-btn{
+    flex-grow: 1;
+    margin-right: .5rem;
+}
+.down-btn{
+    flex-grow: 1;
+    margin-right: .5rem;
+}
+.jump-btn{
+    flex-grow: 1;
+    margin-right: .5rem;
+}
+
+
+.address-inp{
+    font-weight: bold;
+    text-align: center;
+    width: 6rem !important;
+    font-size: x-large !important;
+    height: 2.5rem !important;
+}
