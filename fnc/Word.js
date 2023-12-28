@@ -13,7 +13,6 @@ class Word{
 
 const _instIdentify = (toCon) => {
     result = [/*inst, blank/targetAddr, blank/I*/]
-    result[0] = '0'.repeat(3 - result[0].length) + result[0]
 
     let I = Boolean(toCon & (1 << 15))
     let d = (toCon & ~(1 << 15)) >> 12
@@ -45,8 +44,8 @@ const _instIdentify = (toCon) => {
             break;
 
         default:
-            address = adress.toString(16).toUpperCase().slice(-3)
-            address = '0'.repeat(3 - address.length) + adress
+            address = address.toString(16).toUpperCase().slice(-3)
+            address = '0'.repeat(3 - address.length) + address
 
             result.push(memRefInsts[d], address)
             if (I) result.push('I')
@@ -59,14 +58,14 @@ const findWord = (address) => {
     const arbWord = PDP.PDP.getMem(address)
 
     let answer = {
-        'data': parseInt(arbWord, 16).toUpperCase().slice(-4),
+        'data': arbWord.toString(16).toUpperCase().slice(-4),
         'instruction': _instIdentify(arbWord),
-        'isCurrent': ProgramCounter.getMem() === address,
+        'isCurrent': ProgramCounter.get() === address,
         'address': address.toString(16).toUpperCase().slice(-3)
     }
 
     answer.data = '0'.repeat(4 - answer.data.length) + answer.data
-    answer.address = '0'.repeat(3 - answer.addresss.length) + answer.address
+    answer.address = '0'.repeat(3 - answer.address.length) + answer.address
     
     return answer
 }
