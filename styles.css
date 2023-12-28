@@ -82,6 +82,36 @@
     font-weight: 900;
 }
 
+.label-wrap-flag{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 2.3rem !important;
+    padding-right: 5rem !important;
+}
+
+.inp-wrap-int{
+    display: flex;
+    padding: .2rem 0 !important;
+    padding-right: 3rem !important;
+    justify-content: end;
+    height: 4.5rem !important;
+}
+
+.input--label {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: xxx-large  !important;
+    width: 7.7rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.inp-inp{
+    font-size: xxx-large  !important;
+    width: 7.7rem;
+    text-align: center;
+    font-weight: bold;
+}
+
 .reg--box{
     height: 4.5rem;
 }

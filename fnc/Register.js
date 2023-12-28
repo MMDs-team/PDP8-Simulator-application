@@ -35,11 +35,51 @@ class E extends Register{
 
 
 
-class IEN extends Register{}
-class IF extends Register{}
-class OF extends Register{}
-class INPR extends Register{}
-class OUTR extends Register{}
+class IEN extends Register{
+    static #mem = false
+
+    static size = () => { return 1}
+
+    static setMem(newMem) { this.#mem = newMem }
+
+    static getMem() { return this.#mem }
+}
+class IF extends Register{
+    static #mem = false
+
+    static size = () => { return 1}
+
+    static setMem(newMem) { this.#mem = newMem }
+
+    static getMem() { return this.#mem }
+}
+class OF extends Register{
+    static #mem = false
+
+    static size = () => { return 1}
+
+    static setMem(newMem) { this.#mem = newMem }
+
+    static getMem() { return this.#mem }
+}
+class INPR extends Register{
+    static #mem = 0
+
+    static size = () => { return 8}
+
+    static setMem(newMem) { this.#mem = newMem }
+
+    static getMem() { return this.#mem }
+}
+class OUTR extends Register{
+    static #mem = 0
+
+    static size = () => { return 8}
+
+    static setMem(newMem) { this.#mem = newMem }
+
+    static getMem() { return this.#mem }
+}
 
 const getRegistersValues = () => {
     const pcVal = ProgramCounter.get()

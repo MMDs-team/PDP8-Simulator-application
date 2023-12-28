@@ -3,27 +3,6 @@ const PDP = require('./PDP.js')
 
 
 class Memory {
-
-    static findValue(inst) {
-        
-        
-        
-    }
-
-    
-    static getBinHex(instructions) {
-        let answer = new Array(instructions.length)
-        instructions.forEach((inst, i) => {
-            const [address, amount, value] = this.findValue(inst)
-            answer[i] = {
-                'dec': amount, 
-                'bin': '0'.repeat(16 - amount.toString(2).slice(-16).length) + amount.toString(2).slice(-16),
-                'hex': value,
-                'address': address,
-            }
-        })
-        return answer
-    }
     
     static addToMemory(instructions) {   
         const instOpcode = {
