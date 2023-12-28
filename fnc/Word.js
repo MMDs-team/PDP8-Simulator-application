@@ -12,7 +12,7 @@ class Word{
 }
 
 const _instIdentify = (toCon) => {
-    result = [/*, inst, blank/targetAddr, blank/I*/]
+    result = [/*inst, blank/targetAddr, blank/I*/]
     result[0] = '0'.repeat(3 - result[0].length) + result[0]
 
     let I = Boolean(toCon & (1 << 15))
