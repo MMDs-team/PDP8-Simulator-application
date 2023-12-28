@@ -22,8 +22,7 @@ const ACLights = document.querySelectorAll(".ac-lights span")
 const switchesVal = document.querySelectorAll(".switch-vl")
 const switchesCon = document.querySelectorAll(".switch-control")
 
-let valueSwitches = [0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0]
-let controlSwitches = [0,0,0,0, 0,0,0,0]
+
 
 const instructionWrapper = document.querySelector(".instructions-wrappper")
 const currentBtn = document.querySelector(".current-btn")
@@ -32,7 +31,14 @@ const downBtn = document.querySelector(".down-btn")
 const jumpBtn = document.querySelector(".jump-btn")
 const addressInput = document.querySelector(".address-inp")
 
+const power = document.querySelector("#power")
+const pannelLock = document.querySelector("#pannel-lock")
+
+let valueSwitches = [0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0]
+let controlSwitches = [0,0,0,0, 0,0,0,0]
 let currentMemoryIndex = 0
+let ispowered = true
+let switchLock = false
 
 const getPcToStart = () => {
     let start = window.api.getProgramCounterMem()
@@ -222,6 +228,27 @@ const checkFunc = (switchNumber) => {
 }
 
 
+power.addEventListener("click", (e) => {
+    ispowered = !ispowered
+    if (ispowered){
+        window.api.power()
+        power.classList.add("active")
+        createPanel(getProgramCounterMem())
+    } else {
+        power.classList.remove("active")
+    }
+})
+
+pannelLock.addEventListener("click", () => {
+    switchLock = !switchLock
+    if (switchLock) {
+        pannelLock.classList.add("active")
+    } else {
+        pannelLock.classList.remove("active")
+    }
+}) 
+
+
 sendBtn.addEventListener("click", (e) => {
     e.preventDefault()
 
@@ -250,6 +277,7 @@ labelItems[1].addEventListener("click", () => {
 
 switchesVal.forEach((swch, i) => {
     swch.addEventListener("click", (e) => {
+        if (switchLock) return
         if (valueSwitches[i] === 0) {
             valueSwitches[i] = 1;
             swch.classList.add("active")
@@ -264,6 +292,7 @@ switchesVal.forEach((swch, i) => {
 
 switchesCon.forEach((swch, i) => {
     swch.addEventListener("click", (e) => {
+        if (switchLock) return
         if (controlSwitches[i] === 0) {
             controlSwitches[i] = 1;
             swch.classList.add("active")

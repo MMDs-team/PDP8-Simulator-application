@@ -28,7 +28,8 @@ const { getRegistersValues } = require('./fnc/Register.js')
 const { validateInstruction} = require('./fnc/instructions/Instruction.js')
 const ProgramConter = require('./fnc/ProgramCounter.js')
 const { findWord } = require('./fnc/Word.js')
-
+const PDP = require('./fnc/PDP.js')
+const power = () => PDP.PDP.power()
 
 const getProgramCounterMem = () => ProgramConter.get()
 
@@ -42,7 +43,8 @@ contextBridge.exposeInMainWorld('api', {
   ProgramConter,
   getProgramCounterMem: () => getProgramCounterMem(),
   findWord: (start) => findWord(start),
-
+  PDP,
+  power: () => power(),
   start: () => start(),
   loadAdd: (value) => loadAdd(value),
   deposit: (value) => deposit(value),

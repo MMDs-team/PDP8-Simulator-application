@@ -43,7 +43,7 @@ module.exports.PDP = class PDP {
     static start() {
         let IR = this.getMem(ProgramCounter.get())
         this.decode(IR)
-        if (R) {
+        if (this.R) {
             this.interrupt()
             return
         }
