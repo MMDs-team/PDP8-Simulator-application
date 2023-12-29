@@ -82,7 +82,7 @@ class Instruction {
 
         for(let index = 1 ; index < instLen - 1 ; index++){
             validateRes = this.validateCodeLine(inst[index])
-            if(validateRes != 100) return validateRes 
+            if(validateRes != 100) return {'status' : validateRes , 'assembly': codeLine}
             
             txtLen = inst[index][0].length 
             if(inst[index][0][txtLen - 1] == ','){
@@ -128,7 +128,7 @@ class Instruction {
             codeLine.push(pushArr)
             lineNumber += 1 
         }
-        return codeLine
+        return {'status' : 100 , 'assembly': codeLine}
     }
 
 
