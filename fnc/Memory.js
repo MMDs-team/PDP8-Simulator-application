@@ -60,7 +60,6 @@ class Memory {
                 value = instruction[1]
             } 
             const amount = parseInt(value, 16)
-            console.log(`memeory(${address}) set to ${amount}`)
             PDP.PDP.setMem(address, amount)
         })
     }

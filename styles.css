@@ -500,3 +500,39 @@
     font-size: x-large !important;
     height: 2.5rem !important;
 }
+
+
+.RTL--name{
+    font-size: small;
+    margin: auto 0;
+    color: #555;
+    display: none;
+}
+
+.instruction.rtl-active .RTL--name{
+    display: block;
+    margin-left: auto;
+}
+
+.bin-assembeled{
+    width: calc(100% - 2rem);
+    margin: .2rem 1rem;
+    background-color: #6cda86;
+    padding: .1rem;
+    font-size: x-large;
+    font-weight: bold;
+    text-align: center;
+}
+
+.element-wrap{
+    position: relative;
+}
+
+.bin-label{
+    position: absolute;
+    top: .2rem; 
+    left: .5rem; 
+    padding: .2rem .5rem ;
+    background-color: white;
+    border-radius: 2rem;
+}
