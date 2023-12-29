@@ -1,5 +1,6 @@
 const PDP = require("./PDP")
 const ProgramCounter = require("./ProgramCounter")
+const { AC, E, INPR, IF, OF } = require("./Register.js")
 
 class Word{
     #mem = 0;
@@ -52,11 +53,190 @@ const _instIdentify = (toCon) => {
     return result
 }
 
-// const _toRTL = (instruction) => {
-//     // Shape of instruction array: [inst, targetAddr(opt), I(opt)]
-    
+const _toRTL = (instWord) => {
+    let I = Boolean(instWord & (1 << 15))
+    let d = (instWord & ~(1 << 15)) >> 12
+    let address = instWord & ((1 << 12) - 1)
 
-// }
+    let result = "RTL: "
+    switch (d) {
+        case 0:
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            if (!I) { // Arithmetic & Logical
+                // ["CLA", "CLE", "CMA", "CME", "CIR", "CIL", "INC", "SPA", "SNA", "SZA", "SZE", "HLT"]
+                switch (address) {
+                    case 1 << 11: // CLA
+                        // RTL: AC ← 0
+
+                        result += "AC ← 0"
+                        break;
+                    case 1 << 10: // CLE
+                        // RTL: E ← 0
+
+                        result += "E ← 0"
+                        break;
+                    case 1 << 9: // CMA
+                        // RTL: AC ← ~AC
+
+                        {
+                            let notAcVal = ~AC.getMem() & ((1 << 16) - 1)
+                            notAcVal = notAcVal.toString(16).toUpperCase().slice(-4)
+                            notAcVal = '0'.repeat(4 - notAcVal.length) + notAcVal
+                            result += "AC ← " + notAcVal + "(~AC)";
+                        }
+                        break;
+                    case 1 << 8: // CME
+                        // RTL: E ← !E
+
+                        result += "E ← " + (!E.getMem() ? '1' : '0') + "(!E)"
+                        break;
+                    case 1 << 7: // CIR
+                        // RTL: E ← AC(0), AC(15) ← E, AC[14: 0] ← shr(AC)
+
+                        {
+                            let acVal = AC.getMem()
+                            let shiftedVal = (acVal >> 1).toString(16).toUpperCase().slice(-4)
+                            shiftedVal = '0'.repeat(4 - shiftedVal.length) + shiftedVal
+
+                            result += "E ← " + (Boolean(acVal & 1) ? '1' : '0')
+                                + "(AC(0)), AC(15) ← " + (E.getMem() ? '1' : '0')
+                                + "(E), AC[14: 0] ← " + shiftedVal + "shr(AC)";
+                        }
+                        break;
+                    case 1 << 6: // CIL
+                        // RTL: E ← AC(15), AC(0) ← E, AC[15: 1] ← shr(AC)
+
+                        {
+                            let acVal = AC.getMem()
+                            let shiftedVal = (acVal << 1).toString(16).toUpperCase().slice(-4)
+                            shiftedVal = '0'.repeat(4 - shiftedVal.length) + shiftedVal
+
+                            result += "E ← " + (Boolean(acVal & (1 << 15)) ? '1' : '0')
+                                + "(AC(15)), AC(0) ← " + (E.getMem() ? '1' : '0')
+                                + "(E), AC[15: 1] ← " + shiftedVal + "shl(AC)";
+                        }
+                        break;
+                    case 1 << 5: // INC
+                        // RTL: AC ← AC + 1
+
+                        {
+                            let incrementedAc = (AC.getMem() + 1) & ((1 << 16) - 1)
+                            incrementedAc = incrementedAc.toString(16).toUpperCase().slice(-4)
+                            incrementedAc = '0'.repeat(4 - incrementedAc.length) + incrementedAc
+
+                            result += "AC ← " + incrementedAc + "(AC + 1)"
+                        }
+                        break;
+                    case 1 << 4: // SPA
+                        // RTL: if(AC >= 0) then PC ← PC + 1
+
+                        {
+                            // maybe we can make some changes in result
+                            let acVal = AC.getMem().toString(16).toUpperCase().slice(-4)
+                            acVal = '0'.repeat(4 - acVal.length) + acVal
+
+                            let incrementedPCVal = (ProgramCounter.get() + 1).toString(16).toUpperCase().slice(-3)
+                            incrementedPCVal = '0'.repeat(3 - incrementedPCVal.length) + incrementedPCVal
+
+                            result += "if(" + acVal + "(AC) ≥ 0) then PC ← " + incrementedPCVal + "(PC + 1)"
+                        }
+                        break;
+                    case 1 << 3: // SNA
+                        // RTL: if(AC < 0) then PC ← PC + 1
+
+                        {
+                            let acVal = AC.getMem().toString(16).toUpperCase().slice(-4)
+                            acVal = '0'.repeat(4 - acVal.length) + acVal
+
+                            let incrementedPCVal = (ProgramCounter.get() + 1).toString(16).toUpperCase().slice(-3)
+                            incrementedPCVal = '0'.repeat(3 - incrementedPCVal.length) + incrementedPCVal
+
+                            result += "if(" + acVal + "(AC) < 0) then PC ← " + incrementedPCVal + "(PC + 1)"
+                        }
+                        break;
+                    case 1 << 2: // SZA
+                        // RTL: if(AC = 0) then PC ← PC + 1
+
+                        {
+                            let acVal = AC.getMem().toString(16).toUpperCase().slice(-4)
+                            acVal = '0'.repeat(4 - acVal.length) + acVal
+
+                            let incrementedPCVal = (ProgramCounter.get() + 1).toString(16).toUpperCase().slice(-3)
+                            incrementedPCVal = '0'.repeat(3 - incrementedPCVal.length) + incrementedPCVal
+
+                            result += "if(" + acVal + "(AC) = 0) then PC ← " + incrementedPCVAl + "(PC + 1)"
+                        }
+                        break;
+                    case 1 << 1: // SZE
+                        // RTL: if(E = 0) then PC ← PC + 1
+
+                        {
+                            let eVal = E.getMem()
+                            let incrementedPCVal = (ProgramCounter.get() + 1).toString(16).toUpperCase().slice(-3)
+                            incrementedPCVal = '0'.repeat(3 - incrementedPCVal.length) + incrementedPCVal
+
+                            result += "if(" + (eVal ? '1' : '0') + "(E) = 0) then PC ← PC + 1"
+                        }
+                        break;
+                    case 1: // HLT
+                        // RTL: PDP.isOn ← FALSE
+
+                        result += "PDP.isOn ← FALSE"
+                }
+            }
+            else { // I/O
+                // ["INP", "OUT", "SKI", "SKO", "ION", "IOF"]
+                switch (address) {
+                    case 1 << 11: // INP
+                        // RTL: AC[7: 0] ← INPR, IF ← 0
+
+                        {
+                            let inpVal = INPR.getMem().toString(16).toUpperCase().slice(-2)
+                            inpVal = '0'.repeat(2 - inpVal.length) + inpVal
+
+                            result += "AC[7: 0] ← " + inpVal + "(INPR), IF ← 0"
+                        }
+                        break;
+                    case 1 << 10: // OUT
+                        // RTL: OUT ← AC[7: 0], OF ← 0
+
+                        {
+                            let acLowerVal = AC.getMem().toString(16).toUpperCase().slice(-2)
+                            acLowerVal = '0'.repeat(2 - acLowerVal.length) + acLowerVal
+
+                            result += "OUT ← " + acLowerVal + "(AC[7: 0]), OF ← 0"
+                        }
+                        break;
+                    case 1 << 9: // SKI
+                        // RTL: if(IF = 1) then PC ← PC + 1
+                        break;
+                    case 1 << 8: // SKO
+                        break;
+                    case 1 << 7: // ION
+                        // RTL: IEN ← 1
+                        break;
+                    case 1 << 6: // IOF
+                        // RTL: IEN ← 0
+                        break;
+                }
+            }
+    }
+
+    return result
+}
 
 const findWord = (address) => {
     const arbWord = PDP.PDP.getMem(address)
@@ -120,7 +300,7 @@ const assemble = (toCon) => {
         let address = parseInt(toCon[1], 16)
         result |= address
 
-        result = result.toString(2).slice(-16)
+        result = result.toString(2).toUpperCase().slice(-16)
         result = '0'.repeat(16 - result.length) + result
 
         return result
