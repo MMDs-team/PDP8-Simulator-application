@@ -51,10 +51,17 @@
     display: flex;
     align-items: center;    
 }
-
+.wrap--btn-add{
+    border-top: 1px solid #999;
+}
+#sendAssem:active{
+    background-color: #ddd;
+    color: #111;
+}
 
 .inp--file{
-    /* height: 2.45rem; */
+    align-items: center;
+    display: flex;
 }
 
 /* ////////////////////righy pdp/////////////////////////////// */
@@ -390,11 +397,9 @@
     justify-content: space-between;
 }
 
-.instructions-wrap{
+/* .instructions-wrap{} */
 
-}
-
-.instructions-wrappper{}
+/* .instructions-wrappper{} */
 
 
 .mem-btn-wrap{
