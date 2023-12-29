@@ -80,7 +80,7 @@ class Instruction {
         let pushArr = []
         let pushAdd = 0
 
-        for(let index = 1 ; index < instLen ; index++){
+        for(let index = 1 ; index < instLen - 1 ; index++){
             validateRes = this.validateCodeLine(inst[index])
             if(validateRes != 100) return validateRes 
             
@@ -96,7 +96,7 @@ class Instruction {
 
         lineNumber = parseInt(inst[0][1] , 16) ;
 
-        for(let index = 1 ; index < instLen ; index++){
+        for(let index = 1 ; index < instLen - 1 ; index++){
             lineLen = inst[index].length 
             pushArr = []
 
@@ -138,7 +138,6 @@ class Instruction {
             'mem': [ 'AND', 'ADD', 'LDA', 'STA', 'BUN', 'BSA', 'ISZ'],
             'reg': [ 'CLA', 'CLE', 'CMA', 'CME', 'CIR', 'CIL', 'INC', 'SPA', 'SNA', 'SZA', 'SZE', 'HLT'],
             'iot': [ 'INP', 'OUT', 'SKI', 'SKO', 'ION', 'IOF'],
-            'needLabel' : []
         }
     
         const hex = '0123456789ABCDEF'
