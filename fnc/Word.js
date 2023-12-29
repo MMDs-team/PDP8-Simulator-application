@@ -222,14 +222,35 @@ const _toRTL = (instWord) => {
                         break;
                     case 1 << 9: // SKI
                         // RTL: if(IF = 1) then PC ← PC + 1
+
+                        {
+                            let iFVal = IF.getMem()
+                            let incrementedPCVal = (ProgramCounter.get() + 1).toString(16).toUpperCase().slice(-3)
+                            incrementedPCVal = '0'.repeat(3 - incrementedPCVal.length) + incrementedPCVal
+
+                            result += "if(" + (iFVal ? '1' : '0') + "(IF) = 1) then PC ← " + incrementedPCVal + "(PC + 1)"
+                        }
                         break;
                     case 1 << 8: // SKO
+                        // RTL: if(OF = 1) then PC ← PC + 1
+
+                        {
+                            let oFVal = OF.getMem()
+                            let incrementedPCVal = (ProgramCounter.get() + 1).toString(16).toUpperCase().slice(-3)
+                            incrementedPCVal = '0'.repeat(3 - incrementedPCVal.length) + incrementedPCVal
+
+                            result += "if(" + (oFVal ? '1' : '0') + "(OF) = 1) then PC ← " + incrementedPCVal + "(PC + 1)"
+                        }
                         break;
                     case 1 << 7: // ION
                         // RTL: IEN ← 1
+
+                        result += "IEN ← 1"
                         break;
                     case 1 << 6: // IOF
                         // RTL: IEN ← 0
+
+                        result += "IEN ← 0"
                         break;
                 }
             }
