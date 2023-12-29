@@ -58,36 +58,44 @@ const _toRTL = (instWord) => {
     let d = (instWord & ~(1 << 15)) >> 12
     let address = instWord & ((1 << 12) - 1)
 
+    let addr = address.toString(16).toUpperCase().slice(-3)
+    addr = '0'.repeat(3 - addr.length) + addr
+
     let result = "RTL: "
     switch (d) { // 0 to 6: Memory reference instructions:
         // ["AND", "ADD", "LDA", "STA", "BUN", "BSA", "ISZ"]
         case 0: // AND
-            if (I) result += "Address ← Mem[Address] then AC ← AC & Mem[Address]"
-            else result += "AC ← AC & Mem[Address]"
+            if (I) result += "Address ← Mem[" + addr + "] then AC ← AC & Mem[Address]"
+            else result += "AC ← AC & Mem[" + addr + "]"
             break;
         case 1: // ADD
-            if (I) result += "Address ← Mem[Address] then AC ← AC + Mem[Address]"
-            else result += "AC ← AC + Mem[Address]"
+            if (I) result += "Address ← Mem[" + addr + "] then AC ← AC + Mem[Address]"
+            else result += "AC ← AC + Mem[" + addr + "]"
             break;
         case 2: // LDA
-            if (I) result += "Address ← Mem[Address] then AC ← Mem[Address]"
-            else result += "AC ← Mem[Address]"
+            if (I) result += "Address ← Mem[" + addr + "] then AC ← Mem[Address]"
+            else result += "AC ← Mem[" + addr + "]"
             break;
         case 3: // STA
-            if (I) result += "Address ← Mem[Address] then Mem[Address] ← AC"
-            else result += "Mem[Address] ← AC"
+            if (I) result += "Address ← Mem[" + addr + "] then Mem[Address] ← AC"
+            else result += "Mem[" + addr + "] ← AC"
             break;
         case 4: // BUN
-            if (I) result += "Address ← Mem[Address] then PC ← Mem[Address]"
-            else result += "PC ← Mem[Address]"
+            if (I) result += "Address ← Mem[" + addr + "] then PC ← Mem[Address]"
+            else result += "PC ← Mem[" + addr + "]"
             break;
         case 5: // BSA
-            if (I) result += "Address ← Mem[Address] then Mem[Address] ← PC, Address ← Address + 1 then PC ← Address"
-            else result += "Mem[Address] ← PC, Address ← Address + 1 then PC ← Address"
+            if (I) result += "Address ← Mem[" + addr + "] then Mem[Address] ← PC, Address ← Address + 1 then PC ← Address"
+            else {
+                let incrementedAddr = (address + 1).toString(16).toUpperCase().slice(-3)
+                incrementedAddr = '0'.repeat(3 - addr.length) + incrementedAddr
+
+                result += "Mem[" + addr + "] ← PC, Address ← " + incrementedAddr + " then PC ← Address"
+            }
             break;
         case 6: // ISZ
-            if (I) result += "Address ← Mem[Address] then Mem[Address] ← Mem[Address] + 1 then if(Mem[Address] = 0) then PC ← PC + 1"
-            else result += "Mem[Address] ← Mem[Address] + 1 then if(Mem[Address] = 0) then PC ← PC + 1"
+            if (I) result += "Address ← Mem[" + addr + "] then Mem[Address] ← Mem[Address] + 1 then if(Mem[Address] = 0) then PC ← PC + 1"
+            else result += "Mem[" + addr + "] ← Mem[" + addr + "] + 1 then if(Mem[" + addr + "] = 0) then PC ← PC + 1"
             break;
         case 7:
             if (!I) { // Arithmetic & Logical
