@@ -5,6 +5,7 @@ const items = document.querySelectorAll(".left--part")
 
 const textArea = document.getElementById("exampleTextarea")
 const sendBtn = document.getElementById("sendAssem")
+const fileInput = document.getElementById("formFile")
 let assembelyText = []
 
 const acNibbles = document.querySelectorAll(".ac--box .nibble-box")
@@ -256,6 +257,7 @@ sendBtn.addEventListener("click", (e) => {
     assembelyText = textArea.value.split('\n')
     if (validateAssembly()) {
         window.api.addToMemory(assembelyText)
+        fileInput.value = null
     }
     createPanel(getPcToStart())
 })
@@ -312,6 +314,28 @@ switchesCon.forEach((swch, i) => {
     })
 })
 
+
+fileInput.onchange = () => {
+    if (fileInput.files.length==0) return
+    const selectedFile = fileInput.files[0];
+    const reader = new FileReader()
+
+    reader.addEventListener(
+        "load",
+        () => {
+          textArea.value = reader.result;
+        },
+        false,
+      );
+    
+      if (selectedFile) {
+        reader.readAsText(selectedFile);
+      }
+}
+
+textArea.addEventListener("keyup", () => {
+    textArea.value = textArea.value.toUpperCase()
+})
 
 
 
