@@ -23,7 +23,7 @@ const ACLights = document.querySelectorAll(".ac-lights span")
 const switchesVal = document.querySelectorAll(".switch-vl")
 const switchesCon = document.querySelectorAll(".switch-control")
 
-
+const binaryText = document.querySelector(".binary--text")
 
 const instructionWrapper = document.querySelector(".instructions-wrappper")
 const currentBtn = document.querySelector(".current-btn")
@@ -114,13 +114,16 @@ const createPanel = (startAddress) => {
     currentMemoryIndex = startAddress
     instructionWrapper.innerHTML = ""
     for (let i = startAddress; i < end; i++) {
-        const {data, instruction, isCurrent, address} = window.api.findWord(i)
-
+        const {data, instruction, isCurrent, address, RTL} = window.api.findWord(i)
+        
         let word = document.createElement("div")
         word.className = isCurrent? "instruction active" : "instruction"
         let addressName = document.createElement("div")
         addressName.className = "address-part"
         addressName.innerHTML = address
+        let RTLName = document.createElement("div")
+        RTLName.className = "RTL--name"
+        RTLName.innerHTML = RTL
 
         instPart = document.createElement("div")
         instPart.className = "inst-part"
@@ -156,11 +159,41 @@ const createPanel = (startAddress) => {
         if (instPart.innerHTML!="") {
             word.appendChild(instPart)
         }
+        word.appendChild(RTLName)
+
+        word.addEventListener("click", (e)=>{
+            if (word.classList.contains("rtl-active")) 
+                word.classList.remove("rtl-active")
+            else word.classList.add("rtl-active")
+        })
+    
         instructionWrapper.appendChild(word)
     }
 }
 
 
+const writeBinary = () => {
+    assembelyText.forEach((inst, i) => {
+        if (i>19) return
+        const wrap = document.createElement("div")
+        wrap.className = "element-wrap"
+        let line = inst.split(" ")
+        const label = document.createElement("div")
+        label.className = "bin-label"
+        label.innerHTML = line[0].slice(0,3)
+
+        line = line.slice(1)
+        const binAns = window.api.assemble(line)
+        const element = document.createElement("div")
+        element.className = "bin-assembeled"
+        let ans = binAns.slice(0,4) + " " + binAns.slice(4,8) + " " + binAns.slice(8,12) + " " + binAns.slice(12,16)
+        element.innerHTML = ans
+        element.appendChild = label
+        wrap.appendChild(label)
+        wrap.appendChild(element)
+        binaryText.appendChild(wrap)
+    })
+}
 
 
 
@@ -230,7 +263,12 @@ const checkFunc = (switchNumber) => {
 
 const convertLabelToBasic = (inpTxt) => {
     for (let i = 0; i < inpTxt.length; i++) {
-        const line = inpTxt.trim()
+        let line = inpTxt[i].trim()
+        while (true) {
+            let len = line.length
+            line = line.replace("  ", " ")
+            if (line.length==len) break
+        }
         inpTxt[i] = line.split(" ")
     }
 
@@ -268,19 +306,23 @@ sendBtn.addEventListener("click", (e) => {
     first = first.split(" ")
     if (first[0]=="ORG") {
         const answer = convertLabelToBasic(assembelyText)
-        if (answer.status==100) {
-            for (let i = 0; i < answer.assembly.length; i++) 
-                answer.assembly[i] = answer.assembly[i].join(' ')               
-            assembelyText = answer.assembly
-        } else return
+        if (answer.status!==100) return
+
+        for (let i = 0; i < answer.assembly.length; i++) 
+            answer.assembly[i] = answer.assembly[i].join(' ')               
+        assembelyText = answer.assembly
     }
 
     if (validateAssembly()) {
         window.api.addToMemory(assembelyText)
         fileInput.value = null
     }
+
+    writeBinary()
+
     createPanel(getPcToStart())
 })
+
 // assembly
 let lastLabelItem = labelItems[0]
 let lastItem = items[0]
