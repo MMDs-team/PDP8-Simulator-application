@@ -172,7 +172,7 @@ const findWord = (address) => {
     answer.data = '0'.repeat(4 - answer.data.length) + answer.data
     answer.address = '0'.repeat(3 - answer.address.length) + answer.address
     
-    if (answer.instruction.length) answer.RTL = _toRTL(answer.instruction)
+    if (answer.instruction.length) answer.RTL = _toRTL(arbWord)
 
     return answer
 }
