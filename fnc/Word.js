@@ -59,197 +59,96 @@ const _toRTL = (instWord) => {
     let address = instWord & ((1 << 12) - 1)
 
     let result = "RTL: "
-    switch (d) {
-        case 0:
+    switch (d) { // 0 to 6: Memory reference instructions:
+        // ["AND", "ADD", "LDA", "STA", "BUN", "BSA", "ISZ"]
+        case 0: // AND
+            if (I) result += "Address ← Mem[Address] then AC ← AC & Mem[Address]"
+            else result += "AC ← AC & Mem[Address]"
             break;
-        case 1:
+        case 1: // ADD
+            if (I) result += "Address ← Mem[Address] then AC ← AC + Mem[Address]"
+            else result += "AC ← AC + Mem[Address]"
             break;
-        case 2:
+        case 2: // LDA
+            if (I) result += "Address ← Mem[Address] then AC ← Mem[Address]"
+            else result += "AC ← Mem[Address]"
             break;
-        case 3:
+        case 3: // STA
+            if (I) result += "Address ← Mem[Address] then Mem[Address] ← AC"
+            else result += "Mem[Address] ← AC"
             break;
-        case 4:
+        case 4: // BUN
+            if (I) result += "Address ← Mem[Address] then PC ← Mem[Address]"
+            else result += "PC ← Mem[Address]"
             break;
-        case 5:
+        case 5: // BSA
+            if (I) result += "Address ← Mem[Address] then Mem[Address] ← PC, Address ← Address + 1 then PC ← Address"
+            else result += "Mem[Address] ← PC, Address ← Address + 1 then PC ← Address"
             break;
-        case 6:
+        case 6: // ISZ
+            if (I) result += "Address ← Mem[Address] then Mem[Address] ← Mem[Address] + 1 then if(Mem[Address] = 0) then PC ← PC + 1"
+            else result += "Mem[Address] ← Mem[Address] + 1 then if(Mem[Address] = 0) then PC ← PC + 1"
             break;
         case 7:
             if (!I) { // Arithmetic & Logical
                 // ["CLA", "CLE", "CMA", "CME", "CIR", "CIL", "INC", "SPA", "SNA", "SZA", "SZE", "HLT"]
                 switch (address) {
                     case 1 << 11: // CLA
-                        // RTL: AC ← 0
-
                         result += "AC ← 0"
                         break;
                     case 1 << 10: // CLE
-                        // RTL: E ← 0
-
                         result += "E ← 0"
                         break;
                     case 1 << 9: // CMA
-                        // RTL: AC ← ~AC
-
-                        {
-                            let notAcVal = ~AC.getMem() & ((1 << 16) - 1)
-                            notAcVal = notAcVal.toString(16).toUpperCase().slice(-4)
-                            notAcVal = '0'.repeat(4 - notAcVal.length) + notAcVal
-                            result += "AC ← " + notAcVal + "(~AC)";
-                        }
+                        result += "AC ← ~AC"
                         break;
                     case 1 << 8: // CME
-                        // RTL: E ← !E
-
-                        result += "E ← " + (!E.getMem() ? '1' : '0') + "(!E)"
+                        result += "E ← !E"
                         break;
                     case 1 << 7: // CIR
-                        // RTL: E ← AC(0), AC(15) ← E, AC[14: 0] ← shr(AC)
-
-                        {
-                            let acVal = AC.getMem()
-                            let shiftedVal = (acVal >> 1).toString(16).toUpperCase().slice(-4)
-                            shiftedVal = '0'.repeat(4 - shiftedVal.length) + shiftedVal
-
-                            result += "E ← " + (Boolean(acVal & 1) ? '1' : '0')
-                                + "(AC(0)), AC(15) ← " + (E.getMem() ? '1' : '0')
-                                + "(E), AC[14: 0] ← " + shiftedVal + "shr(AC)";
-                        }
+                        result += "E ← AC(0), AC(15) ← E, AC[14: 0] ← shr(AC)"
                         break;
                     case 1 << 6: // CIL
-                        // RTL: E ← AC(15), AC(0) ← E, AC[15: 1] ← shr(AC)
-
-                        {
-                            let acVal = AC.getMem()
-                            let shiftedVal = (acVal << 1).toString(16).toUpperCase().slice(-4)
-                            shiftedVal = '0'.repeat(4 - shiftedVal.length) + shiftedVal
-
-                            result += "E ← " + (Boolean(acVal & (1 << 15)) ? '1' : '0')
-                                + "(AC(15)), AC(0) ← " + (E.getMem() ? '1' : '0')
-                                + "(E), AC[15: 1] ← " + shiftedVal + "shl(AC)";
-                        }
+                        result += "E ← AC(15), AC(0) ← E, AC[15: 1] ← shl(AC)"
                         break;
                     case 1 << 5: // INC
-                        // RTL: AC ← AC + 1
-
-                        {
-                            let incrementedAc = (AC.getMem() + 1) & ((1 << 16) - 1)
-                            incrementedAc = incrementedAc.toString(16).toUpperCase().slice(-4)
-                            incrementedAc = '0'.repeat(4 - incrementedAc.length) + incrementedAc
-
-                            result += "AC ← " + incrementedAc + "(AC + 1)"
-                        }
+                        result += "AC ← AC + 1"
                         break;
                     case 1 << 4: // SPA
-                        // RTL: if(AC >= 0) then PC ← PC + 1
-
-                        {
-                            // maybe we can make some changes in result
-                            let acVal = AC.getMem().toString(16).toUpperCase().slice(-4)
-                            acVal = '0'.repeat(4 - acVal.length) + acVal
-
-                            let incrementedPCVal = (ProgramCounter.get() + 1).toString(16).toUpperCase().slice(-3)
-                            incrementedPCVal = '0'.repeat(3 - incrementedPCVal.length) + incrementedPCVal
-
-                            result += "if(" + acVal + "(AC) ≥ 0) then PC ← " + incrementedPCVal + "(PC + 1)"
-                        }
+                        result += "if(AC ≥ 0) then PC ← PC + 1"
                         break;
                     case 1 << 3: // SNA
-                        // RTL: if(AC < 0) then PC ← PC + 1
-
-                        {
-                            let acVal = AC.getMem().toString(16).toUpperCase().slice(-4)
-                            acVal = '0'.repeat(4 - acVal.length) + acVal
-
-                            let incrementedPCVal = (ProgramCounter.get() + 1).toString(16).toUpperCase().slice(-3)
-                            incrementedPCVal = '0'.repeat(3 - incrementedPCVal.length) + incrementedPCVal
-
-                            result += "if(" + acVal + "(AC) < 0) then PC ← " + incrementedPCVal + "(PC + 1)"
-                        }
+                        result += "if(AC < 0) then PC ← PC + 1"
                         break;
                     case 1 << 2: // SZA
-                        // RTL: if(AC = 0) then PC ← PC + 1
-
-                        {
-                            let acVal = AC.getMem().toString(16).toUpperCase().slice(-4)
-                            acVal = '0'.repeat(4 - acVal.length) + acVal
-
-                            let incrementedPCVal = (ProgramCounter.get() + 1).toString(16).toUpperCase().slice(-3)
-                            incrementedPCVal = '0'.repeat(3 - incrementedPCVal.length) + incrementedPCVal
-
-                            result += "if(" + acVal + "(AC) = 0) then PC ← " + incrementedPCVAl + "(PC + 1)"
-                        }
+                        result += "if(AC = 0) then PC ← PC + 1"
                         break;
                     case 1 << 1: // SZE
-                        // RTL: if(E = 0) then PC ← PC + 1
-
-                        {
-                            let eVal = E.getMem()
-                            let incrementedPCVal = (ProgramCounter.get() + 1).toString(16).toUpperCase().slice(-3)
-                            incrementedPCVal = '0'.repeat(3 - incrementedPCVal.length) + incrementedPCVal
-
-                            result += "if(" + (eVal ? '1' : '0') + "(E) = 0) then PC ← PC + 1"
-                        }
+                        result += "if(E = 0) then PC ← PC + 1"
                         break;
                     case 1: // HLT
-                        // RTL: PDP.isOn ← FALSE
-
-                        result += "PDP.isOn ← FALSE"
+                        result = "END OF COMPUTING!"
                 }
             }
             else { // I/O
                 // ["INP", "OUT", "SKI", "SKO", "ION", "IOF"]
                 switch (address) {
                     case 1 << 11: // INP
-                        // RTL: AC[7: 0] ← INPR, IF ← 0
-
-                        {
-                            let inpVal = INPR.getMem().toString(16).toUpperCase().slice(-2)
-                            inpVal = '0'.repeat(2 - inpVal.length) + inpVal
-
-                            result += "AC[7: 0] ← " + inpVal + "(INPR), IF ← 0"
-                        }
+                        result += "AC[7: 0] ← INPR, IF ← 0"
                         break;
                     case 1 << 10: // OUT
-                        // RTL: OUT ← AC[7: 0], OF ← 0
-
-                        {
-                            let acLowerVal = AC.getMem().toString(16).toUpperCase().slice(-2)
-                            acLowerVal = '0'.repeat(2 - acLowerVal.length) + acLowerVal
-
-                            result += "OUT ← " + acLowerVal + "(AC[7: 0]), OF ← 0"
-                        }
+                        result += "OUT ← AC[7: 0], OF ← 0"
                         break;
                     case 1 << 9: // SKI
-                        // RTL: if(IF = 1) then PC ← PC + 1
-
-                        {
-                            let iFVal = IF.getMem()
-                            let incrementedPCVal = (ProgramCounter.get() + 1).toString(16).toUpperCase().slice(-3)
-                            incrementedPCVal = '0'.repeat(3 - incrementedPCVal.length) + incrementedPCVal
-
-                            result += "if(" + (iFVal ? '1' : '0') + "(IF) = 1) then PC ← " + incrementedPCVal + "(PC + 1)"
-                        }
+                        result += "if(IF = 1) then PC ← PC + 1"
                         break;
                     case 1 << 8: // SKO
-                        // RTL: if(OF = 1) then PC ← PC + 1
-
-                        {
-                            let oFVal = OF.getMem()
-                            let incrementedPCVal = (ProgramCounter.get() + 1).toString(16).toUpperCase().slice(-3)
-                            incrementedPCVal = '0'.repeat(3 - incrementedPCVal.length) + incrementedPCVal
-
-                            result += "if(" + (oFVal ? '1' : '0') + "(OF) = 1) then PC ← " + incrementedPCVal + "(PC + 1)"
-                        }
+                        result += "if(OF = 1) then PC ← PC + 1"
                         break;
                     case 1 << 7: // ION
-                        // RTL: IEN ← 1
-
                         result += "IEN ← 1"
                         break;
                     case 1 << 6: // IOF
-                        // RTL: IEN ← 0
-
                         result += "IEN ← 0"
                         break;
                 }
