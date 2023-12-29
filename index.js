@@ -5,6 +5,7 @@ const items = document.querySelectorAll(".left--part")
 
 const textArea = document.getElementById("exampleTextarea")
 const sendBtn = document.getElementById("sendAssem")
+const fileInput = document.getElementById("formFile")
 let assembelyText = []
 
 const acNibbles = document.querySelectorAll(".ac--box .nibble-box")
@@ -22,8 +23,7 @@ const ACLights = document.querySelectorAll(".ac-lights span")
 const switchesVal = document.querySelectorAll(".switch-vl")
 const switchesCon = document.querySelectorAll(".switch-control")
 
-let valueSwitches = [0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0]
-let controlSwitches = [0,0,0,0, 0,0,0,0]
+
 
 const instructionWrapper = document.querySelector(".instructions-wrappper")
 const currentBtn = document.querySelector(".current-btn")
@@ -32,7 +32,14 @@ const downBtn = document.querySelector(".down-btn")
 const jumpBtn = document.querySelector(".jump-btn")
 const addressInput = document.querySelector(".address-inp")
 
+const power = document.querySelector("#power")
+const pannelLock = document.querySelector("#pannel-lock")
+
+let valueSwitches = [0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0]
+let controlSwitches = [0,0,0,0, 0,0,0,0]
 let currentMemoryIndex = 0
+let ispowered = true
+let switchLock = false
 
 const getPcToStart = () => {
     let start = window.api.getProgramCounterMem()
@@ -221,35 +228,79 @@ const checkFunc = (switchNumber) => {
     updateRegistersBox()
 }
 
+const convertLabelToBasic = (inpTxt) => {
+    for (let i = 0; i < inpTxt.length; i++) {
+        const line = inpTxt.trim()
+        inpTxt[i] = line.split(" ")
+    }
+
+    return window.api.createCodeLine(inpTxt)
+}
+
+
+power.addEventListener("click", (e) => {
+    ispowered = !ispowered
+    if (ispowered){
+        window.api.power()
+        power.classList.add("active")
+        createPanel(getPcToStart())
+        updateRegistersBox()
+    } else {
+        power.classList.remove("active")
+    }
+})
+
+pannelLock.addEventListener("click", () => {
+    switchLock = !switchLock
+    if (switchLock) {
+        pannelLock.classList.add("active")
+    } else {
+        pannelLock.classList.remove("active")
+    }
+}) 
+
 
 sendBtn.addEventListener("click", (e) => {
     e.preventDefault()
 
     assembelyText = textArea.value.split('\n')
+    let first = assembelyText[0].trim()
+    first = first.split(" ")
+    if (first[0]=="ORG") {
+        const answer = convertLabelToBasic(assembelyText)
+        if (answer.status==100) {
+            for (let i = 0; i < answer.assembly.length; i++) 
+                answer.assembly[i] = answer.assembly[i].join(' ')               
+            assembelyText = answer.assembly
+        } else return
+    }
+
     if (validateAssembly()) {
         window.api.addToMemory(assembelyText)
+        fileInput.value = null
     }
     createPanel(getPcToStart())
 })
+// assembly
+let lastLabelItem = labelItems[0]
+let lastItem = items[0]
 
-labelItems[0].addEventListener("click", () => {
-    if (labelItems[0].classList.contains("active")) return
-    labelItems[0].classList.add("active")
-    labelItems[1].classList.remove("active")
-    items[0].classList.add("active")
-    items[1].classList.remove("active")
+labelItems.forEach((label, i) => {
+    label.addEventListener("click", () => {
+        if (label.classList.contains("active")) return
+        label.classList.add("active")
+        lastLabelItem.classList.remove("active")
+        items[i].classList.add("active")
+        lastItem.classList.remove("active")
+        lastItem = items[i]
+        lastLabelItem = label
+    })
 })
 
-labelItems[1].addEventListener("click", () => {
-    if (labelItems[1].classList.contains("active")) return
-    labelItems[1].classList.add("active")
-    labelItems[0].classList.remove("active")
-    items[1].classList.add("active")
-    items[0].classList.remove("active")
-})
 
 switchesVal.forEach((swch, i) => {
     swch.addEventListener("click", (e) => {
+        if (switchLock) return
         if (valueSwitches[i] === 0) {
             valueSwitches[i] = 1;
             swch.classList.add("active")
@@ -264,11 +315,18 @@ switchesVal.forEach((swch, i) => {
 
 switchesCon.forEach((swch, i) => {
     swch.addEventListener("click", (e) => {
+        if (switchLock) return
         if (controlSwitches[i] === 0) {
             controlSwitches[i] = 1;
             swch.classList.add("active")
             checkFunc(i)
             createPanel(getPcToStart())
+            if (i<6) {
+                setTimeout(() => {
+                    controlSwitches[i] = 0
+                    swch.classList.remove("active")
+                }, 300)
+            }
         } else {
             controlSwitches[i] = 0
             swch.classList.remove("active")
@@ -276,6 +334,28 @@ switchesCon.forEach((swch, i) => {
     })
 })
 
+
+fileInput.onchange = () => {
+    if (fileInput.files.length==0) return
+    const selectedFile = fileInput.files[0];
+    const reader = new FileReader()
+
+    reader.addEventListener(
+        "load",
+        () => {
+          textArea.value = reader.result;
+        },
+        false,
+      );
+    
+      if (selectedFile) {
+        reader.readAsText(selectedFile);
+      }
+}
+
+textArea.addEventListener("keyup", () => {
+    textArea.value = textArea.value.toUpperCase()
+})
 
 
 

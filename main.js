@@ -1,17 +1,18 @@
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, screen, Menu } = require('electron')
 
 require('electron-reload')(__dirname, {
   // Note that the path to electron may vary according to the main file
   electron: require(`${__dirname}/node_modules/electron`)
 });
 
-
 const path = require('node:path')
 
-function createWindow () {
+function createWindow (width, height) {
   const win = new BrowserWindow({
-    width: 1980,
-    height: 1180,
+    width: width,
+    height: height,
+    minWidth: width,
+    minHeight: height,
     webPreferences: {
       nodeIntegration: true,
       
@@ -24,11 +25,13 @@ function createWindow () {
 }
 
 app.whenReady().then(() => {
-  createWindow()
+  const primaryDisplay = screen.getPrimaryDisplay()
+  const { width, height } = primaryDisplay.workAreaSize
+  createWindow(width, height)
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
+      createWindow(width, height)
     }
   })
 })

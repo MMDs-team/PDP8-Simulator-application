@@ -25,10 +25,12 @@ const {
 } = require('./pdpFunc.js')
 
 const { getRegistersValues } = require('./fnc/Register.js')
-const { validateInstruction} = require('./fnc/instructions/Instruction.js')
+const { validateInstruction, Instruction} = require('./fnc/instructions/Instruction.js')
 const ProgramConter = require('./fnc/ProgramCounter.js')
-const { findWord } = require('./fnc/Word.js')
-
+const { findWord, assemble } = require('./fnc/Word.js')
+const PDP = require('./fnc/PDP.js')
+const power = () => PDP.PDP.power()
+const validateCodeLine = (inst) => Instruction.validateCodeLine(inst)
 
 const getProgramCounterMem = () => ProgramConter.get()
 
@@ -42,7 +44,11 @@ contextBridge.exposeInMainWorld('api', {
   ProgramConter,
   getProgramCounterMem: () => getProgramCounterMem(),
   findWord: (start) => findWord(start),
-
+  assemble: (inp) => assemble(inp),
+  PDP,
+  Instruction,
+  validateCodeLine: (inst) => validateCodeLine(inst),
+  power: () => power(),
   start: () => start(),
   loadAdd: (value) => loadAdd(value),
   deposit: (value) => deposit(value),

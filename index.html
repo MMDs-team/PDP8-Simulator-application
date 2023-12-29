@@ -19,8 +19,9 @@
         <!-- left part for edit text and memory -->
         <div class="col-4">
           <div class="label--wrap">  <!-- tuggle part for mem and edit -->
-            <span class="label--item py-2 px-3 active" >asemmbly</span>
+            <span class="label--item py-2 px-3 active" >assembly</span>
             <span class="label--item py-2 px-3" >memory</span>
+            <span class="label--item py-2 px-3" >binary</span>
           </div>
           <!-- edit text or memory -->
           <div class="wrap--left p-1 ps-2">
@@ -28,12 +29,16 @@
               <form>
                 <fieldset>
                   <div class="form-group">
-                    <textarea class="form-control" id="exampleTextarea" rows="19"></textarea>
+                    <textarea class="form-control" id="exampleTextarea" rows="19" placeholder="type or drag the assembly code..."></textarea>
                   </div>
                 </fieldset>
-                <div class="wrap--btn-left">
-                  <button type="submit" class="btn btn-secondary m-2 ms-0" id="sendAssem">Submit</button>
-                  <input class="form-control inp--file me-2" type="file" id="formFile">
+                <div class="row g-0 gx-1 wrap--btn-add">
+                  <div class="col-4">
+                    <button type="submit" class="btn btn-secondary my-2 w-100" id="sendAssem">Add To Memory</button>
+                  </div>
+                  <div class="col-8 inp--file">
+                    <input class="form-control" type="file" id="formFile">
+                  </div>
                 </div>
               </form>
             </div>
@@ -60,6 +65,10 @@
                   <input type="text" class="address-inp form-control border border-dark px-0" placeholder="0x">
                 </div>
               </div>
+            </div>
+
+            <div class="left--part p-1" id="binary-wrap">
+              <div class="binary--text"></div>
             </div>
           </div>
 
@@ -431,8 +440,8 @@
             <div class="bottom-pdp-part">
               <div>
                 <div class="col-1 power--btn-wrap">
-                  <div id="power">Power</div> 
-                  <div id="pannel-lock">Pannel Lock</div> 
+                  <div class="active" id="power">Power</div> 
+                  <div class="" id="pannel-lock">Pannel Lock</div> 
                 </div>
                 <div class="col-11 switch--wrapper"> <!-- wrapper of bottom switches -->
                   <div class="switch red-c-switch switch-vl"></div>
@@ -506,6 +515,26 @@
             </div>
 
             <div class="row">
+              <label class="col-6" for="e-box"></label>
+              <label class="col-3"></label>
+              <label class="col-3" for="inp-box">INP</label>
+            </div>
+            <div class="col-6 inp-wrap-int">
+              <div class="input--label btn btn-success px-4 fs-2">INPUT</div>
+              <input type="text" class="inp-inp" placeholder="0x">
+            </div>
+            <div class="col-6 reg--box inp--box">
+              <div class="row">
+                <div class="col-6 py-2">
+                  <div class="row nibble-box display-5 gx-1">1</div>
+                </div>
+                <div class="col-6 py-2">
+                  <div class="row nibble-box display-5 gx-1">1</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
               <div class="col-6 label-wrap-flag">
                 <label for="e-box">E</label>
                 <label for="e-box">IEN</label>
@@ -544,25 +573,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <label class="col-6" for="e-box"></label>
-              <label class="col-3"></label>
-              <label class="col-3" for="inp-box">INP</label>
-            </div>
-            <div class="col-6 inp-wrap-int">
-              <div class="input--label btn btn-success px-4 fs-2">INPUT</div>
-              <input type="text" class="inp-inp" placeholder="0x">
-            </div>
-            <div class="col-6 reg--box inp--box">
-              <div class="row">
-                <div class="col-6 py-2">
-                  <div class="row nibble-box display-5 gx-1">1</div>
-                </div>
-                <div class="col-6 py-2">
-                  <div class="row nibble-box display-5 gx-1">1</div>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
         </div>
