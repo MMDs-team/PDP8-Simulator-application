@@ -233,7 +233,8 @@ power.addEventListener("click", (e) => {
     if (ispowered){
         window.api.power()
         power.classList.add("active")
-        createPanel(getProgramCounterMem())
+        createPanel(getPcToStart())
+        updateRegistersBox()
     } else {
         power.classList.remove("active")
     }

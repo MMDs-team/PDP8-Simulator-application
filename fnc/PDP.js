@@ -34,6 +34,7 @@ module.exports.PDP = class PDP {
 
     static power = () => {
         this.#memory = new Array(4096).fill(0);
+        ProgramCounter.load(0)
         this.R = false
         this.isOn = true
         this.#AR = 0
