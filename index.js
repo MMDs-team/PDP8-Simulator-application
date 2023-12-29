@@ -261,22 +261,22 @@ sendBtn.addEventListener("click", (e) => {
     }
     createPanel(getPcToStart())
 })
+// assembly
+let lastLabelItem = labelItems[0]
+let lastItem = items[0]
 
-labelItems[0].addEventListener("click", () => {
-    if (labelItems[0].classList.contains("active")) return
-    labelItems[0].classList.add("active")
-    labelItems[1].classList.remove("active")
-    items[0].classList.add("active")
-    items[1].classList.remove("active")
+labelItems.forEach((label, i) => {
+    label.addEventListener("click", () => {
+        if (label.classList.contains("active")) return
+        label.classList.add("active")
+        lastLabelItem.classList.remove("active")
+        items[i].classList.add("active")
+        lastItem.classList.remove("active")
+        lastItem = items[i]
+        lastLabelItem = label
+    })
 })
 
-labelItems[1].addEventListener("click", () => {
-    if (labelItems[1].classList.contains("active")) return
-    labelItems[1].classList.add("active")
-    labelItems[0].classList.remove("active")
-    items[1].classList.add("active")
-    items[0].classList.remove("active")
-})
 
 switchesVal.forEach((swch, i) => {
     swch.addEventListener("click", (e) => {
