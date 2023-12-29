@@ -39,6 +39,7 @@ const examinate = () => {
 
 const continueSw = () => {
     PDP.PDP.isOn = true 
+    PDP.PDP.start()
 }
 
 const stop = () => {
