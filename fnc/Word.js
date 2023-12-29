@@ -212,7 +212,7 @@ const assemble = (toCon) => {
         'IOF': 'F040',
     }
 
-    const isInst = toCon[0] in instOpCode
+    const isInst = toCon[0] in instOpcode
     if (isInst && typeof (instOpcode[toCon[0]]) === 'number') {
         let result = instOpcode[toCon[0]] << 12;
         if (toCon.length === 3) result |= 1 << 15
@@ -220,17 +220,17 @@ const assemble = (toCon) => {
         let address = parseInt(toCon[1], 16)
         result |= address
 
-        result = result.toString(2).toUpperCase().slice(-16)
+        result = result.toString(2).slice(-16)
         result = '0'.repeat(16 - result.length) + result
 
         return result
     }
     else if (isInst) {
-        let result = parseInt(toCon[0], 16).toString(2).slice(-16)
+        let result = parseInt(instOpcode[toCon[0]], 16).toString(2).slice(-16)
         return '0'.repeat(16 - result.length) + result
     }
     else {
-        let result = parseInt(instOfcode[toCon[0]], 16).toString(2).slice(-16)
+        let result = parseInt(toCon[0], 16).toString(2).slice(-16)
         return '0'.repeat(16 - result.length) + result
     }
 }
