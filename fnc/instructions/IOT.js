@@ -32,14 +32,16 @@ class IOT {
     static IOF() { IEN.setMem(false) }
 
     static assignToINPR(data) {
-        if (data.length > 2) return
+        if (data.length > 2) return false
 
         const isHex = (digit) => { return (digit >= '0' && digit <= '9') || (digit >= 'A' && digit <= 'F') }
 
+        data = data.toUpperCase()
         for (let i = 0; i < data.length; i++)
-            if (!isHex(data[i])) return
+            if (!isHex(data[i])) return false
 
         INPR.setMem(parseInt(data, 16))
+        return true
     }
 }
 
