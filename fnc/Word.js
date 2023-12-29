@@ -1,5 +1,6 @@
 const PDP = require("./PDP")
 const ProgramCounter = require("./ProgramCounter")
+const { AC, E, INPR, IF, OF } = require("./Register.js")
 
 class Word{
     #mem = 0;
@@ -24,7 +25,7 @@ const _instIdentify = (toCon) => {
 
     switch (d) {
         case 7:
-            // Identify the data elems from counting pop bits of the adress and then control the flow!
+            // Identify the data elems from counting pop bits of the address and then control the flow!
             let popCnt = 0
             let cmdFlag = -1
             for (let i = 0; i < 12; i++) {
@@ -52,6 +53,111 @@ const _instIdentify = (toCon) => {
     return result
 }
 
+const _toRTL = (instWord) => {
+    let I = Boolean(instWord & (1 << 15))
+    let d = (instWord & ~(1 << 15)) >> 12
+    let address = instWord & ((1 << 12) - 1)
+
+    let result = "RTL: "
+    switch (d) { // 0 to 6: Memory reference instructions:
+        // ["AND", "ADD", "LDA", "STA", "BUN", "BSA", "ISZ"]
+        case 0: // AND
+            if (I) result += "Address ← Mem[Address] then AC ← AC & Mem[Address]"
+            else result += "AC ← AC & Mem[Address]"
+            break;
+        case 1: // ADD
+            if (I) result += "Address ← Mem[Address] then AC ← AC + Mem[Address]"
+            else result += "AC ← AC + Mem[Address]"
+            break;
+        case 2: // LDA
+            if (I) result += "Address ← Mem[Address] then AC ← Mem[Address]"
+            else result += "AC ← Mem[Address]"
+            break;
+        case 3: // STA
+            if (I) result += "Address ← Mem[Address] then Mem[Address] ← AC"
+            else result += "Mem[Address] ← AC"
+            break;
+        case 4: // BUN
+            if (I) result += "Address ← Mem[Address] then PC ← Mem[Address]"
+            else result += "PC ← Mem[Address]"
+            break;
+        case 5: // BSA
+            if (I) result += "Address ← Mem[Address] then Mem[Address] ← PC, Address ← Address + 1 then PC ← Address"
+            else result += "Mem[Address] ← PC, Address ← Address + 1 then PC ← Address"
+            break;
+        case 6: // ISZ
+            if (I) result += "Address ← Mem[Address] then Mem[Address] ← Mem[Address] + 1 then if(Mem[Address] = 0) then PC ← PC + 1"
+            else result += "Mem[Address] ← Mem[Address] + 1 then if(Mem[Address] = 0) then PC ← PC + 1"
+            break;
+        case 7:
+            if (!I) { // Arithmetic & Logical
+                // ["CLA", "CLE", "CMA", "CME", "CIR", "CIL", "INC", "SPA", "SNA", "SZA", "SZE", "HLT"]
+                switch (address) {
+                    case 1 << 11: // CLA
+                        result += "AC ← 0"
+                        break;
+                    case 1 << 10: // CLE
+                        result += "E ← 0"
+                        break;
+                    case 1 << 9: // CMA
+                        result += "AC ← ~AC"
+                        break;
+                    case 1 << 8: // CME
+                        result += "E ← !E"
+                        break;
+                    case 1 << 7: // CIR
+                        result += "E ← AC(0), AC(15) ← E, AC[14: 0] ← shr(AC)"
+                        break;
+                    case 1 << 6: // CIL
+                        result += "E ← AC(15), AC(0) ← E, AC[15: 1] ← shl(AC)"
+                        break;
+                    case 1 << 5: // INC
+                        result += "AC ← AC + 1"
+                        break;
+                    case 1 << 4: // SPA
+                        result += "if(AC ≥ 0) then PC ← PC + 1"
+                        break;
+                    case 1 << 3: // SNA
+                        result += "if(AC < 0) then PC ← PC + 1"
+                        break;
+                    case 1 << 2: // SZA
+                        result += "if(AC = 0) then PC ← PC + 1"
+                        break;
+                    case 1 << 1: // SZE
+                        result += "if(E = 0) then PC ← PC + 1"
+                        break;
+                    case 1: // HLT
+                        result = "END OF COMPUTING!"
+                }
+            }
+            else { // I/O
+                // ["INP", "OUT", "SKI", "SKO", "ION", "IOF"]
+                switch (address) {
+                    case 1 << 11: // INP
+                        result += "AC[7: 0] ← INPR, IF ← 0"
+                        break;
+                    case 1 << 10: // OUT
+                        result += "OUT ← AC[7: 0], OF ← 0"
+                        break;
+                    case 1 << 9: // SKI
+                        result += "if(IF = 1) then PC ← PC + 1"
+                        break;
+                    case 1 << 8: // SKO
+                        result += "if(OF = 1) then PC ← PC + 1"
+                        break;
+                    case 1 << 7: // ION
+                        result += "IEN ← 1"
+                        break;
+                    case 1 << 6: // IOF
+                        result += "IEN ← 0"
+                        break;
+                }
+            }
+    }
+
+    return result
+}
+
 const findWord = (address) => {
     const arbWord = PDP.PDP.getMem(address)
 
@@ -59,17 +165,20 @@ const findWord = (address) => {
         'data': arbWord.toString(16).toUpperCase().slice(-4),
         'instruction': _instIdentify(arbWord),
         'isCurrent': ProgramCounter.get() === address,
+        'RTL': "",
         'address': address.toString(16).toUpperCase().slice(-3)
     }
 
     answer.data = '0'.repeat(4 - answer.data.length) + answer.data
     answer.address = '0'.repeat(3 - answer.address.length) + answer.address
     
+    if (answer.instruction.length) answer.RTL = _toRTL(arbWord)
+
     return answer
 }
 
 const assemble = (toCon) => {
-    // ["CMD", "ADDR", "I"] or ["DATA"]
+    // [CMD, ADDR(optional), I(optional)] or [DATA]
     const instOpcode = {
         // Memory reference:
         'AND': 0,
@@ -103,19 +212,20 @@ const assemble = (toCon) => {
         'IOF': 'F040',
     }
 
-    if (typeof (instOpcode[toCon[0]]) === 'number') {
+    const isInst = toCon[0] in instOpCode
+    if (isInst && typeof (instOpcode[toCon[0]]) === 'number') {
         let result = instOpcode[toCon[0]] << 12;
         if (toCon.length === 3) result |= 1 << 15
 
         let address = parseInt(toCon[1], 16)
         result |= address
 
-        result = result.toString(2).slice(-16)
+        result = result.toString(2).toUpperCase().slice(-16)
         result = '0'.repeat(16 - result.length) + result
 
         return result
     }
-    else if (!(toCon[0] in instOpcode)) {
+    else if (isInst) {
         let result = parseInt(toCon[0], 16).toString(2).slice(-16)
         return '0'.repeat(16 - result.length) + result
     }
