@@ -228,6 +228,15 @@ const checkFunc = (switchNumber) => {
     updateRegistersBox()
 }
 
+const convertLabelToBasic = (inpTxt) => {
+    for (let i = 0; i < inpTxt.length; i++) {
+        const line = inpTxt.trim()
+        inpTxt[i] = line.split(" ")
+    }
+
+    return window.api.createCodeLine(inpTxt)
+}
+
 
 power.addEventListener("click", (e) => {
     ispowered = !ispowered
@@ -255,6 +264,17 @@ sendBtn.addEventListener("click", (e) => {
     e.preventDefault()
 
     assembelyText = textArea.value.split('\n')
+    let first = assembelyText[0].trim()
+    first = first.split(" ")
+    if (first[0]=="ORG") {
+        const answer = convertLabelToBasic(assembelyText)
+        if (answer.status==100) {
+            for (let i = 0; i < answer.assembly.length; i++) 
+                answer.assembly[i] = answer.assembly[i].join(' ')               
+            assembelyText = answer.assembly
+        } else return
+    }
+
     if (validateAssembly()) {
         window.api.addToMemory(assembelyText)
         fileInput.value = null
