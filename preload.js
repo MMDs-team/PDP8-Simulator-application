@@ -30,7 +30,6 @@ const ProgramConter = require('./fnc/ProgramCounter.js')
 const { findWord, assemble } = require('./fnc/Word.js')
 const PDP = require('./fnc/PDP.js')
 const power = () => PDP.PDP.power()
-const validateCodeLine = (inst) => Instruction.validateCodeLine(inst)
 
 const getProgramCounterMem = () => ProgramConter.get()
 
@@ -47,7 +46,7 @@ contextBridge.exposeInMainWorld('api', {
   assemble: (inp) => assemble(inp),
   PDP,
   Instruction,
-  validateCodeLine: (inst) => validateCodeLine(inst),
+  createCodeLine: (inst) => Instruction.createCodeLine(inst),
   power: () => power(),
   start: () => start(),
   loadAdd: (value) => loadAdd(value),

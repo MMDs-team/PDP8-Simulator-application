@@ -230,7 +230,12 @@ const checkFunc = (switchNumber) => {
 
 const convertLabelToBasic = (inpTxt) => {
     for (let i = 0; i < inpTxt.length; i++) {
-        const line = inpTxt.trim()
+        let line = inpTxt[i].trim()
+        while (true) {
+            let len = line.length
+            line = line.replace("  ", " ")
+            if (line.length==len) break
+        }
         inpTxt[i] = line.split(" ")
     }
 
@@ -268,11 +273,11 @@ sendBtn.addEventListener("click", (e) => {
     first = first.split(" ")
     if (first[0]=="ORG") {
         const answer = convertLabelToBasic(assembelyText)
-        if (answer.status==100) {
-            for (let i = 0; i < answer.assembly.length; i++) 
-                answer.assembly[i] = answer.assembly[i].join(' ')               
-            assembelyText = answer.assembly
-        } else return
+        if (answer.status!==100) return
+
+        for (let i = 0; i < answer.assembly.length; i++) 
+            answer.assembly[i] = answer.assembly[i].join(' ')               
+        assembelyText = answer.assembly
     }
 
     if (validateAssembly()) {
@@ -281,6 +286,7 @@ sendBtn.addEventListener("click", (e) => {
     }
     createPanel(getPcToStart())
 })
+
 // assembly
 let lastLabelItem = labelItems[0]
 let lastItem = items[0]
