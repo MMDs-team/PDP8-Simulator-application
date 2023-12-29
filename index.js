@@ -298,6 +298,12 @@ switchesCon.forEach((swch, i) => {
             swch.classList.add("active")
             checkFunc(i)
             createPanel(getPcToStart())
+            if (i<6) {
+                setTimeout(() => {
+                    controlSwitches[i] = 0
+                    swch.classList.remove("active")
+                }, 300)
+            }
         } else {
             controlSwitches[i] = 0
             swch.classList.remove("active")
