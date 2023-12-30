@@ -139,7 +139,18 @@ const updateRegistersBox = () => {
     for (let i = 0; i < 2; i++) { // updating the output register box in hex
         outNibbles[i].textContent = registersValues.out.hex[i]
     }
-    console.log(registersValues)
+
+    for (let i = 0; i < 6; i++) { // updating the accumulator register box in oct
+        acOCT[i].textContent = registersValues.ac.oct[i]
+    }
+
+    for (let i = 0; i < 4; i++) { // updating the program counter register box in oct
+        pcOCT[i].textContent = registersValues.pc.oct[i]
+    }
+
+    acDEC.textContent = registersValues.ac.dec   // updating the accumulator register box in dec
+    pcDEC.textContent = registersValues.pc.dec  // updating the program counter register box in dec   
+    
     E.textContent = registersValues.e.bin  // updating the E register box in hex
     IF.textContent = registersValues.if.bin
     OF.textContent = registersValues.of.bin
@@ -211,27 +222,41 @@ const createPanel = (startAddress) => {
     }
 }
 
+const replaceSpace = (inp) => {
+    let line = inp.trim()
+        while (true) {
+            let len = line.length
+            line = line.replace("  ", " ")
+            if (line.length==len) break
+        }
+    return line
+}
+
 
 const writeBinary = () => {
     binaryText.innerHTML = ""
     assembelyText.forEach((inst, i) => {
         const wrap = document.createElement("div")
         wrap.className = "element-wrap"
-        let line = inst.split(" ")
-        const label = document.createElement("div")
-        label.className = "bin-label"
-        label.innerHTML = line[0].slice(0,3)
 
-        line = line.slice(1)
-        const binAns = window.api.assemble(line)
-        const element = document.createElement("div")
-        element.className = "bin-assembeled"
-        let ans = binAns.slice(0,4) + " " + binAns.slice(4,8) + " " + binAns.slice(8,12) + " " + binAns.slice(12,16)
-        element.innerHTML = ans
-        element.appendChild = label
-        wrap.appendChild(label)
-        wrap.appendChild(element)
-        binaryText.appendChild(wrap)
+        let line = replaceSpace(inst)
+        if (line!='') {
+            line = line.split(" ")
+            const label = document.createElement("div")
+            label.className = "bin-label"
+            label.innerHTML = line[0].slice(0,3)
+
+            line = line.slice(1)
+            const binAns = window.api.assemble(line)
+            const element = document.createElement("div")
+            element.className = "bin-assembeled"
+            let ans = binAns.slice(0,4) + " " + binAns.slice(4,8) + " " + binAns.slice(8,12) + " " + binAns.slice(12,16)
+            element.innerHTML = ans
+            element.appendChild = label
+            wrap.appendChild(label)
+            wrap.appendChild(element)
+            binaryText.appendChild(wrap)
+        }
     })
 }
 
@@ -303,13 +328,7 @@ const checkFunc = (switchNumber) => {
 
 const convertLabelToBasic = (inpTxt) => {
     for (let i = 0; i < inpTxt.length; i++) {
-        let line = inpTxt[i].trim()
-        while (true) {
-            let len = line.length
-            line = line.replace("  ", " ")
-            if (line.length==len) break
-        }
-        inpTxt[i] = line.split(" ")
+        inpTxt[i] =  replaceSpace(inpTxt[i]).split(" ")
     }
 
     return window.api.createCodeLine(inpTxt)
