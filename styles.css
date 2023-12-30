@@ -121,6 +121,7 @@
 
 .reg--box{
     height: 4.5rem;
+    cursor: pointer;
 }
 
 
@@ -158,6 +159,16 @@
 
 .box-wrap-base.active{
     display: flex !important;
+}
+
+.base-label{
+    font-size: small;
+    padding-left: .2rem;
+    padding-right: .2rem;
+    border-radius: .5rem;
+    margin-left: .1rem;
+    background-color: #999;
+    color: #333;
 }
 
 

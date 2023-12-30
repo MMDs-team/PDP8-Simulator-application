@@ -414,7 +414,7 @@
           <div class="row registers--wrapper px-4 mt-2" style="padding-bottom: 2rem !important;">
             <div class="row">
               <label class="col-6"></label>
-              <label class="col-6" for="ac-box">Accumulator</label>
+              <label class="col-6 ac-label-box" for="ac-box">Accumulator <span class="base-label">hex</span></label>
             </div>
             <div class="col-12 reg--box ac--box" id="ac-box">
               <div class="row box-wrap-base hex-part active">
@@ -460,7 +460,7 @@
             </div>
             <div class="row">
               <label class="col-7"></label>
-              <label class="col-5" for="pc-box">Program Counter</label>
+              <label class="col-5 pc-label-box" for="pc-box">Program Counter <span class="base-label">hex</span></label>
             </div>
             <div class="col-3 reg--box empty--box"></div>
             <div class="col-9 reg--box pc--box" id="pc-box">
@@ -502,7 +502,7 @@
             <div class="row">
               <label class="col-6" for="e-box"></label>
               <label class="col-3"></label>
-              <label class="col-3" for="inp-box">INP</label>
+              <label class="col-3" for="inp-box">INP <span class="base-label">hex</span></label>
             </div>
             <div class="col-6 inp-wrap-int">
               <div class="input--label btn btn-success px-4 fs-2">INPUT</div>
@@ -511,10 +511,10 @@
             <div class="col-6 reg--box inp--box">
               <div class="row">
                 <div class="col-6 py-2">
-                  <div class="row nibble-box display-5 gx-1">1</div>
+                  <div class="row nibble-box display-5 gx-1">0</div>
                 </div>
                 <div class="col-6 py-2">
-                  <div class="row nibble-box display-5 gx-1">1</div>
+                  <div class="row nibble-box display-5 gx-1">0</div>
                 </div>
               </div>
             </div>
@@ -527,24 +527,24 @@
                 <label for="e-box">IF</label>
               </div>
               <label class="col-3" ></label>
-              <label class="col-3" for="pc-box">OUT</label>
+              <label class="col-3" for="pc-box">OUT <span class="base-label">hex</span></label>
             </div>
             <div class="col-6 reg--box">
               <div class="row">
                 <div class="col-2 py-2 e--box">
-                  <div class="row e-inner-box display-5 gx-1">1</div>
+                  <div class="row e-inner-box display-5 gx-1">0</div>
                 </div>
                 <div class="col-1 reg--box empty--box"></div>
                 <div class="col-2 py-2 ien-box e--box">
-                  <div class="row e-inner-box ien-box display-5 gx-1">1</div>
+                  <div class="row e-inner-box ien-box display-5 gx-1">0</div>
                 </div>
                 <div class="col-1 reg--box empty--box"></div>
                 <div class="col-2 py-2 e--box">
-                  <div class="row e-inner-box of-box display-5 gx-1">1</div>
+                  <div class="row e-inner-box of-box display-5 gx-1">0</div>
                 </div>
                 <div class="col-1 reg--box empty--box"></div>
                 <div class="col-2 py-2 if-box e--box">
-                  <div class="row e-inner-box if-box display-5 gx-1">1</div>
+                  <div class="row e-inner-box if-box display-5 gx-1">0</div>
                 </div>
               </div>
             </div>
