@@ -2,6 +2,7 @@ const ProgramCounter = require('./fnc/ProgramCounter.js')
 const PDP = require('./fnc/PDP.js')
 
 const start = () => {
+    PDP.PDP.isOn = true 
     PDP.PDP.start()
 }
 
@@ -38,12 +39,12 @@ const examinate = () => {
 }
 
 const continueSw = () => {
-    PDP.PDP.isOn = true 
+    PDP.PDP.isStop = true
     PDP.PDP.start()
 }
 
 const stop = () => {
-    PDP.PDP.isOn = false
+    PDP.PDP.isStop = false
 }
 
 const singStep = () => {}
