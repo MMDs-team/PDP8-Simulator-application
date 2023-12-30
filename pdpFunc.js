@@ -3,6 +3,7 @@ const PDP = require('./fnc/PDP.js')
 
 const start = () => {
     PDP.PDP.isOn = true 
+    PDP.PDP.isStop = false 
     PDP.PDP.start()
 }
 
@@ -39,12 +40,12 @@ const examinate = () => {
 }
 
 const continueSw = () => {
-    PDP.PDP.isStop = true
+    PDP.PDP.isStop = false
     PDP.PDP.start()
 }
 
 const stop = () => {
-    PDP.PDP.isStop = false
+    PDP.PDP.isStop = true 
 }
 
 const singStep = () => {}
