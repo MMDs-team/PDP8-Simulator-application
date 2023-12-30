@@ -88,8 +88,8 @@
                     <!-- program Conter and data field and inst field -->
                     <div class="row">
                       <span class="col-5 row">
-                        <span class="col-6">Data Field</span>
-                        <span class="col-6">Data Field</span>
+                        <span class="col-6"></span>
+                        <span class="col-6"></span>
                       </span>
 
                       <span class="col-7 row">
@@ -130,17 +130,9 @@
                       </div>
                       <!-- 5 -->
                       <div class="col-2 light--part-wrap">
-                        <div class="top-light-line"></div>
-                        <div class="light-part">
-                          <span></span><span></span><span></span>
-                        </div>
                       </div>
                       <!-- 6 -->
                       <div class="col-2 light--part-wrap">
-                        <div class="top-light-line"></div>
-                        <div class="light-part">
-                          <span></span><span></span><span></span>
-                        </div>
                       </div>
                       
                       
@@ -306,62 +298,7 @@
 
                     </div>
                     <!-- Multiplier Qutionet and step counter -->
-                    <div class="row">
-                      <span class="col-5 row"></span>
-                      <span class="col-7 row">
-                        <span class="col-4"></span>
-                        <span class="col-6">
-                          Multiplier Qutionet
-                        </span>
-                      </span>
-                    </div>
-                    <div class="line-of-light">
-                      <!-- 1 -->
-                      <div class="col-2 light--part-wrap">
-                        <div class="top-light-line"></div>
-                        <div class="light-part mult-lights">
-                          <span></span><span></span><span></span>
-                        </div>
-                      </div>
-                      <!-- 2 -->
-                      <div class="col-2 light--part-wrap">
-                        <div class="top-light-line"></div>
-                        <div class="light-part mult-lights">
-                          <span></span><span></span><span></span>
-                        </div>
-                      </div>
-                      <!-- 3 -->
-                      <div class="col-2 light--part-wrap">
-                        <div class="top-light-line"></div>
-                        <div class="light-part mult-lights">
-                          <span></span><span></span><span></span>
-                        </div>
-                      </div>
-                      <!-- 4 -->
-                      <div class="col-2 light--part-wrap">
-                        <div class="top-light-line"></div>
-                        <div class="light-part mult-lights">
-                          <span></span><span></span><span></span>
-                        </div>
-                      </div>
-                      <!-- 5 -->
-                      <div class="col-2 light--part-wrap step-count">
-                        <div class="top-light-line"></div>
-                        <div class="light-part mult-lights">
-                          <span></span><span></span>
-                        </div>
-                      </div>
-                      <!-- 6 -->
-                      <div class="col-2 light--part-wrap">
-                        <div class="top-light-line"></div>
-                        <div class="light-part mult-lights">
-                          <span></span><span></span><span></span>
-                        </div>
-                      </div>
-                      
-                      
-
-                    </div>
+                    
 
                   </div>
                   <div class="col-3"> <!--right part of middle-->
@@ -480,7 +417,7 @@
               <label class="col-6" for="ac-box">Accumulator</label>
             </div>
             <div class="col-12 reg--box ac--box" id="ac-box">
-              <div class="row">
+              <div class="row box-wrap-base hex-part active">
                 <div class="col-3 py-2">
                   <div class="row nibble-box display-5 gx-1">F</div>
                 </div>
@@ -494,6 +431,32 @@
                   <div class="row nibble-box display-5 gx-1">F</div>
                 </div>
               </div>
+              <div class="row box-wrap-base oct-part">
+                <div class="col-2 py-2">
+                  <div class="row oct-box display-5 gx-1">F</div>
+                </div>
+                <div class="col-2 py-2">
+                  <div class="row oct-box display-5 gx-1">F</div>
+                </div>
+                <div class="col-2 py-2">
+                  <div class="row oct-box display-5 gx-1">F</div>
+                </div>
+                <div class="col-2 py-2">
+                  <div class="row oct-box display-5 gx-1">F</div>
+                </div>
+                <div class="col-2 py-2">
+                  <div class="row oct-box display-5 gx-1">F</div>
+                </div>
+                <div class="col-2 py-2">
+                  <div class="row oct-box display-5 gx-1">F</div>
+                </div>
+              </div>
+              <div class="row box-wrap-base dec-part">
+                <div class="col-12 py-2">
+                  <div class="row dec-box display-5 gx-1">F</div>
+                </div>
+              </div>
+
             </div>
             <div class="row">
               <label class="col-7"></label>
@@ -501,7 +464,8 @@
             </div>
             <div class="col-3 reg--box empty--box"></div>
             <div class="col-9 reg--box pc--box" id="pc-box">
-              <div class="row">
+
+              <div class="row box-wrap-base hex-part">
                 <div class="col-4 py-2">
                   <div class="row nibble-box display-5 gx-1">1</div>
                 </div>
@@ -512,6 +476,27 @@
                   <div class="row nibble-box display-5 gx-1">1</div>
                 </div>
               </div>
+              <div class="row box-wrap-base oct-part active">
+                <div class="col-3 py-2">
+                  <div class="row oct-box display-5 gx-1">1</div>
+                </div>
+                <div class="col-3 py-2">
+                  <div class="row oct-box display-5 gx-1">1</div>
+                </div>
+                <div class="col-3 py-2">
+                  <div class="row oct-box display-5 gx-1">1</div>
+                </div>
+                <div class="col-3 py-2">
+                  <div class="row oct-box display-5 gx-1">1</div>
+                </div>
+              </div>
+
+              <div class="row box-wrap-base dec-part">
+                <div class="col-12 py-2">
+                  <div class="row dec-box display-5 gx-1">1</div>
+                </div>
+              </div>
+
             </div>
 
             <div class="row">
@@ -550,16 +535,16 @@
                   <div class="row e-inner-box display-5 gx-1">1</div>
                 </div>
                 <div class="col-1 reg--box empty--box"></div>
-                <div class="col-2 py-2 e--box">
-                  <div class="row e-inner-box display-5 gx-1">1</div>
+                <div class="col-2 py-2 ien-box e--box">
+                  <div class="row e-inner-box ien-box display-5 gx-1">1</div>
                 </div>
                 <div class="col-1 reg--box empty--box"></div>
                 <div class="col-2 py-2 e--box">
-                  <div class="row e-inner-box display-5 gx-1">1</div>
+                  <div class="row e-inner-box of-box display-5 gx-1">1</div>
                 </div>
                 <div class="col-1 reg--box empty--box"></div>
-                <div class="col-2 py-2 e--box">
-                  <div class="row e-inner-box display-5 gx-1">1</div>
+                <div class="col-2 py-2 if-box e--box">
+                  <div class="row e-inner-box if-box display-5 gx-1">1</div>
                 </div>
               </div>
             </div>

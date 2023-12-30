@@ -140,7 +140,7 @@
     background-color: darkseagreen;
 }
 
-.nibble-box, .e-inner-box{
+.nibble-box, .e-inner-box, .oct-box, .dec-box{
     background-color:  #0561154a;
     height: 3.5rem;
     color: white;
@@ -149,6 +149,20 @@
     justify-content: center;
     font-weight: bold !important;
 }
+
+
+.box-wrap-base{
+    display: none !important;
+}
+
+
+.box-wrap-base.active{
+    display: flex !important;
+}
+
+
+
+/* bottom pdp */
 
 
 .bottom-pdp-part{
@@ -287,7 +301,7 @@
 .light-part span{
     border-radius: 50%;
     background-color: #555;
-    width: 1rem;
+    width: 1.7rem;
     display: inline-block;
     aspect-ratio: 1;
 }

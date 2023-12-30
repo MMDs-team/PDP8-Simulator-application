@@ -13,7 +13,10 @@ const pcNibbles = document.querySelectorAll(".pc--box .nibble-box")
 const inpNibbles = document.querySelectorAll(".inp--box .nibble-box")
 const outNibbles = document.querySelectorAll(".out--box .nibble-box")
 
-const e = document.querySelector('.e--box .e-inner-box')
+const E = document.querySelector('.e--box .e-inner-box')
+const IEN = document.querySelector("ien-box")
+const IF = document.querySelector("if-box")
+const OF = document.querySelector("of-box")
 
 const PCLights = document.querySelectorAll(".pc-lights span")
 const ARLights = document.querySelectorAll(".ar-lights span")
@@ -105,8 +108,10 @@ const updateRegistersBox = () => {
         outNibbles[i].textContent = registersValues.out.hex[i]
     }
 
-    e.textContent = registersValues.e.hex  // updating the E register box in hex
-
+    E.textContent = registersValues.e.bin  // updating the E register box in hex
+    IF.textContent = registersValues.if.bin
+    OF.textContent = registersValues.of.bin
+    IEN.textContent = registersValues.ien.bin
 
     updateLights(registersValues)
 }
