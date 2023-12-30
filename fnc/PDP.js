@@ -20,6 +20,8 @@ module.exports.PDP = class PDP {
 
     static R = false
 
+    static isStop = false
+
     static getMem(i) { return this.#memory[i] }
 
     static setMem(i, value) { this.#memory[i] = value }
@@ -50,13 +52,14 @@ module.exports.PDP = class PDP {
 
     static start() {
         let IR = this.getMem(ProgramCounter.get())
+        if (!this.isOn) return
         this.decode(IR)
         if (this.R) {
             this.interrupt()
             return
         }
         ProgramCounter.increment()
-        if (this.isOn && !this.singInst) this.start()
+        if (!this.stop && !this.singInst) this.start()
     }
 
     static interrupt() {
@@ -103,10 +106,10 @@ module.exports.PDP = class PDP {
                 const upCode = IR & ((1 << 12) - 1)
                 if (I) {
                     switch (upCode) {
-                        case 1 < 11:
+                        case 1 << 11:
                             IOT.INP()
                             break;
-                        case 1 < 10:
+                        case 1 << 10:
                             IOT.OUT()
                             break;
                         case 1 << 9:

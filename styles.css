@@ -533,6 +533,14 @@
     top: .2rem; 
     left: .5rem; 
     padding: .2rem .5rem ;
-    background-color: white;
+    background-color: darkgreen;
+    color: white;
     border-radius: 2rem;
+}
+
+.binary--text{
+    height: 100%;
+    overflow-y: scroll;
+    border: 1px solid #888;
+    border-radius: 1rem 0 0 1rem;
 }
