@@ -11,11 +11,16 @@ class AC extends Register{
 
     static size = () => { return 16 }
     
-    static setMem(newMem) { this.#mem = newMem }
+    static setMem(newMem) { 
+        this.#mem = newMem & ((1<<16) -1)
+    }
 
     static getMem() { return this.#mem }
 
-    static increment() { this.#mem = this.#mem + 1}
+    static increment() { 
+        const value = this.#mem + 1
+        this.setMem(value)
+    }
 
     //other methods
 }
@@ -67,7 +72,9 @@ class INPR extends Register{
 
     static size = () => { return 8}
 
-    static setMem(newMem) { this.#mem = newMem }
+    static setMem(newMem) { 
+        this.#mem = newMem & ((1<<16) -1)
+    }
 
     static getMem() { return this.#mem }
 }
@@ -76,7 +83,9 @@ class OUTR extends Register{
 
     static size = () => { return 8}
 
-    static setMem(newMem) { this.#mem = newMem }
+    static setMem(newMem) { 
+        this.#mem = newMem & ((1<<16) -1)
+    }
 
     static getMem() { return this.#mem }
 }

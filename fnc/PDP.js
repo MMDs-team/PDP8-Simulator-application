@@ -22,17 +22,27 @@ module.exports.PDP = class PDP {
 
     static isStop = false
 
+    static setMem(i, value) { 
+        const val = value & ((1<<16) -1)
+        this.#memory[i] = val 
+    }
+    
+    static setAR(value) { 
+        const val = value & ((1<<12) -1)
+        this.#AR = val
+    }
+    
+    static setDR(value) { 
+        const val = value & ((1<<12) -1)
+        this.#DR = val
+    }
+    
     static getMem(i) { return this.#memory[i] }
-
-    static setMem(i, value) { this.#memory[i] = value }
-
+    
     static getAR() { return this.#AR }
 
     static getDR() { return this.#DR }
 
-    static setAR(value) { this.#AR = value }
-
-    static setDR(value) { this.#DR = value }
 
     static power = () => {
         this.#memory = new Array(4096).fill(0);

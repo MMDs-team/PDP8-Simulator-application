@@ -5,12 +5,13 @@ class ProgramCounter {
 
     static #mem = 0;
 
-    static load(ref) {
-        this.#mem = ref
+    static load(val) {
+        this.#mem = val & ((1<<12) -1)
     }
 
     static increment() {
-        this.#mem = this.#mem + 1
+        const value = this.#mem + 1
+        this.load(value)
     }
 
     static clear() {
