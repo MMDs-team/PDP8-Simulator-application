@@ -98,19 +98,34 @@ const getRegistersValues = () => {
             bin: pcVal.toString(2).slice(-12),
         },
         inp: {
-            hex: '00',
-            dec: '0',
-            bin: '00000000',
+            hex: INPR.getMem().toString(16).toUpperCase().slice(-2),
+            dec: String(INPR.getMem()),
+            bin: INPR.getMem().toString(2).slice(-8),
+        },
+        if: {
+            hex: IF.getMem() ? '1' : '0',
+            dec: IF.getMem() ? '1' : '0',
+            bin: IF.getMem() ? '1' : '0'
         },
         out: {
-            hex: '00',
-            dec: '0',
-            bin: '00000000',
+            hex: OUTR.getMem().toString(16).toUpperCase().slice(-2),
+            dec: String(OUTR.getMem()),
+            bin: OUTR.getMem().toString(2).slice(-8),
+        },
+        of: {
+            hex: OF.getMem() ? '1' : '0',
+            dec: OF.getMem() ? '1' : '0',
+            bin: OF.getMem() ? '1' : '0'
         },
         e: {
-            hex: String(E.getMem() ? String(1) : String(0)),
-            dec: String(E.getMem() ? String(1) : String(0)),
-            bin: String(E.getMem() ? String(1) : String(0)),
+            hex: E.getMem() ? '1' : '0',
+            dec: E.getMem() ? '1' : '0',
+            bin: E.getMem() ? '1' : '0',
+        },
+        ien: {
+            hex: IEN.getMem() ? '1' : '0',
+            dec: IEN.getMem() ? '1' : '0',
+            bin: IEN.getMem() ? '1' : '0'
         },
         ar: {
             hex: arVal.toString(16).toUpperCase().slice(-3),
@@ -129,6 +144,12 @@ const getRegistersValues = () => {
 
     answer.pc.hex = '0'.repeat(3 - answer.pc.hex.length) + answer.pc.hex
     answer.pc.bin = '0'.repeat(12 - answer.pc.bin.length) + answer.pc.bin
+
+    answer.inp.hex = '0'.repeat(2 - answer.inp.hex.length) + answer.inp.hex
+    answer.inp.bin = '0'.repeat(8 - answer.inp.bin.length) + answer.inp.bin
+
+    answer.out.hex = '0'.repeat(2 - answer.out.hex.length) + answer.out.hex
+    answer.out.bin = '0'.repeat(8 - answer.out.bin.length) + answer.out.bin
 
     answer.ar.hex = '0'.repeat(3 - answer.ar.hex.length) + answer.ar.hex
     answer.ar.bin = '0'.repeat(12 - answer.ar.bin.length) + answer.ar.bin
