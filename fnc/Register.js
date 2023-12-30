@@ -99,51 +99,61 @@ const getRegistersValues = () => {
         ac: {
             hex: AC.getMem().toString(16).toUpperCase().slice(-4),
             dec: String(AC.getMem()),
+            oct: AC.getMem().toString(8).slice(-6),
             bin: AC.getMem().toString(2).slice(-16),
         },
         pc: {
             hex: pcVal.toString(16).toUpperCase().slice(-3),
             dec: String(pcVal),
+            oct: pcVal.toString(8).slice(-4),
             bin: pcVal.toString(2).slice(-12),
         },
         inp: {
             hex: INPR.getMem().toString(16).toUpperCase().slice(-2),
             dec: String(INPR.getMem()),
+            oct: INPR.getMem().toString(8).slice(-3),
             bin: INPR.getMem().toString(2).slice(-8),
         },
         if: {
             hex: IF.getMem() ? '1' : '0',
             dec: IF.getMem() ? '1' : '0',
+            oct: IF.getMem() ? '1' : '0',
             bin: IF.getMem() ? '1' : '0'
         },
         out: {
             hex: OUTR.getMem().toString(16).toUpperCase().slice(-2),
             dec: String(OUTR.getMem()),
+            oct: OUTR.getMem().toString(8).slice(-3),
             bin: OUTR.getMem().toString(2).slice(-8),
         },
         of: {
             hex: OF.getMem() ? '1' : '0',
             dec: OF.getMem() ? '1' : '0',
+            oct: OF.getMem() ? '1' : '0',
             bin: OF.getMem() ? '1' : '0'
         },
         e: {
             hex: E.getMem() ? '1' : '0',
             dec: E.getMem() ? '1' : '0',
+            oct: E.getMem() ? '1' : '0',
             bin: E.getMem() ? '1' : '0',
         },
         ien: {
             hex: IEN.getMem() ? '1' : '0',
             dec: IEN.getMem() ? '1' : '0',
+            oct: IEN.getMem() ? '1' : '0',
             bin: IEN.getMem() ? '1' : '0'
         },
         ar: {
             hex: arVal.toString(16).toUpperCase().slice(-3),
             dec: String(arVal),
+            oct: arVal.toString(8).slice(-4),
             bin: arVal.toString(2).slice(-12),
         },
         dr: {
             hex: drVal.toString(16).toUpperCase().slice(-4),
             dec: String(drVal),
+            oct: drVal.toString(8).slice(-6),
             bin: drVal.toString(2).slice(-16),
         }
     }
