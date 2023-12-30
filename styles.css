@@ -141,6 +141,27 @@
     background-color: darkseagreen;
 }
 
+.ac--box:active,.pc--box:active,.inp--box:active,.out--box:active,.e--box:active{
+    animation: pulseBox 1s ease 0s 1 normal forwards;
+}
+
+@keyframes pulseBox {
+	0% {
+		transform: scale(1);
+        background-color: darkseagreen;
+	}
+
+	50% {
+        transform: scale(1.005);
+        background-color: #76a676;
+	}
+
+	100% {
+		transform: scale(1);
+        background-color: darkseagreen;
+	}
+}
+
 .nibble-box, .e-inner-box, .oct-box, .dec-box{
     background-color:  #0561154a;
     height: 3.5rem;
@@ -252,6 +273,11 @@
     height: 2rem;
     margin: .5rem 0 ;
     background-color: darkgoldenrod;
+    color: #ececb5;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
 }
 .middle--lights{
     /* background-color: aquamarine; */
