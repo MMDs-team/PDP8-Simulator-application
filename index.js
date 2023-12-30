@@ -173,8 +173,8 @@ const createPanel = (startAddress) => {
 
 
 const writeBinary = () => {
+    binaryText.innerHTML = ""
     assembelyText.forEach((inst, i) => {
-        if (i>19) return
         const wrap = document.createElement("div")
         wrap.className = "element-wrap"
         let line = inst.split(" ")
