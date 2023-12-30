@@ -140,10 +140,10 @@ module.exports.PDP = class PDP {
                     }
                 } else {
                     switch (upCode) {
-                        case 1 < 11:
+                        case 1 << 11:
                             ArithmeticLogical.CLA()
                             break;
-                        case 1 < 10:
+                        case 1 << 10:
                             ArithmeticLogical.CLE()
                             break;
                         case 1 << 9:

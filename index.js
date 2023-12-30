@@ -13,10 +13,21 @@ const pcNibbles = document.querySelectorAll(".pc--box .nibble-box")
 const inpNibbles = document.querySelectorAll(".inp--box .nibble-box")
 const outNibbles = document.querySelectorAll(".out--box .nibble-box")
 
+const acOCT = document.querySelectorAll(".ac--box .oct-box")
+const pcOCT = document.querySelectorAll(".pc--box .oct-box")
+const acDEC = document.querySelector(".ac--box .dec-box")
+const pcDEC = document.querySelector(".pc--box .dec-box")
+
+const acBox = document.querySelectorAll(".ac--box .box-wrap-base")
+const pcBox = document.querySelectorAll(".pc--box .box-wrap-base")
+
 const E = document.querySelector('.e--box .e-inner-box')
 const IEN = document.querySelector(".ien-box")
 const IF = document.querySelector(".if-box")
 const OF = document.querySelector(".of-box")
+
+const acLabel = document.querySelector(".ac-label-box .base-label")
+const pcLabel = document.querySelector(".pc-label-box .base-label")
 
 const PCLights = document.querySelectorAll(".pc-lights span")
 const ARLights = document.querySelectorAll(".ar-lights span")
@@ -46,6 +57,27 @@ let controlSwitches = [0,0,0,0, 0,0,0,0]
 let currentMemoryIndex = 0
 let ispowered = true
 let switchLock = false
+
+let currentAcBox = 0
+let currentPcBox = 0
+const baseName = ['hex', 'oct', 'dec']
+
+acBox.forEach((box,i) => {
+    box.addEventListener("click", (e) => {
+        acBox[currentAcBox].classList.remove("active")
+        currentAcBox = currentAcBox < 2 ? currentAcBox + 1 : 0
+        acLabel.textContent = baseName[currentAcBox]
+        acBox[currentAcBox].classList.add("active")
+    })
+})
+pcBox.forEach((box,i) => {
+    box.addEventListener("click", (e) => {
+        pcBox[currentPcBox].classList.remove("active")
+        currentPcBox = currentPcBox < 2 ? currentPcBox + 1 : 0
+        pcLabel.textContent = baseName[currentPcBox]
+        pcBox[currentPcBox].classList.add("active")
+    })
+})
 
 const getPcToStart = () => {
     let start = window.api.getProgramCounterMem()
@@ -107,7 +139,7 @@ const updateRegistersBox = () => {
     for (let i = 0; i < 2; i++) { // updating the output register box in hex
         outNibbles[i].textContent = registersValues.out.hex[i]
     }
-
+    console.log(registersValues)
     E.textContent = registersValues.e.bin  // updating the E register box in hex
     IF.textContent = registersValues.if.bin
     OF.textContent = registersValues.of.bin
