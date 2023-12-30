@@ -22,9 +22,9 @@ const acBox = document.querySelectorAll(".ac--box .box-wrap-base")
 const pcBox = document.querySelectorAll(".pc--box .box-wrap-base")
 
 const E = document.querySelector('.e--box .e-inner-box')
-const IEN = document.querySelector("ien-box")
-const IF = document.querySelector("if-box")
-const OF = document.querySelector("of-box")
+const IEN = document.querySelector(".ien-box")
+const IF = document.querySelector(".if-box")
+const OF = document.querySelector(".of-box")
 
 const acLabel = document.querySelector(".ac-label-box .base-label")
 const pcLabel = document.querySelector(".pc-label-box .base-label")
