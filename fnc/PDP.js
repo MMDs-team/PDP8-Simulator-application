@@ -106,10 +106,10 @@ module.exports.PDP = class PDP {
                 const upCode = IR & ((1 << 12) - 1)
                 if (I) {
                     switch (upCode) {
-                        case 1 < 11:
+                        case 1 << 11:
                             IOT.INP()
                             break;
-                        case 1 < 10:
+                        case 1 << 10:
                             IOT.OUT()
                             break;
                         case 1 << 9:

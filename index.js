@@ -35,6 +35,9 @@ const addressInput = document.querySelector(".address-inp")
 const power = document.querySelector("#power")
 const pannelLock = document.querySelector("#pannel-lock")
 
+const InpInput = document.querySelector(".inp-inp")
+const inpInputBtn = document.querySelector(".input--label")
+
 let valueSwitches = [0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0]
 let controlSwitches = [0,0,0,0, 0,0,0,0]
 let currentMemoryIndex = 0
@@ -370,6 +373,10 @@ switchesCon.forEach((swch, i) => {
                 }, 300)
             }
         } else {
+            if (i>=6) {
+                checkFunc(i)
+                createPanel(getPcToStart())
+            }
             controlSwitches[i] = 0
             swch.classList.remove("active")
         }
@@ -424,6 +431,14 @@ jumpBtn.addEventListener("click", (e) => {
     if (start<0) start = 0
     if (start>4095) start = 4095
     createPanel(start)
+})
+
+inpInputBtn.addEventListener("click", (e) => {
+    const value = InpInput.value.toUpperCase()
+    const ans = window.api.assignToINPR(value)
+    console.log(ans)
+    if (!ans) // show alert
+    updateRegistersBox()
 })
 
 updateRegistersBox()

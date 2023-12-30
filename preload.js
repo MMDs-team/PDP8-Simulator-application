@@ -33,6 +33,8 @@ const power = () => PDP.PDP.power()
 
 const getProgramCounterMem = () => ProgramConter.get()
 
+const IOT = require('./fnc/instructions/IOT.js')
+
 contextBridge.exposeInMainWorld('api', {
   node: () => process.versions.node,
   chrome: () => process.versions.chrome,
@@ -47,6 +49,7 @@ contextBridge.exposeInMainWorld('api', {
   PDP,
   Instruction,
   createCodeLine: (inst) => Instruction.createCodeLine(inst),
+  assignToINPR: (inp) => IOT.assignToINPR(inp),
   power: () => power(),
   start: () => start(),
   loadAdd: (value) => loadAdd(value),

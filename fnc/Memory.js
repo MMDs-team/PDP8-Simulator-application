@@ -54,7 +54,7 @@ class Memory {
                     value = instOpcode[instruction[1]][0] + instruction[2]
             } else if (instructName['reg'].includes(instruction[1])) { // if it is register reference
                 value = instOpcode[instruction[1]]
-            } else if (instructName['iot'].includes[instruction[1]]) { // if it is input output reference
+            } else if (instructName['iot'].includes(instruction[1])) { // if it is input output reference
                 value = instOpcode[instruction[1]]
             } else {// if it is data
                 value = instruction[1]
