@@ -14,9 +14,9 @@ const inpNibbles = document.querySelectorAll(".inp--box .nibble-box")
 const outNibbles = document.querySelectorAll(".out--box .nibble-box")
 
 const E = document.querySelector('.e--box .e-inner-box')
-const IEN = document.querySelector("ien-box")
-const IF = document.querySelector("if-box")
-const OF = document.querySelector("of-box")
+const IEN = document.querySelector(".ien-box")
+const IF = document.querySelector(".if-box")
+const OF = document.querySelector(".of-box")
 
 const PCLights = document.querySelectorAll(".pc-lights span")
 const ARLights = document.querySelectorAll(".ar-lights span")
