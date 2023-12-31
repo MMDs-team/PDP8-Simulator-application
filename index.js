@@ -264,34 +264,34 @@ const writeBinary = () => {
 
 const validateAssembly = () => {
     assembelyText.forEach((inst, i) => {
-        let instruction = inst.split(' ')
+        const instruction = inst.split(' ')
         
         const statuse =  window.api.validateInstruction(instruction)
         switch (statuse) {
             case 100:
-                return true
+                break
             case 101:
                 // show allert
-                alert("the assembly code is wrong!")
+                alert("the assembly code is wrong! (101)")
                 return false
             case 102:
                 // show allert
-                alert("the assembly code is wrong!")
+                alert("the assembly code is wrong! (102)")
                 return false
             case 103:
                 // show allert
-                alert("the assembly code is wrong!")
+                alert("the assembly code is wrong! (103)")
                 return false
             case 104:
                 // show allert
-                alert("the assembly code is wrong!")
+                alert("the assembly code is wrong! (104)")
                 return false
             case 105:
                 // show allert
-                alert("the assembly code is wrong!")
+                alert("the assembly code is wrong! (105)")
                 return false
             default:
-                alert("the assembly code is wrong!")
+                alert("the assembly code is wrong! (other)")
                 return false
         }
         
@@ -346,6 +346,7 @@ power.addEventListener("click", (e) => {
     if (ispowered){
         window.api.power()
         power.classList.add("active")
+        
         createPanel(getPcToStart())
         updateRegistersBox()
     } else {
@@ -366,11 +367,17 @@ pannelLock.addEventListener("click", () => {
 sendBtn.addEventListener("click", (e) => {
     e.preventDefault()
 
+    textArea.value = textArea.value.trim()
     assembelyText = textArea.value.split('\n')
+    for (let i = 0; i < assembelyText.length; i++) 
+        assembelyText[i] = replaceSpace(assembelyText[i])
+    
     let first = assembelyText[0].trim()
     first = first.split(" ")
     if (first[0]=="ORG") {
+        console.log(assembelyText)
         const answer = convertLabelToBasic(assembelyText)
+        console.log(answer)
         if (answer.status!==100) {
             alert("the assembly code is wrong!!")
             return
@@ -382,6 +389,7 @@ sendBtn.addEventListener("click", (e) => {
     }
 
     if (validateAssembly()) {
+        console.log(assembelyText)
         window.api.addToMemory(assembelyText)
         fileInput.value = null
     }
