@@ -33,7 +33,7 @@ module.exports.PDP = class PDP {
     }
     
     static setDR(value) { 
-        const val = value & ((1<<12) -1)
+        const val = value & ((1<<16) -1)
         this.#DR = val
     }
     
