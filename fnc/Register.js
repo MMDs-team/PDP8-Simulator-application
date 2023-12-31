@@ -99,11 +99,13 @@ const getRegistersValues = () => {
         ac: {
             hex: AC.getMem().toString(16).toUpperCase().slice(-4),
             dec: String(AC.getMem()),
+            oct: AC.getMem().toString(8).slice(-6),
             bin: AC.getMem().toString(2).slice(-16),
         },
         pc: {
             hex: pcVal.toString(16).toUpperCase().slice(-3),
             dec: String(pcVal),
+            oct: pcVal.toString(8).slice(-4),
             bin: pcVal.toString(2).slice(-12),
         },
         inp: {
@@ -149,9 +151,11 @@ const getRegistersValues = () => {
     }
 
     answer.ac.hex = '0'.repeat(4 - answer.ac.hex.length) + answer.ac.hex
+    answer.ac.oct = '0'.repeat(6 - answer.ac.oct.length) + answer.ac.oct
     answer.ac.bin = '0'.repeat(16 - answer.ac.bin.length) + answer.ac.bin
 
     answer.pc.hex = '0'.repeat(3 - answer.pc.hex.length) + answer.pc.hex
+    answer.pc.oct = '0'.repeat(4 - answer.pc.oct.length) + answer.pc.oct
     answer.pc.bin = '0'.repeat(12 - answer.pc.bin.length) + answer.pc.bin
 
     answer.inp.hex = '0'.repeat(2 - answer.inp.hex.length) + answer.inp.hex

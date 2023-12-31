@@ -30,8 +30,8 @@ class MemoryReference {
     }
 
     static BUN() { 
-        const DRValue = PDP.PDP.getDR() 
-        ProgramCounter.load(DRValue) 
+        const ARValue = PDP.PDP.getAR() 
+        ProgramCounter.load(ARValue) 
     }
 
     static BSA() {
