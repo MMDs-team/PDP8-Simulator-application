@@ -111,57 +111,51 @@ const getRegistersValues = () => {
         inp: {
             hex: INPR.getMem().toString(16).toUpperCase().slice(-2),
             dec: String(INPR.getMem()),
-            oct: INPR.getMem().toString(8).slice(-3),
             bin: INPR.getMem().toString(2).slice(-8),
         },
         if: {
             hex: IF.getMem() ? '1' : '0',
             dec: IF.getMem() ? '1' : '0',
-            oct: IF.getMem() ? '1' : '0',
             bin: IF.getMem() ? '1' : '0'
         },
         out: {
             hex: OUTR.getMem().toString(16).toUpperCase().slice(-2),
             dec: String(OUTR.getMem()),
-            oct: OUTR.getMem().toString(8).slice(-3),
             bin: OUTR.getMem().toString(2).slice(-8),
         },
         of: {
             hex: OF.getMem() ? '1' : '0',
             dec: OF.getMem() ? '1' : '0',
-            oct: OF.getMem() ? '1' : '0',
             bin: OF.getMem() ? '1' : '0'
         },
         e: {
             hex: E.getMem() ? '1' : '0',
             dec: E.getMem() ? '1' : '0',
-            oct: E.getMem() ? '1' : '0',
             bin: E.getMem() ? '1' : '0',
         },
         ien: {
             hex: IEN.getMem() ? '1' : '0',
             dec: IEN.getMem() ? '1' : '0',
-            oct: IEN.getMem() ? '1' : '0',
             bin: IEN.getMem() ? '1' : '0'
         },
         ar: {
             hex: arVal.toString(16).toUpperCase().slice(-3),
             dec: String(arVal),
-            oct: arVal.toString(8).slice(-4),
             bin: arVal.toString(2).slice(-12),
         },
         dr: {
             hex: drVal.toString(16).toUpperCase().slice(-4),
             dec: String(drVal),
-            oct: drVal.toString(8).slice(-6),
             bin: drVal.toString(2).slice(-16),
         }
     }
 
     answer.ac.hex = '0'.repeat(4 - answer.ac.hex.length) + answer.ac.hex
+    answer.ac.oct = '0'.repeat(6 - answer.ac.oct.length) + answer.ac.oct
     answer.ac.bin = '0'.repeat(16 - answer.ac.bin.length) + answer.ac.bin
 
     answer.pc.hex = '0'.repeat(3 - answer.pc.hex.length) + answer.pc.hex
+    answer.pc.oct = '0'.repeat(4 - answer.pc.oct.length) + answer.pc.oct
     answer.pc.bin = '0'.repeat(12 - answer.pc.bin.length) + answer.pc.bin
 
     answer.inp.hex = '0'.repeat(2 - answer.inp.hex.length) + answer.inp.hex
