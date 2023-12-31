@@ -123,7 +123,7 @@ const updateLights = (registersValues) => {
 
 const updateRegistersBox = () => {
     const registersValues = window.api.getRegistersValues()
-
+    console.log(registersValues)
     for (let i = 0; i < 4; i++) { // updating the accumulator register box in hex
         acNibbles[i].textContent = registersValues.ac.hex[i]
     }
