@@ -1,4 +1,3 @@
-const { INP } = require("./instructions/IOT")
 const ProgramCounter = require("./ProgramCounter.js")
 const PDP = require("./PDP.js")
 
