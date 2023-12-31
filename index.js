@@ -272,20 +272,26 @@ const validateAssembly = () => {
                 return true
             case 101:
                 // show allert
+                alert("the assembly code is wrong!")
                 return false
             case 102:
                 // show allert
+                alert("the assembly code is wrong!")
                 return false
             case 103:
                 // show allert
+                alert("the assembly code is wrong!")
                 return false
             case 104:
                 // show allert
+                alert("the assembly code is wrong!")
                 return false
             case 105:
                 // show allert
+                alert("the assembly code is wrong!")
                 return false
             default:
+                alert("the assembly code is wrong!")
                 return false
         }
         
@@ -365,7 +371,10 @@ sendBtn.addEventListener("click", (e) => {
     first = first.split(" ")
     if (first[0]=="ORG") {
         const answer = convertLabelToBasic(assembelyText)
-        if (answer.status!==100) return
+        if (answer.status!==100) {
+            alert("the assembly code is wrong!!")
+            return
+        }
 
         for (let i = 0; i < answer.assembly.length; i++) 
             answer.assembly[i] = answer.assembly[i].join(' ')               
