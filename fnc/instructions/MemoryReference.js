@@ -31,14 +31,13 @@ class MemoryReference {
 
     static BUN() { 
         const ARValue = PDP.PDP.getAR() 
-        ProgramCounter.load(ARValue) 
+        ProgramCounter.load(ARValue - 1) 
     }
 
     static BSA() {
         var ARValue = PDP.PDP.getAR() 
         const PCValue = ProgramCounter.get()
-        PDP.PDP.setMem(ARValue , PCValue)
-        ARValue += 1 
+        PDP.PDP.setMem(ARValue , PCValue + 1)
         PDP.PDP.setAR(ARValue)
         ProgramCounter.load(ARValue)
     }
@@ -48,7 +47,7 @@ class MemoryReference {
         const DRValue = PDP.PDP.getDR() + 1
         PDP.PDP.setDR(DRValue)
         PDP.PDP.setMem(ARValue , DRValue) 
-        if(DR == 0) ProgramCounter.increment() 
+        if(PDP.PDP.getDR() == 0) ProgramCounter.increment() 
     }
 }
 
