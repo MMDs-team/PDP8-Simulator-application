@@ -52,11 +52,18 @@ const pannelLock = document.querySelector("#pannel-lock")
 const InpInput = document.querySelector(".inp-inp")
 const inpInputBtn = document.querySelector(".input--label")
 
+const notification = document.querySelector('#notification')
+const txtNotif = document.querySelector('.txt-notif')
+const notifBtn = document.querySelector('.notf-btn')
+const wrapHole = document.querySelector('#wrap-hole')
+
 let valueSwitches = [0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0]
 let controlSwitches = [0,0,0,0, 0,0,0,0]
 let currentMemoryIndex = 0
 let ispowered = true
 let switchLock = false
+
+let myInterval;
 
 let currentAcBox = 0
 let currentPcBox = 0
@@ -123,7 +130,6 @@ const updateLights = (registersValues) => {
 
 const updateRegistersBox = () => {
     const registersValues = window.api.getRegistersValues()
-    console.log(registersValues)
     for (let i = 0; i < 4; i++) { // updating the accumulator register box in hex
         acNibbles[i].textContent = registersValues.ac.hex[i]
     }
@@ -272,26 +278,44 @@ const validateAssembly = () => {
                 break
             case 101:
                 // show allert
-                alert("the assembly code is wrong! (101)")
+                notification.classList.add('active')
+                txtNotif.textContent = "the assembly code is wrong! (101)"
+                wrapHole.classList.add('active')
+                
                 return false
             case 102:
                 // show allert
-                alert("the assembly code is wrong! (102)")
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly code is wrong! (102)'
+                wrapHole.classList.add('active')
+                
                 return false
             case 103:
                 // show allert
-                alert("the assembly code is wrong! (103)")
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly code is wrong! (103)'
+                wrapHole.classList.add('active')
+                
                 return false
             case 104:
                 // show allert
-                alert("the assembly code is wrong! (104)")
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly code is wrong! (104)'
+                wrapHole.classList.add('active')
+                
                 return false
             case 105:
                 // show allert
-                alert("the assembly code is wrong! (105)")
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly code is wrong! (105)'
+                wrapHole.classList.add('active')
+                
                 return false
             default:
-                alert("the assembly code is wrong! (other)")
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly code is wrong!!'
+                wrapHole.classList.add('active')
+                
                 return false
         }
         
@@ -299,11 +323,26 @@ const validateAssembly = () => {
     return true
 }
 
+const startFnc = () => {
+    let isNotFinished = true
+    let st = true
+    myInterval = setInterval( () => {
+        isNotFinished = window.api.start(st)
+        st = false
+        createPanel(getPcToStart())
+        updateRegistersBox()
+        if (!isNotFinished) {
+            clearInterval(myInterval)
+            myInterval = null
+        }
+    }, 1000)
+}
+
 
 const checkFunc = (switchNumber) => {
     switch (switchNumber) {
         case 0: //start
-            window.api.start()
+            startFnc()
             break;
         case 1: // load address
             window.api.loadAdd(valueSwitches)
@@ -346,6 +385,9 @@ power.addEventListener("click", (e) => {
     if (ispowered){
         window.api.power()
         power.classList.add("active")
+        textArea.value = ''
+        assembelyText = []
+        if (myInterval!=null) clearInterval(myInterval)
         
         createPanel(getPcToStart())
         updateRegistersBox()
@@ -375,12 +417,74 @@ sendBtn.addEventListener("click", (e) => {
     let first = assembelyText[0].trim()
     first = first.split(" ")
     if (first[0]=="ORG") {
-        console.log(assembelyText)
         const answer = convertLabelToBasic(assembelyText)
-        console.log(answer)
         if (answer.status!==100) {
-            alert("the assembly code is wrong!!")
+
             return
+        }
+        switch (answer.status) {
+            case 100:
+                return
+            case 101:
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (101)'
+                wrapHole.classList.add('active')
+                
+                break
+            case 102:
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (102)'
+                wrapHole.classList.add('active')
+                
+                break
+            case 103:
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (103)'
+                wrapHole.classList.add('active')
+                
+                break
+            case 104:
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (104)'
+                wrapHole.classList.add('active')
+                
+                break
+            case 105:
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (105)'
+                wrapHole.classList.add('active')
+                
+                break
+            case 106:
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (106)'
+                wrapHole.classList.add('active')
+                
+                break
+            case 107:
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (107)'
+                wrapHole.classList.add('active')
+                
+                break
+            case 108:
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (108)'
+                wrapHole.classList.add('active')
+                
+                break
+            case 109:
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (109)'
+                wrapHole.classList.add('active')
+                
+                break
+            default:
+                notification.classList.add('active')
+                txtNotif.textContent ='the assembly is not correct!!'
+                wrapHole.classList.add('active')
+                
+                break;
         }
 
         for (let i = 0; i < answer.assembly.length; i++) 
@@ -389,7 +493,6 @@ sendBtn.addEventListener("click", (e) => {
     }
 
     if (validateAssembly()) {
-        console.log(assembelyText)
         window.api.addToMemory(assembelyText)
         fileInput.value = null
     }
@@ -402,6 +505,15 @@ sendBtn.addEventListener("click", (e) => {
 // assembly
 let lastLabelItem = labelItems[0]
 let lastItem = items[0]
+
+notifBtn.addEventListener("click", (e)=>{
+    notification.classList.remove("active")
+    wrapHole.classList.remove("active")
+})
+wrapHole.addEventListener("click", (e)=>{
+    notification.classList.remove("active")
+    wrapHole.classList.remove("active")
+})
 
 labelItems.forEach((label, i) => {
     label.addEventListener("click", () => {
@@ -509,7 +621,6 @@ jumpBtn.addEventListener("click", (e) => {
 inpInputBtn.addEventListener("click", (e) => {
     const value = InpInput.value.toUpperCase()
     const ans = window.api.assignToINPR(value)
-    console.log(ans)
     if (!ans) // show alert
     updateRegistersBox()
 })

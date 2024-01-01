@@ -21,7 +21,7 @@ function createWindow (width, height) {
   })
 
   win.loadFile('index.html')
-  win.openDevTools()
+  // win.openDevTools()
 }
 
 app.whenReady().then(() => {

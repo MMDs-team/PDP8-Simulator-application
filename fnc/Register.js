@@ -1,10 +1,7 @@
 const ProgramCounter = require("./ProgramCounter.js")
 const PDP = require("./PDP.js")
 
-class Register{}
-
-
-class AC extends Register{
+class AC{
     
     static #mem = 0
 
@@ -26,7 +23,7 @@ class AC extends Register{
 
 
 
-class E extends Register{
+class E{
     
     static #mem = false
 
@@ -39,7 +36,7 @@ class E extends Register{
 
 
 
-class IEN extends Register{
+class IEN{
     static #mem = false
 
     static size = () => { return 1}
@@ -48,7 +45,7 @@ class IEN extends Register{
 
     static getMem() { return this.#mem }
 }
-class IF extends Register{
+class IF{
     static #mem = false
 
     static size = () => { return 1}
@@ -57,7 +54,7 @@ class IF extends Register{
 
     static getMem() { return this.#mem }
 }
-class OF extends Register{
+class OF{
     static #mem = false
 
     static size = () => { return 1}
@@ -66,7 +63,7 @@ class OF extends Register{
 
     static getMem() { return this.#mem }
 }
-class INPR extends Register{
+class INPR{
     static #mem = 0
 
     static size = () => { return 8}
@@ -77,7 +74,7 @@ class INPR extends Register{
 
     static getMem() { return this.#mem }
 }
-class OUTR extends Register{
+class OUTR{
     static #mem = 0
 
     static size = () => { return 8}
