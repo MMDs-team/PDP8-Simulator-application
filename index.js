@@ -52,6 +52,11 @@ const pannelLock = document.querySelector("#pannel-lock")
 const InpInput = document.querySelector(".inp-inp")
 const inpInputBtn = document.querySelector(".input--label")
 
+const notification = document.querySelector('#notification')
+const txtNotif = document.querySelector('.txt-notif')
+const notifBtn = document.querySelector('.notf-btn')
+const wrapHole = document.querySelector('#wrap-hole')
+
 let valueSwitches = [0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0]
 let controlSwitches = [0,0,0,0, 0,0,0,0]
 let currentMemoryIndex = 0
@@ -273,26 +278,44 @@ const validateAssembly = () => {
                 break
             case 101:
                 // show allert
-                alert("the assembly code is wrong! (101)")
+                notification.classList.add('active')
+                txtNotif.textContent = "the assembly code is wrong! (101)"
+                wrapHole.classList.add('active')
+                
                 return false
             case 102:
                 // show allert
-                alert("the assembly code is wrong! (102)")
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly code is wrong! (102)'
+                wrapHole.classList.add('active')
+                
                 return false
             case 103:
                 // show allert
-                alert("the assembly code is wrong! (103)")
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly code is wrong! (103)'
+                wrapHole.classList.add('active')
+                
                 return false
             case 104:
                 // show allert
-                alert("the assembly code is wrong! (104)")
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly code is wrong! (104)'
+                wrapHole.classList.add('active')
+                
                 return false
             case 105:
                 // show allert
-                alert("the assembly code is wrong! (105)")
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly code is wrong! (105)'
+                wrapHole.classList.add('active')
+                
                 return false
             default:
-                alert("the assembly code is wrong! (other)")
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly code is wrong!!'
+                wrapHole.classList.add('active')
+                
                 return false
         }
         
@@ -403,34 +426,64 @@ sendBtn.addEventListener("click", (e) => {
             case 100:
                 return
             case 101:
-                alert('the assembly is not correct!! (101)')
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (101)'
+                wrapHole.classList.add('active')
+                
                 break
             case 102:
-                alert('the assembly is not correct!! (102)')
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (102)'
+                wrapHole.classList.add('active')
+                
                 break
             case 103:
-                alert('the assembly is not correct!! (103)')
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (103)'
+                wrapHole.classList.add('active')
+                
                 break
             case 104:
-                alert('the assembly is not correct!! (104)')
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (104)'
+                wrapHole.classList.add('active')
+                
                 break
             case 105:
-                alert('the assembly is not correct!! (105)')
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (105)'
+                wrapHole.classList.add('active')
+                
                 break
             case 106:
-                alert('the assembly is not correct!! (106)')
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (106)'
+                wrapHole.classList.add('active')
+                
                 break
             case 107:
-                alert('the assembly is not correct!! (107)')
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (107)'
+                wrapHole.classList.add('active')
+                
                 break
             case 108:
-                alert('the assembly is not correct!! (108)')
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (108)'
+                wrapHole.classList.add('active')
+                
                 break
             case 109:
-                alert('the assembly is not correct!! (109)')
+                notification.classList.add('active')
+                txtNotif.textContent = 'the assembly is not correct!! (109)'
+                wrapHole.classList.add('active')
+                
                 break
             default:
-                alert('the assembly is not correct!! (ult)')
+                notification.classList.add('active')
+                txtNotif.textContent ='the assembly is not correct!!'
+                wrapHole.classList.add('active')
+                
                 break;
         }
 
@@ -452,6 +505,15 @@ sendBtn.addEventListener("click", (e) => {
 // assembly
 let lastLabelItem = labelItems[0]
 let lastItem = items[0]
+
+notifBtn.addEventListener("click", (e)=>{
+    notification.classList.remove("active")
+    wrapHole.classList.remove("active")
+})
+wrapHole.addEventListener("click", (e)=>{
+    notification.classList.remove("active")
+    wrapHole.classList.remove("active")
+})
 
 labelItems.forEach((label, i) => {
     label.addEventListener("click", () => {

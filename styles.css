@@ -1,3 +1,47 @@
+#notification{
+    position: absolute;
+    left: calc(50% - 5rem);
+    top: calc(50% - 5rem);
+    padding: 1.5rem;
+    border: 1px solid #333;
+    background-color: #e1e1e1;
+    font-size: 1rem;
+    font-weight: bold;
+    z-index: 2;
+    display: none;
+}
+
+#notification.active{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 30rem !important;
+    height: 10rem !important;
+    box-shadow: 2px 2px 10px #5555;
+}
+
+#wrap-hole{
+    background-color: #9e9d9d33;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: none;
+}
+
+#wrap-hole.active{ 
+    display: block;
+}
+
+#notification div,#notification button  {
+    z-index: 3;
+}
+#notification button{
+    padding: .5rem 1rem;
+}
 
 
 #exampleTextarea{
