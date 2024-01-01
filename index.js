@@ -58,6 +58,8 @@ let currentMemoryIndex = 0
 let ispowered = true
 let switchLock = false
 
+let myInterval;
+
 let currentAcBox = 0
 let currentPcBox = 0
 const baseName = ['hex', 'oct', 'dec']
@@ -123,7 +125,6 @@ const updateLights = (registersValues) => {
 
 const updateRegistersBox = () => {
     const registersValues = window.api.getRegistersValues()
-    console.log(registersValues)
     for (let i = 0; i < 4; i++) { // updating the accumulator register box in hex
         acNibbles[i].textContent = registersValues.ac.hex[i]
     }
@@ -299,11 +300,26 @@ const validateAssembly = () => {
     return true
 }
 
+const startFnc = () => {
+    let isNotFinished = true
+    let st = true
+    myInterval = setInterval( () => {
+        isNotFinished = window.api.start(st)
+        st = false
+        createPanel(getPcToStart())
+        updateRegistersBox()
+        if (!isNotFinished) {
+            clearInterval(myInterval)
+            myInterval = null
+        }
+    }, 1000)
+}
+
 
 const checkFunc = (switchNumber) => {
     switch (switchNumber) {
         case 0: //start
-            window.api.start()
+            startFnc()
             break;
         case 1: // load address
             window.api.loadAdd(valueSwitches)
@@ -346,6 +362,9 @@ power.addEventListener("click", (e) => {
     if (ispowered){
         window.api.power()
         power.classList.add("active")
+        textArea.value = ''
+        assembelyText = []
+        if (myInterval!=null) clearInterval(myInterval)
         
         createPanel(getPcToStart())
         updateRegistersBox()
@@ -375,9 +394,7 @@ sendBtn.addEventListener("click", (e) => {
     let first = assembelyText[0].trim()
     first = first.split(" ")
     if (first[0]=="ORG") {
-        console.log(assembelyText)
         const answer = convertLabelToBasic(assembelyText)
-        console.log(answer)
         if (answer.status!==100) {
             alert("the assembly code is wrong!!")
             return
@@ -389,7 +406,6 @@ sendBtn.addEventListener("click", (e) => {
     }
 
     if (validateAssembly()) {
-        console.log(assembelyText)
         window.api.addToMemory(assembelyText)
         fileInput.value = null
     }
@@ -509,7 +525,6 @@ jumpBtn.addEventListener("click", (e) => {
 inpInputBtn.addEventListener("click", (e) => {
     const value = InpInput.value.toUpperCase()
     const ans = window.api.assignToINPR(value)
-    console.log(ans)
     if (!ans) // show alert
     updateRegistersBox()
 })

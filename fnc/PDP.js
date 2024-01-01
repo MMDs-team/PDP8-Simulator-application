@@ -22,23 +22,23 @@ module.exports.PDP = class PDP {
 
     static isStop = false
 
-    static setMem(i, value) { 
+    static setMem(i, value) {
         const val = value & ((1<<16) -1)
-        this.#memory[i] = val 
+        this.#memory[i] = val
     }
-    
-    static setAR(value) { 
+
+    static setAR(value) {
         const val = value & ((1<<12) -1)
         this.#AR = val
     }
-    
-    static setDR(value) { 
+
+    static setDR(value) {
         const val = value & ((1<<16) -1)
         this.#DR = val
     }
-    
+
     static getMem(i) { return this.#memory[i] }
-    
+
     static getAR() { return this.#AR }
 
     static getDR() { return this.#DR }
@@ -62,14 +62,15 @@ module.exports.PDP = class PDP {
 
     static start() {
         let IR = this.getMem(ProgramCounter.get())
-        if (!this.isOn) return
+        if (!this.isOn) return false
         this.decode(IR)
         if (this.R) {
             this.interrupt()
-            return
+            return true
         }
         ProgramCounter.increment()
-        if (!this.stop && !this.singInst) this.start()
+        if (!this.isStop && !this.singInst) return true
+        return false
     }
 
     static interrupt() {
@@ -86,10 +87,10 @@ module.exports.PDP = class PDP {
         let address = IR & ((1 << 12) - 1)
 
         if (IEN.getMem() && (OF.getMem() || IF.getMem())) this.R = true
-        if (d !== 7 && I === 1) address = this.getMem(address) & ((1 << 12) - 1)
+        if (d !== 7 && I !== 0) address = this.getMem(address) & ((1 << 12) - 1)
         this.setAR(address)
         this.setDR(PDP.getMem(address))
-      
+        
         switch (d) {
             case 0:
                 MemoryReference.AND()
