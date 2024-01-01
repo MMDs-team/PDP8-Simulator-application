@@ -8,61 +8,41 @@ class Instruction {
         // 104 : wrong indirect char 
         // 105 : wrong data char 
         // 106 : data length not enough
-        // 107 : inst length not enough 
+        // 107 : inst length not enough
+        // 108 : label not find
+        // 109 : END not find 
 
-    static validateInstruction(inst) {
-
-        const instructName = {
+        static instructName = {
             'mem': [ 'AND', 'ADD', 'LDA', 'STA', 'BUN', 'BSA', 'ISZ'],
             'reg': [ 'CLA', 'CLE', 'CMA', 'CME', 'CIR', 'CIL', 'INC', 'SPA', 'SNA', 'SZA', 'SZE', 'HLT'],
             'iot': [ 'INP', 'OUT', 'SKI', 'SKO', 'ION', 'IOF']
         }
     
-        const hex = '0123456789ABCDEF'
+        static hex = '0123456789ABCDEF'
 
-        // check first address
-        for(let index = 0 ; index < 3 ; index++) if(!hex.includes(inst[0][index])) return 101
+    static validateInstruction(inst) {
+        for(let index = 0 ; index < 3 ; index++) if(!Instruction.hex.includes(inst[0][index])) return 101
         if(inst[0][3] != ":") return 101 
 
         switch (inst.length) {
             case 4:
-                //check if it is memory reference and the last element is 'I':  (001: ADD 0A2 I)
-
-                // check instruction
-                if(!instructName["mem"].includes(inst[1])) return 103
-
-                // check second address
+                if(!Instruction.instructName["mem"].includes(inst[1])) return 103
                 if(inst[2].length !== 3) return 102 
-                for(let index = 0 ; index < 3 ; index++) if(!hex.includes(inst[2][index])) return 102
-
-                // check indirect sign 
+                for(let index = 0 ; index < 3 ; index++) if(!Instruction.hex.includes(inst[2][index])) return 102
                 if(inst[3] != "I") return 104 
-
                 return 100 
             case 3:
-                //check if it is memory reference and the last element and it is indirect : (001: ADD 0BC)
-
-                // check instruction
-                if(!instructName["mem"].includes(inst[1])) return 103
-
-                // check second address
+                if(!Instruction.instructName["mem"].includes(inst[1])) return 103
                 if(inst[2].length !== 3) return 102
-                for(let index = 0 ; index < 3 ; index++) if(!hex.includes(inst[2][index])) return 102
+                for(let index = 0 ; index < 3 ; index++) if(!Instruction.hex.includes(inst[2][index])) return 102
 
                 return 100 
             case 2:
-                //check if it is register reference or iot refrence or it is data: (00A: CLA)  or (00A: ION) or (00A: B4C2)
-
-                // check instruction
-                if(instructName["reg"].includes(inst[1]) || instructName["iot"].includes(inst[1])) return 100
-
-                // check data validation of data  
+                if(Instruction.instructName["reg"].includes(inst[1]) || Instruction.instructName["iot"].includes(inst[1])) return 100
                 if(inst[1].length !== 4) return 106 
-                for(let index = 0 ; index < 4 ; index++) if(!hex.includes(inst[1][index])) return 105
-
+                for(let index = 0 ; index < 4 ; index++) if(!Instruction.hex.includes(inst[1][index])) return 105
                 return 100 
             default :
-                // it is wrong!!!!
                 return 107
         }
     }
@@ -80,9 +60,10 @@ class Instruction {
         let pushArr = []
         let pushAdd = 0
 
-        for(let index = 1 ; index < instLen - 1 ; index++){
+        for(let index = 1 ; index < instLen ; index++){
             validateRes = this.validateCodeLine(inst[index])
             if(validateRes != 100) return {'status' : validateRes , 'assembly': codeLine}
+            if(index == instLen - 1) break ;
             
             txtLen = inst[index][0].length 
             if(inst[index][0][txtLen - 1] == ','){
@@ -106,7 +87,6 @@ class Instruction {
             else pushAdd = pushAdd + ":"
             pushArr.push(pushAdd.toUpperCase())
 
-            
             switch(lineLen){
                 case 1:
                     pushArr.push(inst[index][0])
@@ -116,7 +96,8 @@ class Instruction {
                         pushArr.push(inst[index][1])
                     }else{
                         pushArr.push(inst[index][0])
-                        pushArr.push(labels[inst[index][1]])
+                        if(inst[index][1] in labels) pushArr.push(labels[inst[index][1]]) ;
+                        else return {'status' : 108 , 'assembly': []}
                     }
                     break ;
                 case 3:
@@ -133,43 +114,25 @@ class Instruction {
 
 
     static validateCodeLine(inst){
-        
-        const instructName = {
-            'mem': [ 'AND', 'ADD', 'LDA', 'STA', 'BUN', 'BSA', 'ISZ'],
-            'reg': [ 'CLA', 'CLE', 'CMA', 'CME', 'CIR', 'CIL', 'INC', 'SPA', 'SNA', 'SZA', 'SZE', 'HLT'],
-            'iot': [ 'INP', 'OUT', 'SKI', 'SKO', 'ION', 'IOF'],
-        }
-    
-        const hex = '0123456789ABCDEF'
 
         switch (inst.length) {
             case 1:
-                // this line only can be a register or I/O instruction 
-
-                if(instructName["reg"].includes(inst[0]) || instructName["iot"].includes(inst[0])) return 100
+                if(inst[0] == "END") return 100
+                if(Instruction.instructName["reg"].includes(inst[0]) || Instruction.instructName["iot"].includes(inst[0])) return 100
                 return 103
             case 2:
-                // label, data 
                 if(inst[0].length >= 1 && inst[0][inst[0].length - 1] == ','){
-                    // check data validation of data  
                     if(inst[1].length !== 4) return 106 
-                    for(let index = 0 ; index < 4 ; index++) if(!hex.includes(inst[1][index])) return 105
+                    for(let index = 0 ; index < 4 ; index++) if(!Instruction.hex.includes(inst[1][index])) return 105
                     return 100
                 }
-                // inst label (this line only can be a memory instruction)
-                else if(instructName["mem"].includes(inst[0])) return 100 
-
+                else if(Instruction.instructName["mem"].includes(inst[0])) return 100 
                 return 103              
             case 3:
-                // inst label I (this line only can be a memory instruction)
-                if(!instructName["mem"].includes(inst[0])) return 103 
-
-                // check indirect char 
+                if(!Instruction.instructName["mem"].includes(inst[0])) return 103 
                 if(inst[2] != "I") return 104 
-
                 return 100
             default :
-                // length not enough or to long 
                 return 107 
         }
     }
