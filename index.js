@@ -396,8 +396,42 @@ sendBtn.addEventListener("click", (e) => {
     if (first[0]=="ORG") {
         const answer = convertLabelToBasic(assembelyText)
         if (answer.status!==100) {
-            alert("the assembly code is wrong!!")
+
             return
+        }
+        switch (answer.status) {
+            case 100:
+                return
+            case 101:
+                alert('the assembly is not correct!! (101)')
+                break
+            case 102:
+                alert('the assembly is not correct!! (102)')
+                break
+            case 103:
+                alert('the assembly is not correct!! (103)')
+                break
+            case 104:
+                alert('the assembly is not correct!! (104)')
+                break
+            case 105:
+                alert('the assembly is not correct!! (105)')
+                break
+            case 106:
+                alert('the assembly is not correct!! (106)')
+                break
+            case 107:
+                alert('the assembly is not correct!! (107)')
+                break
+            case 108:
+                alert('the assembly is not correct!! (108)')
+                break
+            case 109:
+                alert('the assembly is not correct!! (109)')
+                break
+            default:
+                alert('the assembly is not correct!! (ult)')
+                break;
         }
 
         for (let i = 0; i < answer.assembly.length; i++) 
