@@ -10,7 +10,7 @@ const { contextBridge } = require('electron')
 
 const sayHello = () => { return "Hello World"}
 
-const {Memory, addToMemory, getBinHex} = require('./fnc/Memory.js')
+const {Memory, addToMemory} = require('./fnc/Memory.js')
 
 const {
   start,
@@ -51,7 +51,7 @@ contextBridge.exposeInMainWorld('api', {
   createCodeLine: (inst) => Instruction.createCodeLine(inst),
   assignToINPR: (inp) => IOT.assignToINPR(inp),
   power: () => power(),
-  start: () => start(),
+  start: (inp) => start(inp),
   loadAdd: (value) => loadAdd(value),
   deposit: (value) => deposit(value),
   examinate: () => examinate(),
