@@ -580,8 +580,11 @@ fileInput.onchange = () => {
 }
 
 textArea.addEventListener("keyup", () => {
+    let savedPosition = textArea.selectionEnd
     textArea.value = textArea.value.toUpperCase()
+    textArea.selectionEnd = savedPosition
 })
+
 
 let myTimeOut = null;
 clockTime.addEventListener("input", (e) => {
@@ -598,6 +601,17 @@ clockTime.addEventListener("input", (e) => {
     }, 1000)
 })
 
+OF.addEventListener("click", (e) => {
+    const val = ~window.api.OFGetMem()
+    window.api.OFSetMem(val)
+    updateRegistersBox()
+})
+
+IF.addEventListener("click", (e) => { 
+    const val = ~window.api.IFGetMem() 
+    window.api.IFSetMem(val)
+    updateRegistersBox()
+})
 
 // /////////  memory panel ////////////////
 
