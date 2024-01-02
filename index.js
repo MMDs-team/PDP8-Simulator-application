@@ -580,8 +580,11 @@ fileInput.onchange = () => {
 }
 
 textArea.addEventListener("keyup", () => {
+    let savedPosition = textArea.selectionEnd
     textArea.value = textArea.value.toUpperCase()
+    textArea.selectionEnd = savedPosition
 })
+
 
 let myTimeOut = null;
 clockTime.addEventListener("input", (e) => {
