@@ -601,6 +601,17 @@ clockTime.addEventListener("input", (e) => {
     }, 1000)
 })
 
+OF.addEventListener("click", (e) => {
+    const val = ~window.api.OFGetMem()
+    window.api.OFSetMem(val)
+    updateRegistersBox()
+})
+
+IF.addEventListener("click", (e) => { 
+    const val = ~window.api.IFGetMem() 
+    window.api.IFSetMem(val)
+    updateRegistersBox()
+})
 
 // /////////  memory panel ////////////////
 
