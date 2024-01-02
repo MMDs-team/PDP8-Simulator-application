@@ -57,11 +57,14 @@ const txtNotif = document.querySelector('.txt-notif')
 const notifBtn = document.querySelector('.notf-btn')
 const wrapHole = document.querySelector('#wrap-hole')
 
+const clockTime = document.querySelector("#clock-time")
+
 let valueSwitches = [0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0, 0,0,0]
 let controlSwitches = [0,0,0,0, 0,0,0,0]
 let currentMemoryIndex = 0
 let ispowered = true
 let switchLock = false
+let clock = 300
 
 let myInterval;
 
@@ -335,7 +338,7 @@ const startFnc = () => {
             clearInterval(myInterval)
             myInterval = null
         }
-    }, 1000)
+    }, clock)
 }
 
 
@@ -383,16 +386,16 @@ const convertLabelToBasic = (inpTxt) => {
 power.addEventListener("click", (e) => {
     ispowered = !ispowered
     if (ispowered){
-        window.api.power()
         power.classList.add("active")
+    } else {
+        power.classList.remove("active")
+        window.api.power()
         textArea.value = ''
         assembelyText = []
         if (myInterval!=null) clearInterval(myInterval)
-        
+        binaryText.innerHTML = ""
         createPanel(getPcToStart())
         updateRegistersBox()
-    } else {
-        power.classList.remove("active")
     }
 })
 
@@ -591,6 +594,20 @@ textArea.addEventListener("keyup", () => {
     textArea.value = textArea.value.toUpperCase()
 })
 
+let myTimeOut = null;
+clockTime.addEventListener("input", (e) => {
+    if (myTimeOut!=null) {
+        clearTimeout(myTimeOut)
+        myTimeOut = null
+    }
+    let value = e.target.value
+    value = value > 5000 ? 5000 : value < 10 ? 10 : value;
+    clock = value
+    myTimeOut = setTimeout(() => {
+        e.target.value = value
+        myTimeOut = null
+    }, 1000)
+})
 
 
 // /////////  memory panel ////////////////

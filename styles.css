@@ -11,6 +11,14 @@
     display: none;
 }
 
+
+#clock-time{
+    font-size: x-large;
+    width: 6rem;
+    box-shadow: 1px 1px 5px #555;
+    border: .5rem solid #0f9d30;
+}
+
 #notification.active{
     display: flex;
     flex-direction: column;
