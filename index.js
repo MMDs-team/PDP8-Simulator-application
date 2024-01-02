@@ -421,73 +421,62 @@ sendBtn.addEventListener("click", (e) => {
     first = first.split(" ")
     if (first[0]=="ORG") {
         const answer = convertLabelToBasic(assembelyText)
-        if (answer.status!==100) {
-
-            return
-        }
+        
+        console.log(answer)
         switch (answer.status) {
             case 100:
-                return
+                console.log(answer)
+                break
             case 101:
                 notification.classList.add('active')
                 txtNotif.textContent = 'the assembly is not correct!! (101)'
                 wrapHole.classList.add('active')
-                
-                break
+                return
             case 102:
                 notification.classList.add('active')
                 txtNotif.textContent = 'the assembly is not correct!! (102)'
                 wrapHole.classList.add('active')
-                
-                break
+                return
             case 103:
                 notification.classList.add('active')
                 txtNotif.textContent = 'the assembly is not correct!! (103)'
                 wrapHole.classList.add('active')
-                
-                break
+                return
             case 104:
                 notification.classList.add('active')
                 txtNotif.textContent = 'the assembly is not correct!! (104)'
                 wrapHole.classList.add('active')
-                
-                break
+                return
             case 105:
                 notification.classList.add('active')
                 txtNotif.textContent = 'the assembly is not correct!! (105)'
                 wrapHole.classList.add('active')
-                
-                break
+                return
             case 106:
                 notification.classList.add('active')
                 txtNotif.textContent = 'the assembly is not correct!! (106)'
                 wrapHole.classList.add('active')
-                
-                break
+                return
             case 107:
                 notification.classList.add('active')
                 txtNotif.textContent = 'the assembly is not correct!! (107)'
                 wrapHole.classList.add('active')
-                
-                break
+                return
             case 108:
                 notification.classList.add('active')
                 txtNotif.textContent = 'the assembly is not correct!! (108)'
                 wrapHole.classList.add('active')
-                
-                break
+                return
             case 109:
                 notification.classList.add('active')
                 txtNotif.textContent = 'the assembly is not correct!! (109)'
                 wrapHole.classList.add('active')
-                
-                break
+                return
             default:
                 notification.classList.add('active')
                 txtNotif.textContent ='the assembly is not correct!!'
                 wrapHole.classList.add('active')
-                
-                break;
+                return
         }
 
         for (let i = 0; i < answer.assembly.length; i++) 
