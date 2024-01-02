@@ -508,11 +508,15 @@
             </div>
 
             <div class="row">
-              <label class="col-6" for="e-box"></label>
-              <label class="col-3"></label>
+              <label class="col-2"></label>
+              <label class="col-3" >CK <span class="base-label">ms</span></label>
+              <label class="col-4"></label>
               <label class="col-3" for="inp-box">INP <span class="base-label">hex</span></label>
             </div>
-            <div class="col-6 inp-wrap-int">
+            <div class="col-3 inp-wrap-int">
+              <input type="number"  name="clock" id="clock-time" onkeypress="return event.charCode >= 48" min="10" max="5000" value="300">
+            </div>
+              <div class="col-3 inp-wrap-int">
               <div class="input--label btn btn-success px-4 fs-2">INPUT</div>
               <input type="text" class="inp-inp" placeholder="0x">
             </div>
