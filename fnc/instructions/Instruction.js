@@ -101,9 +101,22 @@ class Instruction {
                     }
                     break ;
                 case 3:
-                    pushArr.push(inst[index][0])
-                    pushArr.push(labels[inst[index][1]])
-                    pushArr.push(inst[index][2])
+                    if(inst[index][0][inst[index][0].length - 1] == ','){
+                        pushArr.push(inst[index][1])
+                        if(inst[index][2] in labels) pushArr.push(labels[inst[index][2]]) ;
+                        else return {'status' : 108 , 'assembly': []}
+                    }else{
+                        pushArr.push(inst[index][0])
+                        if(inst[index][1] in labels) pushArr.push(labels[inst[index][1]]) ;
+                        else return {'status' : 108 , 'assembly': []}
+                        pushArr.push(inst[index][2])
+                    }
+                    break ;
+                case 4:
+                    pushArr.push(inst[index][1])
+                    if(inst[index][2] in labels) pushArr.push(labels[inst[index][2]]) ;
+                    else return {'status' : 108 , 'assembly': []}
+                    pushArr.push(inst[index][3])
                     break ;
                 }
             codeLine.push(pushArr)
@@ -121,17 +134,30 @@ class Instruction {
                 if(Instruction.instructName["reg"].includes(inst[0]) || Instruction.instructName["iot"].includes(inst[0])) return 100
                 return 103
             case 2:
-                if(inst[0].length >= 1 && inst[0][inst[0].length - 1] == ','){
-                    if(inst[1].length !== 4) return 106 
-                    for(let index = 0 ; index < 4 ; index++) if(!Instruction.hex.includes(inst[1][index])) return 105
-                    return 100
+                if(inst[0].length > 1 && inst[0][inst[0].length - 1] == ','){
+                    if(inst[1] == "END") return 100
+                    if(inst[1].length == 4){
+                        for(let index = 0 ; index < 4 ; index++) if(!Instruction.hex.includes(inst[1][index])) return 105
+                        return 100
+                    }
+                    if(Instruction.instructName["reg"].includes(inst[1]) || Instruction.instructName["iot"].includes(inst[1])) return 100
+                    return 103
                 }
-                else if(Instruction.instructName["mem"].includes(inst[0])) return 100 
-                return 103              
+                if(Instruction.instructName["mem"].includes(inst[0])) return 100
+                return 100          
             case 3:
+                if(inst[0].length > 1 && inst[0][inst[0].length - 1] == ','){
+                    if(Instruction.instructName["mem"].includes(inst[1])) return 100
+                    return 103
+                }
                 if(!Instruction.instructName["mem"].includes(inst[0])) return 103 
                 if(inst[2] != "I") return 104 
                 return 100
+            case 4:
+                if(inst[0].length <= 1 && inst[0][inst[0].length - 1] != ',') return 103 
+                if(!Instruction.instructName["mem"].includes(inst[1])) return 103 
+                if(inst[3] != "I") return 104 
+                return 100 
             default :
                 return 107 
         }
