@@ -9,6 +9,7 @@ class MemoryReference {
         const DRValue = PDP.PDP.getDR() 
         const answer = ACValue & DRValue
         AC.setMem(answer)
+        E.setMem(Boolean(answer & (1 << 16)))
     }
 
     static ADD() {
