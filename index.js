@@ -640,7 +640,7 @@ jumpBtn.addEventListener("click", (e) => {
 
 inpInputBtn.addEventListener("click", (e) => {
     const value = InpInput.value.toUpperCase()
-    const ans = window.api.assignToINPR(value)
+    const ans = window.api.setInputRegister(value)
     if (!ans) // show alert
     updateRegistersBox()
 })

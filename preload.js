@@ -30,11 +30,10 @@ const ProgramConter = require('./fnc/ProgramCounter.js')
 const { findWord, assemble } = require('./fnc/Word.js')
 const PDP = require('./fnc/PDP.js')
 const power = () => PDP.PDP.power()
-const { IF, OF } = require('./fnc/Register.js')
+const { IF, OF, INPR } = require('./fnc/Register.js')
 
 const getProgramCounterMem = () => ProgramConter.get()
 
-const IOT = require('./fnc/instructions/IOT.js')
 
 contextBridge.exposeInMainWorld('api', {
   node: () => process.versions.node,
@@ -51,10 +50,10 @@ contextBridge.exposeInMainWorld('api', {
   IFSetMem: (inp) => IF.setMem(inp),
   OFGetMem: () => OF.getMem(),
   OFSetMem: (inp) => OF.setMem(inp),
+  setInputRegister: (inp) => INPR.setMem(inp),
   PDP,
   Instruction,
   createCodeLine: (inst) => Instruction.createCodeLine(inst),
-  assignToINPR: (inp) => IOT.assignToINPR(inp),
   power: () => power(),
   start: (inp) => start(inp),
   loadAdd: (value) => loadAdd(value),

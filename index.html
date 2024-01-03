@@ -67,7 +67,7 @@
                 <div class="down-btn btn btn-dark px-3">down</div>
                 <div class="jump-btn btn btn-dark px-3">jump</div>
                 <div class="address">
-                  <input type="text" class="address-inp form-control border border-dark px-0" placeholder="0x">
+                  <input type="text" class="address-inp form-control border border-dark px-0"   onkeypress="return (event.charCode > 47 && event.charCode<58)||(event.charCode > 64 && event.charCode<71)||(event.charCode > 96 && event.charCode<103)" maxlength="3" placeholder="0x">
                 </div>
               </div>
             </div>
@@ -514,11 +514,11 @@
               <label class="col-3" for="inp-box">INP <span class="base-label">hex</span></label>
             </div>
             <div class="col-3 inp-wrap-int">
-              <input type="number"  name="clock" id="clock-time" onkeypress="return event.charCode >= 48" min="10" max="5000" value="300">
+              <input type="number"  name="clock" id="clock-time" onkeypress="return (event.charCode > 47 && event.charCode<58)" min="10" max="5000" value="300">
             </div>
               <div class="col-3 inp-wrap-int">
               <div class="input--label btn btn-success px-4 fs-2">INPUT</div>
-              <input type="text" class="inp-inp" placeholder="0x">
+              <input type="text" class="inp-inp"  onkeypress="return (event.charCode > 47 && event.charCode<58)||(event.charCode > 64 && event.charCode<71)||(event.charCode > 96 && event.charCode<103)" maxlength="2" placeholder="0x">
             </div>
             <div class="col-6 reg--box inp--box">
               <div class="row">
