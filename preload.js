@@ -8,8 +8,6 @@
 
 const { contextBridge } = require('electron')
 
-const sayHello = () => { return "Hello World"}
-
 const {Memory, addToMemory} = require('./fnc/Memory.js')
 
 const {
@@ -29,21 +27,15 @@ const { validateInstruction, Instruction} = require('./fnc/instructions/Instruct
 const ProgramConter = require('./fnc/ProgramCounter.js')
 const { findWord, assemble } = require('./fnc/Word.js')
 const PDP = require('./fnc/PDP.js')
-const power = () => PDP.PDP.power()
 const { IF, OF, INPR } = require('./fnc/Register.js')
 
-const getProgramCounterMem = () => ProgramConter.get()
 
 
 contextBridge.exposeInMainWorld('api', {
-  node: () => process.versions.node,
-  chrome: () => process.versions.chrome,
-  electron: () => process.versions.electron,
-  sayHello: () => sayHello(),
   addToMemory: (assem) => addToMemory(assem),
   Memory: Memory,
   ProgramConter,
-  getProgramCounterMem: () => getProgramCounterMem(),
+  getProgramCounterMem: () => ProgramConter.get(),
   findWord: (start) => findWord(start),
   assemble: (inp) => assemble(inp),
   IFGetMem: () => IF.getMem(),
@@ -51,10 +43,9 @@ contextBridge.exposeInMainWorld('api', {
   OFGetMem: () => OF.getMem(),
   OFSetMem: (inp) => OF.setMem(inp),
   setInputRegister: (inp) => INPR.setMem(inp),
-  PDP,
   Instruction,
   createCodeLine: (inst) => Instruction.createCodeLine(inst),
-  power: () => power(),
+  power: () => PDP.PDP.power(),
   start: (inp) => start(inp),
   loadAdd: (value) => loadAdd(value),
   deposit: (value) => deposit(value),

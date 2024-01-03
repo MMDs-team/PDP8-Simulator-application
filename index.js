@@ -95,6 +95,12 @@ const getPcToStart = () => {
     return start
 }
 
+const showAlert = (txt, status, i='assembly') => {
+    notification.classList.add('active')
+    txtNotif.textContent = `error in [${i}]: ${txt}. [status code:${status}]`
+    wrapHole.classList.add('active')
+}
+
 
 const updateLights = (registersValues) => {
     const PCVlue = registersValues.pc.bin.split("").reverse().join("");
@@ -275,50 +281,39 @@ const validateAssembly = () => {
     assembelyText.forEach((inst, i) => {
         const instruction = inst.split(' ')
         
-        const statuse =  window.api.validateInstruction(instruction)
-        switch (statuse) {
+        const status =  window.api.validateInstruction(instruction)
+        switch (status) {
             case 100:
                 break
             case 101:
-                // show allert
-                notification.classList.add('active')
-                txtNotif.textContent = "the assembly code is wrong! (101)"
-                wrapHole.classList.add('active')
-                
+                showAlert('wrong first address', status, i)
                 return false
             case 102:
-                // show allert
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly code is wrong! (102)'
-                wrapHole.classList.add('active')
-                
+                showAlert('wrong second address', status, i)
                 return false
             case 103:
-                // show allert
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly code is wrong! (103)'
-                wrapHole.classList.add('active')
-                
+                showAlert('wrong instruction', status, i)
                 return false
             case 104:
-                // show allert
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly code is wrong! (104)'
-                wrapHole.classList.add('active')
-                
+                showAlert('wrong indirect char', status, i)
                 return false
             case 105:
-                // show allert
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly code is wrong! (105)'
-                wrapHole.classList.add('active')
-                
+                showAlert('wrong data char', status, i)
+                return false
+            case 106:
+                showAlert('data length not enough', status, i)
+                return false
+            case 107:
+                showAlert('inst length not enough', status, i)
+                return false
+            case 108:
+                showAlert('label not find', status, i)
+                return false
+            case 109:
+                showAlert('END not find', status, i)
                 return false
             default:
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly code is wrong!!'
-                wrapHole.classList.add('active')
-                
+                showAlert('error', status, i)
                 return false
         }
         
@@ -343,6 +338,7 @@ const startFnc = () => {
 
 
 const checkFunc = (switchNumber) => {
+    if (!ispowered) return
     switch (switchNumber) {
         case 0: //start
             startFnc()
@@ -390,10 +386,8 @@ power.addEventListener("click", (e) => {
     } else {
         power.classList.remove("active")
         window.api.power()
-        textArea.value = ''
         assembelyText = []
         if (myInterval!=null) clearInterval(myInterval)
-        binaryText.innerHTML = ""
         createPanel(getPcToStart())
         updateRegistersBox()
     }
@@ -422,61 +416,39 @@ sendBtn.addEventListener("click", (e) => {
     if (first[0]=="ORG") {
         const answer = convertLabelToBasic(assembelyText)
         
-        console.log(answer)
         switch (answer.status) {
             case 100:
-                console.log(answer)
                 break
             case 101:
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly is not correct!! (101)'
-                wrapHole.classList.add('active')
-                return
+                showAlert('wrong first address', answer.status)
+                return false
             case 102:
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly is not correct!! (102)'
-                wrapHole.classList.add('active')
-                return
+                showAlert('wrong second address', answer.status)
+                return false
             case 103:
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly is not correct!! (103)'
-                wrapHole.classList.add('active')
-                return
+                showAlert('wrong instruction', answer.status)
+                return false
             case 104:
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly is not correct!! (104)'
-                wrapHole.classList.add('active')
-                return
+                showAlert('wrong indirect char', answer.status)
+                return false
             case 105:
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly is not correct!! (105)'
-                wrapHole.classList.add('active')
-                return
+                showAlert('wrong data char', answer.status)
+                return false
             case 106:
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly is not correct!! (106)'
-                wrapHole.classList.add('active')
-                return
+                showAlert('data length not enough', answer.status)
+                return false
             case 107:
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly is not correct!! (107)'
-                wrapHole.classList.add('active')
-                return
+                showAlert('inst length not enough', answer.status)
+                return false
             case 108:
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly is not correct!! (108)'
-                wrapHole.classList.add('active')
-                return
+                showAlert('label not find', answer.status)
+                return false
             case 109:
-                notification.classList.add('active')
-                txtNotif.textContent = 'the assembly is not correct!! (109)'
-                wrapHole.classList.add('active')
-                return
+                showAlert('END not find', answer.status)
+                return false
             default:
-                notification.classList.add('active')
-                txtNotif.textContent ='the assembly is not correct!!'
-                wrapHole.classList.add('active')
-                return
+                showAlert('error', answer.status)
+                return false
         }
 
         for (let i = 0; i < answer.assembly.length; i++) 
@@ -640,8 +612,8 @@ jumpBtn.addEventListener("click", (e) => {
 
 inpInputBtn.addEventListener("click", (e) => {
     const value = InpInput.value.toUpperCase()
-    const ans = window.api.setInputRegister(value)
-    if (!ans) // show alert
+    const amount = parseInt(value, 16)
+    window.api.setInputRegister(amount)
     updateRegistersBox()
 })
 
