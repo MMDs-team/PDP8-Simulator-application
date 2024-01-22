@@ -1,9 +1,9 @@
 const { app, BrowserWindow, screen, Menu } = require('electron')
 
-require('electron-reload')(__dirname, {
-  // Note that the path to electron may vary according to the main file
-  electron: require(`${__dirname}/node_modules/electron`)
-});
+// require('electron-reload')(__dirname, {
+//   // Note that the path to electron may vary according to the main file
+//   electron: require(`${__dirname}/node_modules/electron`)
+// });
 
 const path = require('node:path')
 
@@ -15,6 +15,7 @@ function createWindow (width, height) {
     minHeight: height,
     maxWidth: width,
     maxHeight: height,
+    icon: path.join(__dirname, 'logo.svg'),
     webPreferences: {
       nodeIntegration: true,
       
