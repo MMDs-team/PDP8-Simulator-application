@@ -1,4 +1,4 @@
-const { AC, INPR, IF, OUTR, OF } = require("../Register.js")
+const { AC, INPR, IF, OUTR, OF, IEN } = require("../Register.js")
 const ProgramCounter = require("../ProgramCounter.js")
 
 
